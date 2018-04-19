@@ -11,11 +11,12 @@ public abstract class VictoryCard extends Card {
 	
 	private int cost;
 	
-	private CardType type;
+	private List<CardType> typesCarte = new ArrayList<CardType>();
+	
 	
 	public VictoryCard(String name, int cost) {
 		super(name, cost);
-		this.type = CardType.Victory;
+		typesCarte.add(CardType.Victory);
 	}
 	
 	public int getCost() {
@@ -27,12 +28,18 @@ public abstract class VictoryCard extends Card {
 	}
 	
 	public List<CardType> getTypes() {
-		List<CardType> typesCarte = new ArrayList<CardType>();
-		typesCarte.add(this.type);
 		return typesCarte;
 	}
 	
 	public String toString() {
-		return "La carte : " + this.name + " est de type " + this.type;
+		return "La carte : " + this.name + " est de type " + this.typesCarte.get(0);
+	}
+	
+	public abstract void play(Player p);
+	
+	
+	public int victoryValue(Player p) {
+		return 0;
 	}
 }
+
