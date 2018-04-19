@@ -13,4 +13,10 @@ public class Curse extends CurseCard {
 	public int victoryValue(Player p) {
 		return -1;
 	}
+
+	@Override
+	public void play(Player p) {
+		// TODO Auto-generated method stub
+		
+	}
 }
