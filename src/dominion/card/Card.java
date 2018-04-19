@@ -16,6 +16,8 @@ public abstract class Card {
 	 */
 	private int cost;
 	
+	private List<CardType> typesCarte = new ArrayList<CardType>();
+	
 	/**
 	 * Constructeur simple
 	 * @param name le nom de la carte
@@ -45,7 +47,6 @@ public abstract class Card {
 	 * {@code ArrayList} vide, auquel les sous-classes ajouteront les types.
 	 */
 	public List<CardType> getTypes() {
-		List<CardType> typesCarte = new ArrayList<CardType>;
 		return typesCarte;
 	}
 	
