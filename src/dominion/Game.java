@@ -49,7 +49,10 @@ public class Game {
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
 		int nombreJoueur = playerNames.length;
-		Game game; // on doit créér des player mais dans les paramètres du constructeur de player il y a un objet Game.... On defini un autre constructeur sans Game???
+		//Initialise le tableau de joueurs de la partie
+		this.players = new Player[nombreJoueur];
+		//Game game; // on doit créér des player mais dans les paramètres du constructeur de player il y a un objet Game.... On defini un autre constructeur sans Game???
+		//Pas nécessaire, le constructeur de Player a un objet game pour utiliser les méthodes removeFromSupply, utiliser "this"
 		CardList copper = new CardList();
 		CardList silver = new CardList();
 		CardList gold = new CardList();
@@ -58,7 +61,7 @@ public class Game {
 		CardList province = new CardList();
 		CardList curse = new CardList();
 		for(int i=0; i<nombreJoueur; i++) {
-			Player J_i = new Player(playerNames[i], game);//// ????
+			this.players[i] = new Player(playerNames[i], this);//// ???? Mettre "this" à la place, je le mets, tu peux l'enlever si tu es pas d'accord. J'ai aussi fait rentrer le joueur dans le tableau joueurs du Game
 		}
 		for(int i=0; i<60; i++) {
 			Copper c = new Copper();
@@ -85,8 +88,10 @@ public class Game {
 				Province p = new Province();
 				province.add(p);	
 			}
-			Curse c = new Curse();
-			curse.add(c);
+			for(int i = 0; i<10; i++) { //10 cartes Curse pour 2 joueurs (10^1)
+				Curse c = new Curse();
+				curse.add(c);
+			}
 		}
 		else if(nombreJoueur >2) {
 			for(int i=0; i<12; i++) {
@@ -101,7 +106,7 @@ public class Game {
 				Province p = new Province();
 				province.add(p);	
 			}
-			for(int i =0; i<(nombreJoueur-1); i++) {
+			for(int i =0; i < 10*(nombreJoueur-1); i++) { //10*(n-1)
 				Curse c = new Curse();
 				curse.add(c);
 			}
@@ -170,7 +175,7 @@ public class Game {
 	 */
 	public List<Player> otherPlayers(Player p) {
 		ArrayList <Player> autresJoueurs = new ArrayList<Player>();
-		int indiceD = numberOfPlayers()- indexOfPlayer(p);
+		int indiceD = numberOfPlayers() - indexOfPlayer(p);// ??? J'aurai juste mis indiceD = indexOfPlayer(p)
 		for(int i=indiceD+1; i < this.numberOfPlayers(); i++) {
 			autresJoueurs.add(this.players[i]);
 		}
@@ -192,7 +197,8 @@ public class Game {
 		for(int i =0; i <this.supplyStacks.size(); i++) {
 			if(this.supplyStacks.get(i).get(0) != null) 
 			{
-				carteReserve.add(this.supplyStacks.get(i).get(0));}
+				carteReserve.add(this.supplyStacks.get(i).get(0));
+			}
 		}	
 		return carteReserve;	
 	}

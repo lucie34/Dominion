@@ -7,4 +7,15 @@ import dominion.*;
  * Rmq: les cartes Attaque sont toutes des cartes Action
  */
 public abstract class AttackCard extends ActionCard {
+	
+	public AttackCard(String name, int cost) {
+		super(name, cost);
+		super.getTypes().add(CardType.Attack);
+	}
+	
+	public String toString() {
+		return super.toString()+"-"+super.getTypes().get(1);
+	}
+	
+	public abstract void play(Player p);
 }

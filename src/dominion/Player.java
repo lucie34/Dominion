@@ -66,6 +66,7 @@ public class Player {
 	 * pr√©parer la main du joueur apr√®s avoir plac√© les cartes dans la d√©fausse.
 	 */
 	public Player(String name, Game game) {
+		this.game = game; //Initialise this.game
 		int i;
 		for(i=0; i<3; i++) {
 			Card carte = game.removeFromSupply("Estate");
@@ -77,7 +78,7 @@ public class Player {
 		}
 		this.endTurn();
 		i = 0;
-		Card cartePioche = this.drawCard();
+		Card cartePioche = this.drawCard(); //NÈcessaire ? la mÈthode endTurn fait dÈj‡ piocher la main du joueur.... et j'ai du mal ‡ comprendre ‡ quoi sert cartePioche :s
 		while( cartePioche == null || i<4) {
 			cartePioche = this.drawCard();
 			i++;
@@ -150,6 +151,18 @@ public class Player {
 		return nouvelleListe;
 	}
 	
+	//MÈthode dont j'ai besoin pour classe Militia A VOIR
+	public void removeFromHand(Card c) {
+		if(c != null) {
+			for(int i = 0; i<this.hand.size(); i++) {
+				if(this.hand.get(i).equals(c)) {
+					this.hand.remove(i);
+					System.exit(0);
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Renvoie une liste de toutes les cartes poss√©d√©es par le joueur
 	 * (le deck complet c'est-√†-dire toutes les cartes dans la main, la
@@ -161,13 +174,13 @@ public class Player {
 			toutesCartes.add(this.hand.get(i));
 		}
 		for(int i=0 ; i<this.discard.size(); i++) {
-			toutesCartes.add(this.hand.get(i));
+			toutesCartes.add(this.discard.get(i)); // C'Ètait un copiÈ collÈ de la ligne en dessous du premier for, mais il manquait la modif ^^'
 		}
 		for(int i=0 ; i<this.draw.size(); i++) {
-			toutesCartes.add(this.hand.get(i));
+			toutesCartes.add(this.draw.get(i)); //idem, j'ai mis draw ‡ la place de hand
 		}
 		for(int i=0 ; i<this.inPlay.size(); i++) {
-			toutesCartes.add(this.hand.get(i));
+			toutesCartes.add(this.inPlay.get(i)); //idem
 		}
 		return toutesCartes;
 	}
@@ -312,7 +325,7 @@ public class Player {
 	 * {@code playCard(Card c)}. Si aucune carte ne correspond, la m√©thode ne
 	 * fait rien.
 	 */
-	public void playCard(String cardName) {  // A VOIR peut on avoir deux carte avec le mÍme nom? J'ai exit au cas ou...
+	public void playCard(String cardName) {  // A VOIR peut on avoir deux carte avec le mÍme nom? J'ai exit au cas ou... TU AS BIEN FAIT JE CROIS
 		for(int i =0; i < this.hand.size(); i++) {
 			if(this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
 				this.playCard(this.hand.get(i));
@@ -346,7 +359,8 @@ public class Player {
 	 * null} si aucune carte n'a √©t√© prise dans la r√©serve.
 	 */
 	public Card gain(String cardName) {
-		game.getFromSupply(cardName);
+		Card c = game.getFromSupply(cardName);
+		this.gain(c); // Je l'ai rajoutÈ, il manquait le placement de la carte dans la dÈfausse
 		return game.removeFromSupply(cardName);
 	}
 	
@@ -518,7 +532,7 @@ public class Player {
 			this.hand.remove(i);
 			i++;
 		}
-		for(i=0; i<5; i++) {
+		for(i=0; i<5; i++) { //Il vaudrait peut-Ítre mieux utiliser la mÈthode drawCard() non ? Elle prend en compte si la pioche est vide...
 			this.hand.add(this.draw.get(i));
 			this.draw.remove(i);
 		}	
