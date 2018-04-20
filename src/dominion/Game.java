@@ -46,6 +46,58 @@ public class Game {
 	 * - 8 (si 2 joueurs) ou 12 (si 3 ou 4 joueurs) Estate, Duchy et Province 	 * - 10 * (n-1) Curse oÃ¹ n est le nombre de joueurs dans la partie
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
+		int nombreJoueur = playerNames.length;
+		Game game; // on doit créér des player mais dans les paramètres du constructeur de player il y a un objet Game.... On defini un autre constructeur sans Game???
+		CardList communes = new CardList();
+		for(int i=0; i<nombreJoueur; i++) {
+			Player J_i = new Player(playerNames[i], game);//// ????
+		}
+		for(int i=0; i<60; i++) {
+			Copper c = new Copper();
+			communes.add(c);	
+		}
+		for(int i=0; i<40; i++) {
+			Silver s = new Silver();
+			communes.add(s);	
+		}
+		for(int i=0; i<30; i++) {
+			Gold g = new Gold();
+			communes.add(g);	
+		}
+		if(nombreJoueur == 2) {
+			for(int i=0; i<8; i++) {
+				Estate e = new Estate();
+				communes.add(e);	
+			}
+			for(int i=0; i<8; i++) {
+				Duchy d = new Duchy();
+				communes.add(d);	
+			}
+			for(int i=0; i<8; i++) {
+				Province p = new Province();
+				communes.add(p);	
+			}
+			Curse c = new Curse();
+			communes.add(c);
+		}
+		else if(nombreJoueur >2) {
+			for(int i=0; i<12; i++) {
+				Estate e = new Estate();
+				communes.add(e);	
+			}
+			for(int i=0; i<12; i++) {
+				Duchy d = new Duchy();
+				communes.add(d);	
+			}
+			for(int i=0; i<12; i++) {
+				Province p = new Province();
+				communes.add(p);	
+			}
+			for(int i =0; i<(nombreJoueur-1); i++) {
+				Curse c = new Curse();
+				communes.add(c);
+			}
+		}
 	}
 	
 	/**
