@@ -65,9 +65,23 @@ public class Player {
 	 * Indications: On peut utiliser la mÃ©thode {@code this.endTurn()} pour 
 	 * prÃ©parer la main du joueur aprÃ¨s avoir placÃ© les cartes dans la dÃ©fausse.
 	 */
-	public Player(String name, Game game) {  // où sont les cartes que l'on place?
-		
+	public Player(String name, Game game) {
+		int i;
+		for(i=0; i<3; i++) {
+			Card carte = game.removeFromSupply("Estate");
+			this.discard.add(carte);
+		}
+		for(i = 0; i<7; i++) {
+			Card carte = game.removeFromSupply("Copper");
+			this.discard.add(carte);
+		}
 		this.endTurn();
+		i = 0;
+		Card cartePioche = this.drawCard();
+		while( cartePioche == null || i<4) {
+			cartePioche = this.drawCard();
+			i++;
+		}
 	}
 
 	/**
@@ -541,17 +555,21 @@ public class Player {
 		this.startTurn();
 		String reponse = "y";
 		while(this.actions>=0 || !reponse.isEmpty() || reponse != null) {
-			System.out.print("Choisissez une carte ACTION de votre main ou entrez une réponse vide pour arrêter cette étape" );
-			for(int i=0; i<this.getActionCards().size(); i++) {
-				System.out.print(this.getActionCards().get(i));
-				}
-			Scanner sc = new Scanner(System.in);
-			reponse = sc.nextLine();
+			String instruction = "Choisissez une carte ACTION de votre main ou entrez une réponse vide pour arrêter cette étape" ;
+			reponse = chooseCard(instruction, this.getActionCards(), true);
 			if(!reponse.isEmpty() || reponse != null) {
 				this.playCard(reponse);
 				this.actions -= 1;
 			}
 		}
-		while() {}
+		for(int i=0; i< this.getTreasureCards().size(); i++) {
+			this.playCard(this.getTreasureCards().get(i));
+		}
+		while(this.buys>=0 || !reponse.isEmpty() || reponse != null || this.money == 0) {
+			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour" ;
+			reponse = chooseCard(instruction, game.availableSupplyCards(), true);
+			this.buyCard(reponse);
+		}
+		this.endTurn();
 	}
 }
