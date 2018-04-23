@@ -78,11 +78,12 @@ public class Player {
 		}
 		this.endTurn();
 		i = 0;
-		Card cartePioche = this.drawCard(); //Nécessaire ? la méthode endTurn fait déjà piocher la main du joueur.... et j'ai du mal à comprendre à quoi sert cartePioche :s
+		// a vérifier mais je crois que tu as raison
+		/*Card cartePioche = this.drawCard(); //Nécessaire ? la méthode endTurn fait déjà piocher la main du joueur.... et j'ai du mal à comprendre à quoi sert cartePioche :s
 		while( cartePioche == null || i<4) {
 			cartePioche = this.drawCard();
 			i++;
-		}
+		}*/
 	}
 
 	/**
@@ -174,13 +175,13 @@ public class Player {
 			toutesCartes.add(this.hand.get(i));
 		}
 		for(int i=0 ; i<this.discard.size(); i++) {
-			toutesCartes.add(this.discard.get(i)); // C'était un copié collé de la ligne en dessous du premier for, mais il manquait la modif ^^'
+			toutesCartes.add(this.discard.get(i)); 
 		}
 		for(int i=0 ; i<this.draw.size(); i++) {
-			toutesCartes.add(this.draw.get(i)); //idem, j'ai mis draw à la place de hand
+			toutesCartes.add(this.draw.get(i)); 
 		}
 		for(int i=0 ; i<this.inPlay.size(); i++) {
-			toutesCartes.add(this.inPlay.get(i)); //idem
+			toutesCartes.add(this.inPlay.get(i)); 
 		}
 		return toutesCartes;
 	}
@@ -360,7 +361,7 @@ public class Player {
 	 */
 	public Card gain(String cardName) {
 		Card c = game.getFromSupply(cardName);
-		this.gain(c); // Je l'ai rajouté, il manquait le placement de la carte dans la défausse
+		this.gain(c); 
 		return game.removeFromSupply(cardName);
 	}
 	
@@ -532,9 +533,8 @@ public class Player {
 			this.hand.remove(i);
 			i++;
 		}
-		for(i=0; i<5; i++) { //Il vaudrait peut-être mieux utiliser la méthode drawCard() non ? Elle prend en compte si la pioche est vide...
-			this.hand.add(this.draw.get(i));
-			this.draw.remove(i);
+		for(i=0; i<5; i++) { 
+			this.hand.add(this.drawCard());
 		}	
 	}
 	

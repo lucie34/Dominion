@@ -88,7 +88,7 @@ public class Game {
 				Province p = new Province();
 				province.add(p);	
 			}
-			for(int i = 0; i<10; i++) { //10 cartes Curse pour 2 joueurs (10^1)
+			for(int i = 0; i<10; i++) { 
 				Curse c = new Curse();
 				curse.add(c);
 			}
@@ -106,7 +106,7 @@ public class Game {
 				Province p = new Province();
 				province.add(p);	
 			}
-			for(int i =0; i < 10*(nombreJoueur-1); i++) { //10*(n-1)
+			for(int i =0; i < 10*(nombreJoueur-1); i++) { 
 				Curse c = new Curse();
 				curse.add(c);
 			}
@@ -175,11 +175,11 @@ public class Game {
 	 */
 	public List<Player> otherPlayers(Player p) {
 		ArrayList <Player> autresJoueurs = new ArrayList<Player>();
-		int indiceD = numberOfPlayers() - indexOfPlayer(p);// ??? J'aurai juste mis indiceD = indexOfPlayer(p)
-		for(int i=indiceD+1; i < this.numberOfPlayers(); i++) {
+		int indice = indexOfPlayer(p);
+		for(int i=indice ; i < this.numberOfPlayers(); i++) {
 			autresJoueurs.add(this.players[i]);
 		}
-		for(int i=0; i < indiceD; i++) {
+		for(int i=0; i < indice; i++) {
 			autresJoueurs.add(this.players[i]);
 		}
 		return autresJoueurs;

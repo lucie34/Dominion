@@ -26,9 +26,6 @@ public abstract class CurseCard extends Card {
 		return typesCarte;
 	}
 	
-	public List<CardType> getTypes() {
-		return typesCarte;
-	}
 	
 	public String toString() {
 		return "La carte : " + this.name + " est de type " + this.typesCarte.get(0);
