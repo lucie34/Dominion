@@ -125,8 +125,7 @@ public class Game {
 			if(this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
 				this.indiceProvincesupplyStacks = i;
 			}
-			}
-	
+		}
 	}
 	
 	/**
@@ -238,9 +237,9 @@ public class Game {
 	 * ne correspond
 	 */
 	public Card getFromSupply(String cardName) {
-		CardList reserve = new CardList();
+		CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< this.availableSupplyCards().size(); i++) {
+			for(int i =0; i< reserve.size(); i++) {
 				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
 					return reserve.get(i);
 				}
@@ -258,9 +257,9 @@ public class Game {
 	 * ne correspond au nom passÃ© en argument
 	 */
 	public Card removeFromSupply(String cardName) {
-		CardList reserve = new CardList();
+		CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< this.availableSupplyCards().size(); i++) {
+			for(int i =0; i< reserve.size(); i++) {
 				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
 					return reserve.remove(i);
 				}
@@ -269,6 +268,21 @@ public class Game {
 		}
 		return null;
 	}
+	
+	
+	//Méthode nécessaire pour écarter une carte
+	public void addInTrash(Card c) {
+		if(c != null) {
+			this.trashedCards.add(c);
+		}
+	}
+	
+	
+	//Permet de récupérer la liste des cartes dans le trash
+	public CardList getTrashedCards() {
+		return this.trashedCards;
+	}
+	
 	
 	/**
 	 * Teste si la partie est terminÃ©e

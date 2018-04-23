@@ -16,5 +16,7 @@ public abstract class ReactionCard extends ActionCard {
 		return super.toString()+"-"+super.getTypes().get(1);
 	}
 	
+	public abstract boolean devoiler(Player p, CardList pile);
+	
 	public abstract void play(Player p);
 }

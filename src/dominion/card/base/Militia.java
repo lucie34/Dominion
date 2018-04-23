@@ -25,13 +25,10 @@ public class Militia extends AttackCard {
 			//Récupère la main de l'adversaire i
 			CardList main = adversaires.get(i).cardsInHand();
 			//Gère le cas où l'adversaire i possède dans sa main et dévoile une carte Douves l'immunisant de l'attaque
-			Moat defenseCard = new Moat();
-			if(main.contains(defenseCard) && defenseCard.choisirDevoilerDouves(adversaires.get(i))) {
-				System.out.println(adversaires.get(i).getName()+" dévoile sa carte Douves, il est protégé de l'attaque de "+p.getName());
-			}
 			//Ramène la main de l'adversaire i à 3 cartes s'il ne dévoile aucune carte Douves
-			else if(!main.contains(defenseCard) || main.contains(defenseCard) && !defenseCard.choisirDevoilerDouves(adversaires.get(i))) {
-				while(main.size()>3) {
+			Moat douves = new Moat();
+			if(!douves.devoiler(adversaires.get(i), main)) {
+				while(main.size() > 3) {
 					//Empêche de défausser plusieurs fois les cartes de même nom dans une boucle for
 					cartesMemeNomDefausse = 0;
 					choix = adversaires.get(i).chooseCard(instruction, main, false);
