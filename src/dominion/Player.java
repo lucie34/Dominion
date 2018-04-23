@@ -152,7 +152,7 @@ public class Player {
 		return nouvelleListe;
 	}
 	
-	//Méthode dont j'ai besoin pour classe Militia A VOIR
+	//Méthode dont j'ai besoin pour classe Militia
 	public void removeFromHand(Card c) {
 		if(c != null) {
 			for(int i = 0; i<this.hand.size(); i++) {
@@ -326,7 +326,7 @@ public class Player {
 	 * {@code playCard(Card c)}. Si aucune carte ne correspond, la mÃ©thode ne
 	 * fait rien.
 	 */
-	public void playCard(String cardName) {  // A VOIR peut on avoir deux carte avec le même nom? J'ai exit au cas ou... TU AS BIEN FAIT JE CROIS
+	public void playCard(String cardName) {
 		for(int i =0; i < this.hand.size(); i++) {
 			if(this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
 				this.playCard(this.hand.get(i));
