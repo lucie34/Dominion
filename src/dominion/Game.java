@@ -49,6 +49,8 @@ public class Game {
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
 		int nombreJoueur = playerNames.length;
+		//initialise le joueur courant
+		this.currentPlayerIndex = 0;
 		//Initialise le tableau de joueurs de la partie
 		this.players = new Player[nombreJoueur];
 		//Game game; // on doit créér des player mais dans les paramètres du constructeur de player il y a un objet Game.... On defini un autre constructeur sans Game???
@@ -125,9 +127,14 @@ public class Game {
 			if(this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
 				this.indiceProvincesupplyStacks = i;
 			}
-			}
-	
+		}
 	}
+	
+	//Récupère l'index du joueur actif dans le tableau players
+	public int getCurrentPlayerIndex() {
+		return this.currentPlayerIndex;
+	}
+	
 	
 	/**
 	 * Renvoie le joueur correspondant Ã  l'indice passÃ© en argument
@@ -238,9 +245,9 @@ public class Game {
 	 * ne correspond
 	 */
 	public Card getFromSupply(String cardName) {
-		CardList reserve = new CardList();
+		CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< this.availableSupplyCards().size(); i++) {
+			for(int i =0; i< reserve.size(); i++) {
 				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
 					return reserve.get(i);
 				}
@@ -258,9 +265,9 @@ public class Game {
 	 * ne correspond au nom passÃ© en argument
 	 */
 	public Card removeFromSupply(String cardName) {
-		CardList reserve = new CardList();
+		CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< this.availableSupplyCards().size(); i++) {
+			for(int i =0; i< reserve.size(); i++) {
 				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
 					return reserve.remove(i);
 				}
@@ -269,6 +276,21 @@ public class Game {
 		}
 		return null;
 	}
+	
+	
+	//Méthode nécessaire pour écarter une carte
+	public void addInTrash(Card c) {
+		if(c != null) {
+			this.trashedCards.add(c);
+		}
+	}
+	
+	
+	//Permet de récupérer la liste des cartes dans le trash
+	public CardList getTrashedCards() {
+		return this.trashedCards;
+	}
+	
 	
 	/**
 	 * Teste si la partie est terminÃ©e

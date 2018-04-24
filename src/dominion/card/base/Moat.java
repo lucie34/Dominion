@@ -14,6 +14,24 @@ public class Moat extends ReactionCard {
 		super("Douves", 2);
 	}
 	
+	//permet au joueur possédant cette carte de choisir s'il veut la dévoiler ou non en cas d'attaque d'un autre joueur
+	public boolean devoiler(Player p, CardList pile) {
+		if(!pile.contains(this)) {
+			return false;
+		}
+		String instruction = p.getName()+" : Voulez-vous montrer votre carte Douves ? (O/N)\n";
+		List<String> listeChoix = new ArrayList<String>(2);
+		listeChoix.add("O");
+		listeChoix.add("N");
+		String rep = p.choose(instruction, listeChoix, false);
+		if(rep.compareToIgnoreCase("N") == 0) {
+			return false;
+		}
+		System.out.println("\n"+p.getName()+" dévoile sa carte Douves\n");
+		return true;
+	}
+	
+	
 	public void play(Player p) {
 		for(int i = 0; i<2; i++) {
 			p.drawCard();

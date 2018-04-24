@@ -18,22 +18,24 @@ public class Militia extends AttackCard {
 	public void play(Player p) {
 		p.incrementMoney(2);
 		List<Player> adversaires = p.otherPlayers();
-		CardList main = p.cardsInHand();
-		String instruction = "Choisissez une carte de votre main à défausser";
+		String instruction = "Vous devez avoir seulement 3 cartes en main, choisissez une carte de votre main à défausser";
 		String choix;
+		int cartesMemeNomDefausse;
 		for(int i = 0; i<adversaires.size(); i++) {
-			Moat defenseCard = new Moat();
-			//Vérifie que l'adversaire en question n'a pas de carte réaction l'immunisant
-			if(!adversaires.get(i).cardsInHand().contains(defenseCard)) {
-				int cartesMemeNomDefausse;
-				//Ramène la main de l'adversaire à 3 cartes
-				while(main.size()>3) {
+			//Récupère la main de l'adversaire i
+			CardList main = adversaires.get(i).cardsInHand();
+			//Gère le cas où l'adversaire i possède dans sa main et dévoile une carte Douves l'immunisant de l'attaque
+			//Ramène la main de l'adversaire i à 3 cartes s'il ne dévoile aucune carte Douves
+			Moat douves = new Moat();
+			if(!douves.devoiler(adversaires.get(i), main)) {
+				while(main.size() > 3) {
+					//Empêche de défausser plusieurs fois les cartes de même nom dans une boucle for
 					cartesMemeNomDefausse = 0;
 					choix = adversaires.get(i).chooseCard(instruction, main, false);
 					for(int c = 0; c<main.size(); c++) {
-						if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0/*Pb des cartes de même nom...*/) {
-							p.gain(main.get(c));//met dans défausse
-							p.removeFromHand(main.get(c));//l'enleve effectivement de la main du joueur ? Il faut rajouter une méthode Setter à Player ?
+						if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
+							p.gain(main.get(c));//met la carte choisie dans défausse
+							p.removeFromHand(main.get(c));//l'enleve de la main du joueur
 							main.remove(c);
 							cartesMemeNomDefausse ++;
 						}

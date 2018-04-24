@@ -156,15 +156,46 @@ public class Player {
 		return nouvelleListe;
 	}
 	
-	//Méthode dont j'ai besoin pour classe Militia A VOIR
-	public void removeFromHand(Card c) {
+	
+	public void removeFromInPlay(Card c) {
+		if(c != null && this.inPlay.contains(c)) {
+			this.inPlay.remove(c);
+		}
+	}
+	
+	
+	//Ajoute la carte dans la pioche à l'indice indiqué (pour pouvoir remettre carte au dessus de la pile)
+	public void addDeck(int i, Card c) {
 		if(c != null) {
-			for(int i = 0; i<this.hand.size(); i++) {
-				if(this.hand.get(i).equals(c)) {
-					this.hand.remove(i);
-					System.exit(0);
-				}
-			}
+			this.draw.add(i, c);
+		}
+	}
+	
+	
+	//Ajoute la carte dans la pioche
+	public void addDeck(Card c) {
+		if(c != null) {
+			this.draw.add(c);
+		}
+	}
+	
+	
+	//Retourne la pioche du joueur;
+	public CardList getDeck() {
+		return this.draw;
+	}
+	
+	//Enlève une carte de la pioche du joueur
+	public void removeFromDeck(Card c) {
+		if(c != null && this.draw.contains(c)) {
+			this.draw.remove(this.draw.indexOf(c));
+		}
+	}
+	
+	//Méthode pour enlever une carte de la main du joueur
+	public void removeFromHand(Card c) {
+		if(c != null && this.hand.contains(c)) {
+			this.hand.remove(this.hand.indexOf(c));
 		}
 	}
 	
@@ -315,7 +346,7 @@ public class Player {
 	 */
 	public void playCard(Card c) {
 		this.hand.remove(c);
-		this.inPlay.add(c);
+		this.inPlay.add(c); //Quand est-ce que la liste inPlay est mise dans la défausse ? Je le rajoute dans endTurn
 		c.play(this);
 		
 	}
@@ -330,7 +361,7 @@ public class Player {
 	 * {@code playCard(Card c)}. Si aucune carte ne correspond, la mÃ©thode ne
 	 * fait rien.
 	 */
-	public void playCard(String cardName) {  // A VOIR peut on avoir deux carte avec le même nom? J'ai exit au cas ou... TU AS BIEN FAIT JE CROIS
+	public void playCard(String cardName) {
 		for(int i =0; i < this.hand.size(); i++) {
 			if(this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
 				this.playCard(this.hand.get(i));
@@ -537,6 +568,12 @@ public class Player {
 			this.hand.remove(i);
 			i++;
 		}
+		i = 0;
+		while(!this.inPlay.isEmpty()) {
+			this.discard.add(this.inPlay.get(i));
+			this.inPlay.remove(i);
+			i++;
+		}
 		for(i=0; i<5; i++) { 
 			this.hand.add(this.drawCard());
 		}	
@@ -572,18 +609,18 @@ public class Player {
 	public void playTurn() {
 		this.startTurn();
 		String reponse = "y";
-		while(this.actions>=0 || !reponse.isEmpty() || reponse != null) {
+		while(this.actions>=0 && !reponse.isEmpty() && reponse != null) {
 			String instruction = "Choisissez une carte ACTION de votre main ou entrez une réponse vide pour arrêter cette étape" ;
 			reponse = chooseCard(instruction, this.getActionCards(), true);
-			if(!reponse.isEmpty() || reponse != null) {
-				this.playCard(reponse);
+			if(!reponse.isEmpty() && reponse != null) {
 				this.actions -= 1;
+				this.playCard(reponse);
 			}
 		}
 		for(int i=0; i< this.getTreasureCards().size(); i++) {
 			this.playCard(this.getTreasureCards().get(i));
 		}
-		while(this.buys>=0 || !reponse.isEmpty() || reponse != null || this.money == 0) {
+		while(this.buys>=0 && !reponse.isEmpty() && reponse != null && this.money != 0) {
 			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour" ;
 			reponse = chooseCard(instruction, game.availableSupplyCards(), true);
 			this.buyCard(reponse);
