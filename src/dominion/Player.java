@@ -139,6 +139,10 @@ public class Player {
 		this.buys += n;
 	}
 
+	
+	public void incrementHand(Card c) {
+			this.hand.add(c);
+	}
 	/**
 	 * Renvoie une liste des cartes que le joueur a en main.
 	 * La liste renvoyée doit être une nouvelle {@code CardList} dont les 
