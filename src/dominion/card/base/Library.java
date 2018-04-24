@@ -17,13 +17,20 @@ public class Library extends ActionCard {
 
 	@Override
 	public void play(Player p) {
-		while(p.cardsInHand().size() < 8) {
-			if(p.drawCard().getTypes().get(0).equals(CardType.Action)) {
-				
+		List<String> choices = new ArrayList<String>();
+		choices.add("OUI");
+		choices.add("NON");
+		while(p.cardsInHand().size() < 7) {
+			Card carte = p.drawCard();
+			if(carte.getTypes().get(0).equals(CardType.Action)) {
+				String instruction = "Souhaitez_vous mettre de coté la carte action : " + carte.getName();
+				String reponse = p.choose(instruction, choices, false);
+				if(reponse.equalsIgnoreCase("OUI")) {
+					p.gain(carte); //met la carte dans la défausse
+				}
 			}
-			p.incrementHand(p.drawCard()); 
+			p.incrementHand(carte); // met la carte dans la main
 		}
-		
-		
+	
 	}
 }
