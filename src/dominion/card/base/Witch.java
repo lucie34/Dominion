@@ -27,11 +27,14 @@ public class Witch extends AttackCard {
 		for(int i = 0; i<2; i++) {
 			p.incrementHand(p.drawCard()); 
 		}
+		Moat douves = new Moat();
 		for(int i =0; i < p.otherPlayers().size(); i++) {
-			Curse malediction = new Curse();
-			p.otherPlayers().get(i).gain(malediction);
-			p.getGame().removeFromSupply("Curse");
+			if(!douves.devoiler(p.otherPlayers().get(i), p.otherPlayers().get(i).cardsInHand())) {
+				Curse malediction = new Curse();
+				p.otherPlayers().get(i).gain(malediction);
+				p.getGame().removeFromSupply("Curse");
+			}
 		}
 	}
-	
+
 }
