@@ -16,7 +16,7 @@ public class Smithy extends ActionCard {
 	
 	public void play(Player p) {
 		for(int i = 0; i<3; i++) {
-			p.drawCard();
+			p.incrementHand(p.drawCard());
 		}
 	}
 	

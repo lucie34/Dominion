@@ -15,7 +15,7 @@ public class Workshop extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		String instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter 4 pièces ou moins";
+		String instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter au plus 4 pièces";
 		CardList liste = p.getGame().availableSupplyCards();
 		String choix = "init";
 		int prix = 10;

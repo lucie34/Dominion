@@ -18,12 +18,13 @@ public class Chapel extends ActionCard {
 		CardList main = p.cardsInHand();
 		int nombreCartesEcartees = 0;
 		int cartesMemeNomDefausse;
-		Scanner sc = new Scanner(System.in);
 		String instruction = "Vous pouvez écarter jusqu'à 4 cartes, voulez-vous écarter une carte ? (O/N)";
+		List<String> listeChoix = new ArrayList<String>(2);
+		listeChoix.add("O");
+		listeChoix.add("N");
 		String choix = "O";
 		while(choix.equalsIgnoreCase("O") && nombreCartesEcartees < 4) {
-			System.out.println("\n"+instruction+"\n");
-			choix = sc.nextLine();
+			choix = p.choose(instruction, listeChoix, false);
 			if(choix.equalsIgnoreCase("O")) {
 				cartesMemeNomDefausse = 0;
 				for(int c = 0; c<main.size(); c++) {
@@ -36,6 +37,6 @@ public class Chapel extends ActionCard {
 				}
 			}
 		}
-		System.out.println(p.getName()+" a écarté "+nombreCartesEcartees+" cartes");
+		System.out.println("\n"+p.getName()+" a écarté "+nombreCartesEcartees+" cartes");
 	}
 }

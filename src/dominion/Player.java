@@ -141,7 +141,9 @@ public class Player {
 
 	
 	public void incrementHand(Card c) {
+		if(c != null) {
 			this.hand.add(c);
+		}
 	}
 	/**
 	 * Renvoie une liste des cartes que le joueur a en main.
@@ -346,7 +348,7 @@ public class Player {
 	 */
 	public void playCard(Card c) {
 		this.hand.remove(c);
-		this.inPlay.add(c); //Quand est-ce que la liste inPlay est mise dans la défausse ? Je le rajoute dans endTurn
+		this.inPlay.add(c); 
 		c.play(this);
 		
 	}

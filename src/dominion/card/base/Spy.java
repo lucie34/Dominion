@@ -18,20 +18,25 @@ public class Spy extends AttackCard {
 	
 	public boolean devoiler(Player p, CardList pile) {
 		Card carteDevoilee = p.drawCard();
+		//Récupère le joueur ayant joué la carte Espion
+		Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
 		if(carteDevoilee == null) {
 			System.out.println("\n"+p.getName()+" n'a pas de carte à dévoiler\n");
 			return false;
 		}
 		System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
 		List<String> listeChoix= new ArrayList<String>(2);
-		String instruction = "Choisissez de défausser ou de remettre sur votre deck la carte dévoilée (Defausser/Deck)";
+		//Le joueur actif choisit de faire défausser ou non la carte dévoilée par l'adversaire
+		String instruction = joueurActif.getName()+" : Choisissez de faire défausser ou de faire remettre sur son deck la carte "+carteDevoilee.getName()+" dévoilée par le joueur "+p.getName()+" (Defausser/Deck)";
 		listeChoix.add("Defausser"); 
 		listeChoix.add("Deck");
-		String rep = p.choose(instruction, listeChoix, false);
+		String rep = joueurActif.choose(instruction, listeChoix, false);
+		//La fait défausser
 		if(rep.equalsIgnoreCase("Defausser")) {
 			p.removeFromHand(carteDevoilee);
 			p.gain(carteDevoilee);
 		}
+		//la fait remettre sur son deck
 		else if(rep.equalsIgnoreCase("Deck")) {
 			p.removeFromHand(carteDevoilee);
 			p.addDeck(0, carteDevoilee);
@@ -40,14 +45,18 @@ public class Spy extends AttackCard {
 	}
 
 	public void play(Player p) {
-		p.drawCard();
+		p.incrementHand(p.drawCard());
 		p.incrementActions(1);
 		CardList deck = p.getDeck();
 		List<Player> adversaires = p.otherPlayers();
 		this.devoiler(p, deck);
 		for(int i = 0; i<adversaires.size(); i++) {
 			deck = adversaires.get(i).getDeck();
-			this.devoiler(adversaires.get(i), deck);
+			//Vérifie que l'adversaire n'a pas de carte Douves dans sa main l'immunisant
+			Moat douves = new Moat();
+			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
+				this.devoiler(adversaires.get(i), deck);
+			}
 		}
 	}
 	

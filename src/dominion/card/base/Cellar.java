@@ -19,15 +19,17 @@ public class Cellar extends ActionCard {
 	public void play(Player p) {
 		p.incrementActions(1);
 		CardList main = p.cardsInHand();
-		Scanner scan = new Scanner(System.in);
-		String reponse = "O";
 		int cartesMemeNomDefausse;
 		int nombreCartesDefausse = 0;
+		String question = p.getName()+" : Voulez-vous défausser une carte ? (O/N)";
+		List<String> listeChoix = new ArrayList<String>(2);
+		listeChoix.add("O");
+		listeChoix.add("N");
+		String reponse = "O";
 		String instruction = "Choisissez une carte de votre main à défausser ou passez en laissant vide";
 		String choix = "init";
-		while(reponse.equalsIgnoreCase("O") && !choix.equals("")) {
-			System.out.println("\n"+p.getName()+" : Voulez-vous défausser une carte ? (O/N)\n");
-			reponse = scan.nextLine();
+		while(reponse.equalsIgnoreCase("O") && !choix.equals("") && !main.isEmpty()) {
+			reponse = p.choose(question, listeChoix, false);
 			if(reponse.compareToIgnoreCase("O") == 0) {
 				cartesMemeNomDefausse = 0;
 				choix = p.chooseCard(instruction, main, true);
@@ -35,6 +37,7 @@ public class Cellar extends ActionCard {
 					if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
 						p.gain(main.get(c));
 						p.removeFromHand(main.get(c));
+						main.remove(c);
 						cartesMemeNomDefausse ++;
 						nombreCartesDefausse ++;
 					}
@@ -42,8 +45,8 @@ public class Cellar extends ActionCard {
 			}
 		}
 		for(int i = 0; i<nombreCartesDefausse; i++) {
-			p.drawCard();
+			p.incrementHand(p.drawCard());
 		}
-		System.out.println(p.getName()+" a défaussé "+nombreCartesDefausse+" cartes");
+		System.out.println("\n"+p.getName()+" a défaussé "+nombreCartesDefausse+" cartes");
 	}
 }

@@ -20,7 +20,7 @@ public class Feast extends ActionCard {
 		p.removeFromInPlay(this);
 		p.getGame().addInTrash(this);
 		//Reçoit une carte coûtant 5 pièces ou moins
-		String instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter 5 pièces ou moins";
+		String instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter au plus 5 pièces";
 		CardList liste = p.getGame().availableSupplyCards();
 		String choix = "init";
 		int prix = 10;

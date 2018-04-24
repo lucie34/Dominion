@@ -17,23 +17,19 @@ public class Remodel extends ActionCard {
 
 	public void play(Player p) {
 		CardList main = p.cardsInHand();
-		int nbCartesEcartees = 0;
 		int coutCarte = 0;
 		int cartesMemeNomDefausse;
 		String instruction = "Choisissez une carte de votre main à écarter";
 		String choix = "init";
 		if(main.size() > 0) {
-			while(nbCartesEcartees < 1) {
-				choix = p.chooseCard(instruction, main, false);
-				cartesMemeNomDefausse = 0;
-				for(int c = 0; c<main.size(); c++) {
-					if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
-						p.getGame().addInTrash(main.get(c));
-						p.removeFromHand(main.get(c));
-						coutCarte = main.get(c).getCost();
-						nbCartesEcartees ++;
-						cartesMemeNomDefausse ++;
-					}
+			choix = p.chooseCard(instruction, main, false);
+			cartesMemeNomDefausse = 0;
+			for(int c = 0; c<main.size(); c++) {
+				if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
+					p.getGame().addInTrash(main.get(c));
+					p.removeFromHand(main.get(c));
+					coutCarte = main.get(c).getCost();
+					cartesMemeNomDefausse ++;
 				}
 			}
 			coutCarte += 2;
