@@ -49,6 +49,8 @@ public class Game {
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
 		int nombreJoueur = playerNames.length;
+		//initialise le joueur courant
+		this.currentPlayerIndex = 0;
 		//Initialise le tableau de joueurs de la partie
 		this.players = new Player[nombreJoueur];
 		//Game game; // on doit créér des player mais dans les paramètres du constructeur de player il y a un objet Game.... On defini un autre constructeur sans Game???
@@ -127,6 +129,12 @@ public class Game {
 			}
 		}
 	}
+	
+	//Récupère l'index du joueur actif dans le tableau players
+	public int getCurrentPlayerIndex() {
+		return this.currentPlayerIndex;
+	}
+	
 	
 	/**
 	 * Renvoie le joueur correspondant Ã  l'indice passÃ© en argument

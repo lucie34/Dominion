@@ -160,6 +160,14 @@ public class Player {
 	}
 	
 	
+	//Ajoute la carte dans la pioche à l'indice indiqué (pour pouvoir remettre carte au dessus de la pile)
+	public void addDeck(int i, Card c) {
+		if(c != null) {
+			this.draw.add(i, c);
+		}
+	}
+	
+	
 	//Ajoute la carte dans la pioche
 	public void addDeck(Card c) {
 		if(c != null) {
