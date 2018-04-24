@@ -18,7 +18,9 @@ public class Library extends ActionCard {
 	@Override
 	public void play(Player p) {
 		while(p.cardsInHand().size() < 8) {
-			if(p.drawCard().getTypes().) {}
+			if(p.drawCard().getTypes().get(0).equals(CardType.Action)) {
+				
+			}
 			p.incrementHand(p.drawCard()); 
 		}
 		
