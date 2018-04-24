@@ -12,4 +12,17 @@ import dominion.card.*;
  * +1 PiÃ¨ce.
  */
 public class Market extends ActionCard {
+
+	public Market() {
+		super("Marché", 5);
+		
+	}
+
+	@Override
+	public void play(Player p) {
+		p.incrementHand(p.drawCard()); // pioche une carte
+		p.incrementActions(1);
+		p.incrementBuys(1);
+		p.incrementMoney(1);
+	}
 }
