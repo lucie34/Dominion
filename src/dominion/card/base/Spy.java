@@ -33,12 +33,10 @@ public class Spy extends AttackCard {
 		String rep = joueurActif.choose(instruction, listeChoix, false);
 		//La fait défausser
 		if(rep.equalsIgnoreCase("Defausser")) {
-			p.removeFromHand(carteDevoilee);
 			p.gain(carteDevoilee);
 		}
 		//la fait remettre sur son deck
 		else if(rep.equalsIgnoreCase("Deck")) {
-			p.removeFromHand(carteDevoilee);
 			p.addDeck(0, carteDevoilee);
 		}
 		return true;

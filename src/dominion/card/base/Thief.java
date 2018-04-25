@@ -35,7 +35,6 @@ public class Thief extends AttackCard {
 			//La carte dévoilée n'est pas une carte trésor
 			if(listeCartesDevoile.get(i) != null && !listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
 				System.out.println("\n"+p.getName()+" dévoile la carte "+listeCartesDevoile.get(i).getName()+" de son deck\n");
-				p.removeFromHand(listeCartesDevoile.get(i));
 				p.gain(listeCartesDevoile.get(i));
 			}
 			//La carte dévoilée est une carte trésor
@@ -48,7 +47,6 @@ public class Thief extends AttackCard {
 					//Si le joueur actif décide de la faire écarter
 					if(rep.equalsIgnoreCase("O")) {
 						nbCartesTresorEcarte ++;
-						p.removeFromHand(listeCartesDevoile.get(i));
 						p.getGame().addInTrash(listeCartesDevoile.get(i));
 						//le joueur actif décide de récupérer ou non la carte trésor écartée par l'adversaire
 						String question = "Joueur actif "+joueurActif.getName()+" :  voulez-vous récupérer cette carte tresor "+listeCartesDevoile.get(i).getName()+" ? (O/N)";
@@ -61,13 +59,11 @@ public class Thief extends AttackCard {
 					}
 					//Si le joueur actif ne souhaite pas faire écarter cette carte trésor
 					else {
-						p.removeFromHand(listeCartesDevoile.get(i));
 						p.gain(listeCartesDevoile.get(i));
 					}
 				}
 				//Si une carte trésor a déjà été écartée
 				else {
-					p.removeFromHand(listeCartesDevoile.get(i));
 					p.gain(listeCartesDevoile.get(i));
 				}
 			}
