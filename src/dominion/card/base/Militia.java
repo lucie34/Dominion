@@ -44,4 +44,10 @@ public class Militia extends AttackCard {
 			}
 		}
 	}
+
+	@Override
+	public boolean devoiler(Player p, CardList pile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
