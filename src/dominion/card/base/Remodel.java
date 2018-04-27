@@ -12,7 +12,7 @@ import dominion.card.*;
 public class Remodel extends ActionCard {
 
 	public Remodel() {
-		super("Renovation", 4);
+		super("Remodel", 4);
 	}
 
 	public void play(Player p) {
@@ -26,10 +26,10 @@ public class Remodel extends ActionCard {
 			cartesMemeNomDefausse = 0;
 			for(int c = 0; c<main.size(); c++) {
 				if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
-					p.getGame().addInTrash(main.get(c));
-					p.removeFromHand(main.get(c));
 					coutCarte = main.get(c).getCost();
 					cartesMemeNomDefausse ++;
+					p.getGame().addInTrash(main.get(c));
+					p.removeFromHand(main.get(c));
 				}
 			}
 			coutCarte += 2;

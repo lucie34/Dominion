@@ -11,20 +11,21 @@ import dominion.card.*;
  */
 public class Moat extends ReactionCard {
 	public Moat() {
-		super("Douves", 2);
+		super("Moat", 2);
 	}
 	
 	//permet au joueur possédant cette carte de choisir s'il veut la dévoiler ou non en cas d'attaque d'un autre joueur
 	public boolean devoiler(Player p, CardList pile) {
-		if(!pile.contains(this)) {
+		Moat douves = new Moat();
+		if(!pile.contains(douves)) {
 			return false;
 		}
-		String instruction = p.getName()+" : Voulez-vous montrer votre carte Douves ? (O/N)\n";
+		String instruction = p.getName()+" : Voulez-vous montrer votre carte Douves ? (y/n)\n";
 		List<String> listeChoix = new ArrayList<String>(2);
-		listeChoix.add("O");
-		listeChoix.add("N");
+		listeChoix.add("y");
+		listeChoix.add("n");
 		String rep = p.choose(instruction, listeChoix, false);
-		if(rep.compareToIgnoreCase("N") == 0) {
+		if(rep.compareToIgnoreCase("n") == 0) {
 			return false;
 		}
 		System.out.println("\n"+p.getName()+" dévoile sa carte Douves\n");

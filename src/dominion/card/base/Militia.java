@@ -12,7 +12,7 @@ import dominion.card.*;
 public class Militia extends AttackCard {
 	
 	public Militia() {
-		super("Milice", 4);
+		super("Militia", 4);
 	}
 	
 	public void play(Player p) {

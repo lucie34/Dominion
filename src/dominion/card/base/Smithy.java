@@ -11,7 +11,7 @@ import dominion.card.*;
 public class Smithy extends ActionCard {
 	
 	public Smithy() {
-		super("Forgeron", 4);
+		super("Smithy", 4);
 	}
 	
 	public void play(Player p) {

@@ -11,7 +11,7 @@ import dominion.card.*;
 public class Thief extends AttackCard {
 	
 	public Thief() {
-		super("Voleur", 4);
+		super("Thief", 4);
 	}
 	
 	public boolean devoiler(Player p, CardList pile) {
@@ -21,9 +21,9 @@ public class Thief extends AttackCard {
 		int nbCartesTresorEcarte = 0;
 		//Récupère le joueur ayant joué la carte Voleur
 		Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
-		String instruction  = "Le joueur actif "+joueurActif.getName()+" peut décider que "+p.getName()+" écarte cette carte trésor. "+joueurActif.getName()+" voulez-vous faire écarter cette carte ? (O/N)";
+		String instruction  = "Le joueur actif "+joueurActif.getName()+" peut décider que "+p.getName()+" écarte cette carte trésor. "+joueurActif.getName()+" voulez-vous faire écarter cette carte ? (y/n)";
 		List<String> listeChoix = new ArrayList<String>(2);
-		listeChoix.add("O"); listeChoix.add("N");
+		listeChoix.add("y"); listeChoix.add("n");
 		String rep = new String();
 		//Si l'adversaire n'a plus aucune deck et aucune défausse à mélanger
 		if(listeCartesDevoile.get(0) == null && listeCartesDevoile.get(1) == null) {
@@ -45,14 +45,14 @@ public class Thief extends AttackCard {
 					//Le joueur actif décide de faire écarter cette carte trésor ou non par l'adversaire
 					rep = joueurActif.choose(instruction, listeChoix, false);
 					//Si le joueur actif décide de la faire écarter
-					if(rep.equalsIgnoreCase("O")) {
+					if(rep.equalsIgnoreCase("y")) {
 						nbCartesTresorEcarte ++;
 						p.getGame().addInTrash(listeCartesDevoile.get(i));
 						//le joueur actif décide de récupérer ou non la carte trésor écartée par l'adversaire
-						String question = "Joueur actif "+joueurActif.getName()+" :  voulez-vous récupérer cette carte tresor "+listeCartesDevoile.get(i).getName()+" ? (O/N)";
+						String question = "Joueur actif "+joueurActif.getName()+" :  voulez-vous récupérer cette carte tresor "+listeCartesDevoile.get(i).getName()+" ? (y/n)";
 						rep = joueurActif.choose(question, listeChoix, false);
 						//Si le joueur actif la récupère
-						if(rep.equalsIgnoreCase("O")) {
+						if(rep.equalsIgnoreCase("y")) {
 							joueurActif.gain(listeCartesDevoile.get(i));
 							p.getGame().getTrashedCards().remove(p.getGame().getTrashedCards().size()-1);
 						}
@@ -73,7 +73,7 @@ public class Thief extends AttackCard {
 	
 	public void play(Player p) {
 		List<Player> adversaires = p.otherPlayers();
-		CardList deck;
+		CardList deck = new CardList();
 		for(int i =0; i<adversaires.size(); i++) {
 			deck = adversaires.get(i).getDeck();
 			//Vérifie que l'adversaire n'a pas dans sa main une carte Douves l'immunisant

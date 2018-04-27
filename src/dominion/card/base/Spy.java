@@ -13,7 +13,7 @@ import dominion.card.*;
 public class Spy extends AttackCard {
 	
 	public Spy() {
-		super("Espion", 4);
+		super("Spy", 4);
 	}
 	
 	public boolean devoiler(Player p, CardList pile) {
