@@ -9,7 +9,6 @@ import dominion.card.*;
  */
 public class Curse extends CurseCard {
 	public Curse() { super("Curse", 0);	
-	super.getTypes().add(CardType.Curse);
 	}
 	
 	public int victoryValue(Player p) {

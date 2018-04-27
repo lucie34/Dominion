@@ -7,28 +7,27 @@ import dominion.*;
  */
 public abstract class CurseCard extends Card {
 	
-	private String name;
 	
-	private int cost;
-	
-	private List<CardType> typesCarte = new ArrayList<CardType>();
 
 	public CurseCard(String name, int cost) {
 		super(name, cost);
-		typesCarte.add(CardType.Curse);
+		super.getTypes().add(CardType.Curse);
 	}
 	
 	public String getName() {
-		return this.name;
+		return super.getName();
 	}
 	
 	public List<CardType> getTypes() {
-		return typesCarte;
+		return super.getTypes();
 	}
 	
+	public int getCost() {
+		return super.getCost();
+	}
 	
 	public String toString() {
-		return "La carte : " + this.name + " est de type " + this.typesCarte.get(0);
+		return "La carte : " + super.getName() + " est de type " + super.getTypes().get(0);
 	}
 	
 }
