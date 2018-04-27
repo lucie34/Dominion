@@ -68,61 +68,51 @@ public class Game {
 			this.players[i] = new Player(playerNames[i], this);//// ???? Mettre "this" à la place, je le mets, tu peux l'enlever si tu es pas d'accord. J'ai aussi fait rentrer le joueur dans le tableau joueurs du Game
 		}
 		for(int i=0; i<60; i++) {
-			Copper c = new Copper();
-			copper.add(c);	
+			copper.add(new Copper());	
 		}
 		for(int i=0; i<40; i++) {
-			Silver s = new Silver();
-			silver.add(s);	
+			silver.add(new Silver());	
 		}
 		for(int i=0; i<30; i++) {
-			Gold g = new Gold();
-			gold.add(g);	
+			gold.add(new Gold());	
 		}
 		if(nombreJoueur == 2) {
 			for(int i=0; i<8; i++) {
-				Estate e = new Estate();
-				estate.add(e);	
+				estate.add(new Estate());	
 			}
 			for(int i=0; i<8; i++) {
-				Duchy d = new Duchy();
-				duchy.add(d);	
+				duchy.add(new Duchy());	
 			}
 			for(int i=0; i<8; i++) {
-				Province p = new Province();
-				province.add(p);	
+				province.add(new Province());	
 			}
 			for(int i = 0; i<10; i++) { 
-				Curse c = new Curse();
-				curse.add(c);
+				curse.add(new Curse());
 			}
 		}
 		else if(nombreJoueur >2) {
 			for(int i=0; i<12; i++) {
-				Estate e = new Estate();
-				estate.add(e);	
+				estate.add(new Estate());	
 			}
 			for(int i=0; i<12; i++) {
-				Duchy d = new Duchy();
-				duchy.add(d);	
+				duchy.add(new Duchy());	
 			}
 			for(int i=0; i<12; i++) {
-				Province p = new Province();
-				province.add(p);	
+				province.add(new Province());	
 			}
 			for(int i =0; i < 10*(nombreJoueur-1); i++) { 
-				Curse c = new Curse();
-				curse.add(c);
+				curse.add(new Curse());
 			}
 		}
-		kingdomStacks.add(copper);
-		kingdomStacks.add(silver);
-		kingdomStacks.add(gold);
-		kingdomStacks.add(estate);
-		kingdomStacks.add(duchy);
-		kingdomStacks.add(province);
-		kingdomStacks.add(curse);
 		this.supplyStacks = kingdomStacks;
+		this.supplyStacks.add(copper);
+		this.supplyStacks.add(silver);
+		this.supplyStacks.add(gold);
+		this.supplyStacks.add(estate);
+		this.supplyStacks.add(duchy);
+		this.supplyStacks.add(province);
+		this.supplyStacks.add(curse);
+	
 		
 		// permet de connaitre l'emplacement de la pile province
 		for(int i=0; i<this.supplyStacks.size(); i++) {
