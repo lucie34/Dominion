@@ -573,6 +573,7 @@ public class Player {
 			this.inPlay.remove(i);
 			i++;
 		}
+		i = 0;
 		for(i=0; i<5; i++) { 
 			this.hand.add(this.drawCard());
 		}	
