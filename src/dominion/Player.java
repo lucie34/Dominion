@@ -72,15 +72,23 @@ public class Player {
 		inPlay = new CardList();
 		this.game = game; //Initialise this.game
 		this.name = name;
-		for(int i = 0; i<3; i++) {
+		int i;
+		for(i = 0; i<3; i++) {
 			Card carte = game.removeFromSupply("Estate");
 			this.discard.add(carte);
 		}
-		for(int i = 0; i<7; i++) {
+		for(i = 0; i<7; i++) {
 			Card carte = game.removeFromSupply("Copper");
 			this.discard.add(carte);
 		}
 		this.endTurn();
+		i = 0;
+		// a vérifier mais je crois que tu as raison
+		/*Card cartePioche = this.drawCard(); //Nécessaire ? la méthode endTurn fait déjà piocher la main du joueur.... et j'ai du mal à comprendre à quoi sert cartePioche :s
+		while( cartePioche == null || i<4) {
+			cartePioche = this.drawCard();
+			i++;
+		}*/
 	}
 
 	/**
