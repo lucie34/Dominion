@@ -48,7 +48,7 @@ public class Game {
 	 * - 8 (si 2 joueurs) ou 12 (si 3 ou 4 joueurs) Estate, Duchy et Province 	 * - 10 * (n-1) Curse o√π n est le nombre de joueurs dans la partie
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
-		supplyStacks = new ArrayList<CardList>();
+		this.supplyStacks = new ArrayList<CardList>();
 		this.trashedCards = new CardList();
 		int nombreJoueur = playerNames.length;
 		//initialise le joueur courant
@@ -64,9 +64,6 @@ public class Game {
 		CardList duchy = new CardList();
 		CardList province = new CardList();
 		CardList curse = new CardList();
-		for(int i=0; i<nombreJoueur; i++) {
-			this.players[i] = new Player(playerNames[i], this);//// ???? Mettre "this" ‡ la place, je le mets, tu peux l'enlever si tu es pas d'accord. J'ai aussi fait rentrer le joueur dans le tableau joueurs du Game
-		}
 		for(int i=0; i<60; i++) {
 			copper.add(new Copper());	
 		}
@@ -113,12 +110,16 @@ public class Game {
 		this.supplyStacks.add(province);
 		this.supplyStacks.add(curse);
 	
-		
 		// permet de connaitre l'emplacement de la pile province
 		for(int i=0; i<this.supplyStacks.size(); i++) {
 			if(this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
 				this.indiceProvincesupplyStacks = i;
 			}
+		}
+		
+		//CrÈÈe les joueurs
+		for(int i=0; i<nombreJoueur; i++) {
+			this.players[i] = new Player(playerNames[i], this);
 		}
 	}
 	
