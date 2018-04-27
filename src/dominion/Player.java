@@ -71,6 +71,7 @@ public class Player {
 		draw = new CardList();
 		inPlay = new CardList();
 		this.game = game; //Initialise this.game
+		this.name = name;
 		int i;
 		for(i=0; i<3; i++) {
 			Card carte = game.removeFromSupply("Estate");
@@ -321,7 +322,7 @@ public class Player {
 	public CardList getActionCards() {
 		CardList listAction = new CardList();
 		for(int i=0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getTypes().get(0) == CardType.Action) {
+			if(this.hand.get(i).getTypes().get(0).equals(CardType.Action)) {
 				listAction.add(this.hand.get(i));
 			}
 		}
