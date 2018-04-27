@@ -262,7 +262,7 @@ public class Game {
 		if(cardName != null) {
 			for(int i =0; i< reserve.size(); i++) {
 				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
-					return reserve.remove(i);
+					return this.supplyStacks.get(i).remove(0);
 				}
 			}
 			return null;
