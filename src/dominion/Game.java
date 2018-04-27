@@ -104,7 +104,7 @@ public class Game {
 				curse.add(new Curse());
 			}
 		}
-		this.supplyStacks = kingdomStacks;
+		this.supplyStacks.addAll(kingdomStacks);
 		this.supplyStacks.add(copper);
 		this.supplyStacks.add(silver);
 		this.supplyStacks.add(gold);
