@@ -7,32 +7,32 @@ import dominion.*;
  */
 public abstract class VictoryCard extends Card {
 
-	private String name;
+	//private String name;
 	
-	private int cost;
+	//private int cost;
 	
-	private List<CardType> typesCarte = new ArrayList<CardType>();
+	//private List<CardType> typesCarte = new ArrayList<CardType>();
 	
 	
 	public VictoryCard(String name, int cost) {
 		super(name, cost);
-		typesCarte.add(CardType.Victory);
+		super.getTypes().add(CardType.Victory);
 	}
 	
 	public int getCost() {
-		return this.cost;
+		return super.getCost();
 	}
 	
 	public String getName() {
-		return this.name;
+		return super.getName();
 	}
 	
 	public List<CardType> getTypes() {
-		return typesCarte;
+		return super.getTypes();
 	}
 	
 	public String toString() {
-		return "La carte : " + this.name + " est de type " + this.typesCarte.get(0);
+		return "La carte : " + super.getName() + " est de type " + super.getTypes().get(0);
 	}
 	
 	public abstract void play(Player p);
