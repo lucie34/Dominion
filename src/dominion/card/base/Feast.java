@@ -12,7 +12,7 @@ import dominion.card.*;
 public class Feast extends ActionCard {
 	
 	public Feast() {
-		super("Festin", 4);
+		super("Feast", 4);
 	}
 	
 	public void play(Player p) {

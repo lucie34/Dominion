@@ -12,7 +12,7 @@ import dominion.card.*;
 public class Laboratory extends ActionCard {
 
 	public Laboratory() {
-		super("Laboratoire", 5);
+		super("Laboratory", 5);
 		
 	}
 

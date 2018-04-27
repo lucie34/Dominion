@@ -11,21 +11,21 @@ import dominion.card.*;
 public class Chapel extends ActionCard {
 	
 	public Chapel() {
-		super("Chapelle", 2);
+		super("Chapel", 2);
 	}
 	
 	public void play(Player p) {
 		CardList main = p.cardsInHand();
 		int nombreCartesEcartees = 0;
 		int cartesMemeNomDefausse;
-		String instruction = "Vous pouvez écarter jusqu'à 4 cartes, voulez-vous écarter une carte ? (O/N)";
+		String instruction = "Vous pouvez écarter jusqu'à 4 cartes, voulez-vous écarter une carte ? (y/n)";
 		List<String> listeChoix = new ArrayList<String>(2);
-		listeChoix.add("O");
-		listeChoix.add("N");
-		String choix = "O";
-		while(choix.equalsIgnoreCase("O") && nombreCartesEcartees < 4) {
+		listeChoix.add("y");
+		listeChoix.add("n");
+		String choix = "y";
+		while(choix.equalsIgnoreCase("y") && !main.isEmpty() && nombreCartesEcartees < 4) {
 			choix = p.choose(instruction, listeChoix, false);
-			if(choix.equalsIgnoreCase("O")) {
+			if(choix.equalsIgnoreCase("y")) {
 				cartesMemeNomDefausse = 0;
 				for(int c = 0; c<main.size(); c++) {
 					if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {

@@ -109,19 +109,18 @@ public class Game {
 		this.supplyStacks.add(duchy);
 		this.supplyStacks.add(province);
 		this.supplyStacks.add(curse);
-	
 		// permet de connaitre l'emplacement de la pile province
 		for(int i=0; i<this.supplyStacks.size(); i++) {
 			if(this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
 				this.indiceProvincesupplyStacks = i;
 			}
 		}
-		
 		//Créée les joueurs
 		for(int i=0; i<nombreJoueur; i++) {
 			this.players[i] = new Player(playerNames[i], this);
 		}
 	}
+	
 	
 	//Récupère l'index du joueur actif dans le tableau players
 	public int getCurrentPlayerIndex() {

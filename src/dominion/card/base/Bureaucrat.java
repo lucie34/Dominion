@@ -13,7 +13,7 @@ import dominion.card.common.*;
 public class Bureaucrat extends AttackCard {
 
 	public Bureaucrat() {
-		super("Bureaucrate", 4);
+		super("Bureaucrat", 4);
 	}
 
 	public boolean devoiler(Player p, CardList pile) {
