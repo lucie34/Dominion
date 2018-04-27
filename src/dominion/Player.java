@@ -75,6 +75,7 @@ public class Player {
 		for(i=0; i<3; i++) {
 			Card carte = game.removeFromSupply("Estate");
 			this.discard.add(carte);
+			
 		}
 		for(i = 0; i<7; i++) {
 			Card carte = game.removeFromSupply("Copper");
