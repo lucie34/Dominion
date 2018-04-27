@@ -83,13 +83,7 @@ public class Player {
 			this.discard.add(carte);
 		}
 		this.endTurn();
-		i = 0;
-		// a vérifier mais je crois que tu as raison
-		/*Card cartePioche = this.drawCard(); //Nécessaire ? la méthode endTurn fait déjà piocher la main du joueur.... et j'ai du mal à comprendre à quoi sert cartePioche :s
-		while( cartePioche == null || i<4) {
-			cartePioche = this.drawCard();
-			i++;
-		}*/
+		
 	}
 
 	/**
