@@ -48,7 +48,8 @@ public class Game {
 	 * - 8 (si 2 joueurs) ou 12 (si 3 ou 4 joueurs) Estate, Duchy et Province 	 * - 10 * (n-1) Curse où n est le nombre de joueurs dans la partie
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
-		supplyStacks = new ArrayList<CardList>(); 
+		supplyStacks = new ArrayList<CardList>();
+		this.trashedCards = new CardList();
 		int nombreJoueur = playerNames.length;
 		//initialise le joueur courant
 		this.currentPlayerIndex = 0;
