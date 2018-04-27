@@ -66,6 +66,10 @@ public class Player {
 	 * préparer la main du joueur après avoir placé les cartes dans la défausse.
 	 */
 	public Player(String name, Game game) {
+		discard = new CardList();
+		hand = new CardList();
+		draw = new CardList();
+		inPlay = new CardList();
 		this.game = game; //Initialise this.game
 		int i;
 		for(i=0; i<3; i++) {
