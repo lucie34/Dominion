@@ -566,12 +566,12 @@ public class Player {
 			this.discard.add(this.hand.get(i));
 		}
 		this.hand.removeAll(hand);
-		
+		i = 0;
 		for(i=0; i < this.inPlay.size(); i++) {
 			this.discard.add(this.inPlay.get(i));
 		}
 		this.inPlay.removeAll(inPlay);
-		
+		i = 0;
 		for(i=0; i<5; i++) { 
 			this.hand.add(this.drawCard());
 		}	
@@ -606,8 +606,8 @@ public class Player {
 	 */
 	public void playTurn() {
 		this.startTurn();
-		String reponse = "y";
-		while(this.actions>=0 && !reponse.isEmpty() && reponse != null) {
+		String reponse = "l";
+		while(this.actions>0 && !reponse.equalsIgnoreCase("") && this.getActionCards() != null) {
 			String instruction = "Choisissez une carte ACTION de votre main ou entrez une réponse vide pour arrêter cette étape" ;
 			reponse = chooseCard(instruction, this.getActionCards(), true);
 			if(!reponse.isEmpty() && reponse != null) {
@@ -618,7 +618,8 @@ public class Player {
 		for(int i=0; i< this.getTreasureCards().size(); i++) {
 			this.playCard(this.getTreasureCards().get(i));
 		}
-		while(this.buys>=0 && !reponse.isEmpty() && reponse != null && this.money != 0) {
+		reponse = "l";
+		while(this.buys>0 && !reponse.equalsIgnoreCase("") && this.money != 0) {
 			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour" ;
 			reponse = chooseCard(instruction, game.availableSupplyCards(), true);
 			this.buyCard(reponse);
