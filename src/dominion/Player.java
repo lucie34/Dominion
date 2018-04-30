@@ -265,14 +265,12 @@ public class Player {
 		if(this.draw.isEmpty()) {
 			if(this.discard.isEmpty()) {return null;}
 			this.discard.shuffle();
-			for(int i=0; i <this.discard.size(); i++) {
+			for(int i=0; i<this.discard.size(); i++) {
 				this.draw.add(this.discard.get(i));
-				this.discard.remove(i);
 			}		
+			this.discard.removeAll(discard);
 		}
-		Card retiree = this.draw.get(0);
-		this.draw.remove(0);
-		return retiree;
+		return this.draw.remove(0);
 	}
 	
 	/**
@@ -558,22 +556,19 @@ public class Player {
 	 * - Le joueur pioche 5 cartes en main
 	 */
 	public void endTurn() {
-		int i=0;
 		this.actions = 0;
 		this.buys = 0;
 		this.money = 0;
-		for(i=0; i < this.hand.size(); i++) {
+		for(int i=0; i<this.hand.size(); i++) {
 			this.discard.add(this.hand.get(i));
 		}
 		this.hand.removeAll(hand);
-		i = 0;
-		for(i=0; i < this.inPlay.size(); i++) {
+		for(int i=0; i<this.inPlay.size(); i++) {
 			this.discard.add(this.inPlay.get(i));
 		}
 		this.inPlay.removeAll(inPlay);
-		i = 0;
-		for(i=0; i<5; i++) { 
-			this.hand.add(this.drawCard());
+		for(int i=0; i<5; i++) { 
+			this.incrementHand(this.drawCard());
 		}	
 	}
 	
@@ -624,9 +619,8 @@ public class Player {
 			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour \n"  ;
 			instruction += "La reserve : \n";
 			for(int i=0; i<game.availableSupplyCards().size(); i++) {
-				instruction += game.availableSupplyCards().get(i) + " coût : " + game.availableSupplyCards().get(i).getCost() + "\n";
+				instruction += game.availableSupplyCards().get(i) + ", Coût : " + game.availableSupplyCards().get(i).getCost() + "\n";
 			}
-			
 			reponse = chooseCard(instruction, game.availableSupplyCards(), true);
 			if(!reponse.equalsIgnoreCase("")) {
 				this.buyCard(reponse);
