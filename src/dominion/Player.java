@@ -300,7 +300,7 @@ public class Player {
 	public CardList getTreasureCards() {
 		CardList listTresor = new CardList();
 		for(int i=0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getTypes().get(0) == CardType.Treasure) {
+			if(this.hand.get(i).getTypes().get(0).equals(CardType.Treasure)) {
 				listTresor.add(this.hand.get(i));
 			}
 		}
@@ -326,7 +326,7 @@ public class Player {
 	public CardList getVictoryCards() {
 		CardList listVictoire = new CardList();
 		for(int i=0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getTypes().get(0) == CardType.Victory) {
+			if(this.hand.get(i).getTypes().get(0).equals(CardType.Victory)) {
 				listVictoire.add(this.hand.get(i));
 			}
 		}
@@ -417,7 +417,7 @@ public class Player {
 	public Card buyCard(String cardName) {
 		int coutCarte = game.getFromSupply(cardName).getCost();
 		if(this.money >= coutCarte) {
-			this.incrementMoney(0 - coutCarte);
+			this.incrementMoney(-coutCarte);
 			this.incrementBuys(-1);
 			return this.gain(cardName);	
 		}
@@ -607,20 +607,20 @@ public class Player {
 	public void playTurn() {
 		this.startTurn();
 		String reponse = "l";
-		while(this.actions>0 && !reponse.equalsIgnoreCase("") && this.getActionCards() != null) {
+		while(this.actions>0 && !reponse.equalsIgnoreCase("")) {
 			String instruction = "Choisissez une carte ACTION de votre main ou entrez une réponse vide pour arrêter cette étape" ;
 			reponse = chooseCard(instruction, this.getActionCards(), true);
-			if(!reponse.isEmpty() && reponse != null) {
-				this.actions -= 1;
+			if(!reponse.equalsIgnoreCase("")) {
+				this.incrementActions(-1);
 				this.playCard(reponse);
 			}
 		}
-		for(int i=0; i< this.getTreasureCards().size(); i++) {
-			this.playCard(this.getTreasureCards().get(i));
+		CardList tresorCards = this.getTreasureCards();
+		for(int i = 0; i<tresorCards.size(); i++) {
+			this.playCard(tresorCards.get(i));
 		}
 		reponse = "l";
-		while(this.buys>0 && !reponse.equalsIgnoreCase("") && this.money != 0) {
-			
+		while(this.buys>0 && !reponse.equalsIgnoreCase("")) {
 			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour \n"  ;
 			instruction += "La reserve : \n";
 			for(int i=0; i<game.availableSupplyCards().size(); i++) {
