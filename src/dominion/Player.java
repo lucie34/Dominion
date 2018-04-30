@@ -417,7 +417,7 @@ public class Player {
 	public Card buyCard(String cardName) {
 		int coutCarte = game.getFromSupply(cardName).getCost();
 		if(this.money >= coutCarte) {
-			this.incrementMoney(-coutCarte);
+			this.incrementMoney(0 - coutCarte);
 			this.incrementBuys(-1);
 			return this.gain(cardName);	
 		}
@@ -620,9 +620,17 @@ public class Player {
 		}
 		reponse = "l";
 		while(this.buys>0 && !reponse.equalsIgnoreCase("") && this.money != 0) {
-			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour" ;
+			
+			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour \n"  ;
+			instruction += "La reserve : \n";
+			for(int i=0; i<game.availableSupplyCards().size(); i++) {
+				instruction += game.availableSupplyCards().get(i) + " coût : " + game.availableSupplyCards().get(i).getCost() + "\n";
+			}
+			
 			reponse = chooseCard(instruction, game.availableSupplyCards(), true);
-			this.buyCard(reponse);
+			if(!reponse.equalsIgnoreCase("")) {
+				this.buyCard(reponse);
+			}
 		}
 		this.endTurn();
 	}
