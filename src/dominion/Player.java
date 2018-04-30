@@ -562,18 +562,16 @@ public class Player {
 		this.actions = 0;
 		this.buys = 0;
 		this.money = 0;
-		while(!this.hand.isEmpty()) {
+		for(i=0; i < this.hand.size(); i++) {
 			this.discard.add(this.hand.get(i));
-			this.hand.remove(i);
-			i++;
 		}
-		i = 0;
-		while(!this.inPlay.isEmpty()) {
+		this.hand.removeAll(hand);
+		
+		for(i=0; i < this.inPlay.size(); i++) {
 			this.discard.add(this.inPlay.get(i));
-			this.inPlay.remove(i);
-			i++;
 		}
-		i = 0;
+		this.inPlay.removeAll(inPlay);
+		
 		for(i=0; i<5; i++) { 
 			this.hand.add(this.drawCard());
 		}	
