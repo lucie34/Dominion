@@ -28,7 +28,7 @@ public class Cellar extends ActionCard {
 		String reponse = "y";
 		String instruction = "Choisissez une carte de votre main à défausser ou passez en laissant vide";
 		String choix = "init";
-		while(reponse.equalsIgnoreCase("y") && !choix.equals("") && !main.isEmpty()) {
+		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("") && !main.isEmpty()) {
 			reponse = p.choose(question, listeChoix, false);
 			if(reponse.compareToIgnoreCase("y") == 0) {
 				cartesMemeNomDefausse = 0;

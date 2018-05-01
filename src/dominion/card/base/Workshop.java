@@ -19,7 +19,7 @@ public class Workshop extends ActionCard {
 		CardList liste = p.getGame().availableSupplyCards();
 		String choix = "init";
 		int prix = 10;
-		while(prix > 4 && !choix.equals("")) {
+		while(prix > 4 && !choix.equalsIgnoreCase("")) {
 			choix = p.chooseCard(instruction, liste, false);
 			for(int c = 0; c<liste.size(); c++) {
 				if(liste.get(c).getName().equalsIgnoreCase(choix)) {
