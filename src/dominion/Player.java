@@ -71,7 +71,7 @@ public class Player {
 		draw = new CardList();
 		inPlay = new CardList();
 		this.game = game; //Initialise this.game
-		this.name = name;
+		this.name = name;//Initialise this.name
 		for(int i = 0; i<3; i++) {
 			Card carte = game.removeFromSupply("Estate");
 			this.discard.add(carte);
@@ -136,7 +136,7 @@ public class Player {
 		this.buys += n;
 	}
 
-	
+	//Ajoute les cartes piochées à la main du joueur
 	public void incrementHand(Card c) {
 		if(c != null) {
 			this.hand.add(c);
@@ -155,40 +155,33 @@ public class Player {
 		return nouvelleListe;
 	}
 	
-	
+	//Retire de la pile en jeu
 	public void removeFromInPlay(Card c) {
 		if(c != null && this.inPlay.contains(c)) {
 			this.inPlay.remove(c);
 		}
 	}
 	
-	
 	//Ajoute la carte dans la pioche à l'indice indiqué (pour pouvoir remettre carte au dessus de la pile)
-	public void addDeck(int i, Card c) {
+	public void addDraw(int i, Card c) {
 		if(c != null) {
 			this.draw.add(i, c);
 		}
 	}
 	
-	
-	//Ajoute la carte dans la pioche
-	public void addDeck(Card c) {
-		if(c != null) {
-			this.draw.add(c);
-		}
-	}
-	
-	
 	//Retourne la pioche du joueur;
-	public CardList getDeck() {
+	public CardList getDraw() {
 		return this.draw;
 	}
 	
-	//Enlève une carte de la pioche du joueur
-	public void removeFromDeck(Card c) {
-		if(c != null && this.draw.contains(c)) {
-			this.draw.remove(this.draw.indexOf(c));
-		}
+	//Supprime et retourne le deck complet du joueur
+	public CardList removeDeck() {
+		CardList deck = this.totalCards();
+		this.hand.removeAll(this.hand);
+		this.discard.removeAll(this.discard);
+		this.draw.removeAll(this.draw);
+		this.inPlay.removeAll(this.inPlay);
+		return deck;
 	}
 	
 	//Méthode pour enlever une carte de la main du joueur

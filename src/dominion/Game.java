@@ -270,20 +270,12 @@ public class Game {
 		return null;
 	}
 	
-	
 	//Méthode nécessaire pour écarter une carte
 	public void addInTrash(Card c) {
 		if(c != null) {
 			this.trashedCards.add(c);
 		}
 	}
-	
-	
-	//Permet de récupérer la liste des cartes dans le trash
-	public CardList getTrashedCards() {
-		return this.trashedCards;
-	}
-	
 	
 	/**
 	 * Teste si la partie est terminÃ©e

@@ -33,10 +33,17 @@ public class Remodel extends ActionCard {
 				}
 			}
 			coutCarte += 2;
-			CardList liste = p.getGame().availableSupplyCards();
+			choix = "init";
 			instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter au plus "+coutCarte+" pièces";
+			boolean existe = false;
+			CardList liste = p.getGame().availableSupplyCards();
+			for(int i=0; i<liste.size(); i++) {
+				if(liste.get(i).getCost()<=coutCarte) {
+					existe = true;
+				}
+			}
 			int prix = coutCarte + 10;//initialise variable prix pour entrer dans la boucle
-			while(prix > coutCarte && !choix.equals("")) {
+			while(prix > coutCarte && existe && !choix.equalsIgnoreCase("")) {
 				choix = p.chooseCard(instruction, liste, false);
 				for(int c = 0; c<liste.size(); c++) {
 					if(liste.get(c).getName().equalsIgnoreCase(choix)) {
@@ -44,7 +51,13 @@ public class Remodel extends ActionCard {
 					}
 				}
 			}
-			p.gain(choix);
+			//Ajoute la carte choisie au deck si la réserve contenait une carte de prix valide
+			if(!choix.equalsIgnoreCase("init") && !choix.equalsIgnoreCase("")) {
+				p.gain(choix);
+			}
+			else {
+				System.out.println("Aucune carte de la réserve à moins de "+(coutCarte+1)+" pièces disponible");
+			}
 		}
 	}
 }
