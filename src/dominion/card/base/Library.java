@@ -28,6 +28,9 @@ public class Library extends ActionCard {
 				if(reponse.equalsIgnoreCase("Y")) {
 					p.gain(carte); //met la carte dans la défausse
 				}
+				else {
+					p.incrementHand(carte);
+				}
 			}
 			p.incrementHand(carte); // met la carte dans la main
 		}

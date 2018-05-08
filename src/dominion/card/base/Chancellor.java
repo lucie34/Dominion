@@ -17,17 +17,16 @@ public class Chancellor extends ActionCard {
 
 	public void play(Player p) {
 		p.incrementMoney(2);
-		CardList pioche = p.getDeck();
-		if(!pioche.isEmpty()) {//A voir si deck ne comprend pas aussi la pile inPlay
+		if(!p.totalCards().isEmpty()) {
 			String instruction = "\nVoulez-vous défausser votre deck ? (y/n)\n";
 			List<String> listeChoix = new ArrayList<String>(2);
 			listeChoix.add("y");
 			listeChoix.add("n");
 			String choix = p.choose(instruction, listeChoix, false);
 			if(choix.equalsIgnoreCase("y")) {
-				for(int c = 0; c<pioche.size(); c++) {
-					p.gain(pioche.get(c));
-					p.removeFromDeck(pioche.get(c));
+				CardList deck = p.removeDeck();
+				for(int c=0; c<deck.size(); c++) {
+					p.gain(deck.get(c));
 				}
 				System.out.println("\n"+p.getName()+" a defaussé sa deck");
 			}

@@ -8,7 +8,7 @@ import dominion.card.*;
  * 
  * +1 Carte.
  * +1 Action.
- * Tous les joueurs (vous aussi) dévoilent la première carte de leur deck. Vous décidez ensuite si chaque carte dévoilée est défaussée ou replacée sur son deck.
+ * Tous les joueurs (vous aussi) dévoilent la première carte de leur pioche. Vous décidez ensuite si chaque carte dévoilée est défaussée ou replacée sur la pioche.
  */
 public class Spy extends AttackCard {
 	
@@ -37,7 +37,7 @@ public class Spy extends AttackCard {
 		}
 		//la fait remettre sur son deck
 		else if(rep.equalsIgnoreCase("Deck")) {
-			p.addDeck(0, carteDevoilee);
+			p.addDraw(0, carteDevoilee);
 		}
 		return true;
 	}
@@ -45,15 +45,13 @@ public class Spy extends AttackCard {
 	public void play(Player p) {
 		p.incrementHand(p.drawCard());
 		p.incrementActions(1);
-		CardList deck = p.getDeck();
 		List<Player> adversaires = p.otherPlayers();
-		this.devoiler(p, deck);
+		this.devoiler(p, p.getDraw());
 		for(int i = 0; i<adversaires.size(); i++) {
-			deck = adversaires.get(i).getDeck();
 			//V�rifie que l'adversaire n'a pas de carte Douves dans sa main l'immunisant
 			Moat douves = new Moat();
 			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-				this.devoiler(adversaires.get(i), deck);
+				this.devoiler(adversaires.get(i), adversaires.get(i).getDraw());
 			}
 		}
 	}

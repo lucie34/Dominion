@@ -17,22 +17,21 @@ public class Bureaucrat extends AttackCard {
 	}
 
 	public boolean devoiler(Player p, CardList pile) {
-		CardList listeVictoryCards = p.getVictoryCards();
 		int nbCarteVictoryDevoile = 0;
-		if(!listeVictoryCards.isEmpty()) {
-			String rep = p.chooseCard("Choisissez une carte victoire dans votre main", listeVictoryCards, false);
-			for(int c = 0; c<listeVictoryCards.size(); c++) {
-				if(listeVictoryCards.get(c).getName().equalsIgnoreCase(rep) && nbCarteVictoryDevoile < 1) {
-					Card carteVictory = listeVictoryCards.get(c);
+		if(!pile.isEmpty()) {
+			String rep = p.chooseCard("Choisissez une carte victoire dans votre main", pile, false);
+			for(int c = 0; c<pile.size(); c++) {
+				if(pile.get(c).getName().equalsIgnoreCase(rep) && nbCarteVictoryDevoile < 1) {
+					Card carteVictory = pile.get(c);
 					System.out.println("\n"+p.getName()+" dévoile une carte victoire "+carteVictory.getName()+"\n");
-					p.addDeck(0, carteVictory);
+					p.gain(carteVictory);
 					p.removeFromHand(carteVictory);
 					nbCarteVictoryDevoile ++;
 				}
 			}
 		}
 		else {
-			String mainDevoile = String.format("Hand: %s\n", pile.toString());
+			String mainDevoile = String.format("%s\n", p.cardsInHand().toString());
 			System.out.println(p.getName()+" dévoile sa main sans carte victoire : \n"+mainDevoile);
 		}
 		return true;
@@ -40,18 +39,16 @@ public class Bureaucrat extends AttackCard {
 
 	public void play(Player p) {
 		Silver silver =  new Silver();
-		Card carteGain = p.getGame().removeFromSupply(silver.getName());
-		p.addDeck(0, carteGain);
+		Card carteGain = p.gain(silver.getName());
 		if(carteGain == null) {
 			System.out.println("\nLa pile Silver de la réserve est vide\n");
 		}
 
 		List<Player> adversaires = p.otherPlayers();
 		for(int i = 0; i<adversaires.size(); i++) {
-			CardList main = adversaires.get(i).cardsInHand();
 			Moat douves = new Moat();
-			if(!douves.devoiler(adversaires.get(i), main)) {
-				this.devoiler(adversaires.get(i), main);
+			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
+				this.devoiler(adversaires.get(i), adversaires.get(i).getVictoryCards());
 			}
 		}
 	}

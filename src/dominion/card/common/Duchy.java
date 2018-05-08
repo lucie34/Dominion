@@ -16,7 +16,6 @@ public class Duchy extends VictoryCard {
 
 	@Override
 	public void play(Player p) {
-	
-		
+		// TODO Auto-generated method stub
 	}
 }

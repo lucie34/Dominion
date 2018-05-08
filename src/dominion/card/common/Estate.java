@@ -9,11 +9,6 @@ import dominion.card.*;
  */
 public class Estate extends VictoryCard {
 	
-	private String name;
-	
-	private int cost;
-	
-	
 	public Estate() { 
 		super("Estate", 2);	
 	}
@@ -23,7 +18,8 @@ public class Estate extends VictoryCard {
 	}
 
 	@Override
-	public void play(Player p) {		
+	public void play(Player p) {
+		// TODO Auto-generated method stub
 	}
 	
 }

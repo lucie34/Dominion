@@ -23,7 +23,7 @@ public class Chapel extends ActionCard {
 		listeChoix.add("y");
 		listeChoix.add("n");
 		String choix = "y";
-		while(choix.equalsIgnoreCase("y") && !main.isEmpty() && nombreCartesEcartees < 4) {
+		while(choix.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("") && !main.isEmpty() && nombreCartesEcartees < 4) {
 			choix = p.choose(instruction, listeChoix, false);
 			if(choix.equalsIgnoreCase("y")) {
 				cartesMemeNomDefausse = 0;
