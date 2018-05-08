@@ -268,7 +268,7 @@ public class Game {
 		CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
 			for(int i =0; i< reserve.size(); i++) {
-				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
+				if(!this.supplyStacks.get(i).isEmpty() && reserve.get(i).getName().equalsIgnoreCase(cardName)) {
 					return this.supplyStacks.get(i).remove(0);
 				}
 			}
