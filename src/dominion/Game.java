@@ -118,7 +118,7 @@ public class Game {
 		this.supplyStacks.add(curse);
 		// permet de connaitre l'emplacement de la pile province
 		for(int i=0; i<this.supplyStacks.size(); i++) {
-			if(this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
+			if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
 				this.indiceProvincesupplyStacks = i;
 			}
 		}
