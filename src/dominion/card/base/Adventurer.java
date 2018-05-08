@@ -17,18 +17,33 @@ public class Adventurer extends ActionCard {
 	@Override
 	public void play(Player p) {
 		int carteTresor = 0;
-			for(int i=0; i < p.getDeck().size(); i++) {
-				if(carteTresor < 2) {
-					Card carteDevoilee = p.drawCard();
-					System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
-					if(carteDevoilee.getTypes().equals(CardType.Treasure)) {
-						carteTresor ++;
-						p.incrementHand(carteDevoilee);
-					}
-					else {
-						p.gain(carteDevoilee);
-					}
+		for(int i=0; i < p.getDeck().size(); i++) {
+			if(carteTresor < 2) {
+				Card carteDevoilee = p.drawCard();
+				System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
+				if(carteDevoilee.getTypes().get(0).equals(CardType.Treasure)) {
+					carteTresor ++;
+					p.incrementHand(carteDevoilee);
 				}
+				else {
+					p.gain(carteDevoilee);
+				}	
 			}
+		}
+		for(int i=0; i < p.getDiscard().size(); i++) {
+			if(carteTresor < 2) {
+				Card carteDevoilee = p.getDiscard().get(i);
+				System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
+				if(carteDevoilee.getTypes().get(0).equals(CardType.Treasure)) {
+					carteTresor ++;
+					p.incrementHand(carteDevoilee);
+				}
+				else {
+					p.gain(carteDevoilee);
+				}	
+				p.removeDiscard(carteDevoilee);
+			}
+		}	
 	}
+	// faire pour inPlay
 }

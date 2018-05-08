@@ -198,6 +198,20 @@ public class Player {
 		}
 	}
 	
+	public CardList getDiscard() {
+		CardList toutesCartesDiscard = new CardList();
+		for(int i=0 ; i<this.discard.size(); i++) {
+			toutesCartesDiscard .add(this.discard.get(i)); 
+		}
+		return toutesCartesDiscard ;
+	}
+	
+	public void removeDiscard(Card c) {
+		if(c != null && this.discard.contains(c)) {
+			this.discard.remove(c);
+		}
+	}
+	
 	/**
 	 * Renvoie une liste de toutes les cartes possédées par le joueur
 	 * (le deck complet c'est-à-dire toutes les cartes dans la main, la
