@@ -202,7 +202,7 @@ public class Game {
 		CardList carteReserve = new CardList();
 
 		for(int i =0; i < this.supplyStacks.size(); i++) {
-			if(this.supplyStacks.get(i).get(0) != null) 
+			if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null) 
 			{
 				carteReserve.add(this.supplyStacks.get(i).get(0));
 			}
