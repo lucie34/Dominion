@@ -478,7 +478,6 @@ public class Player {
 			// Un seul choix possible (renvoyer cet unique élément)
 			return choiceSet.iterator().next();
 		} else {
-			Scanner sc = new Scanner(System.in);
 			String input;
 			// Lit l'entrée de l'utilisateur jusqu'à obtenir un choix valide
 			while (true) {
@@ -493,7 +492,7 @@ public class Player {
 				System.out.println(">>> " + instruction);
 				System.out.print("> ");
 				// lit l'entrée de l'utilisateur au clavier
-				input = sc.nextLine();
+				input = this.game.readLine();
 				if (choiceSet.contains(input) || (canPass && input.equals(""))){
 					// si une réponse valide est obtenue, elle est renvoyée
 					return input;
