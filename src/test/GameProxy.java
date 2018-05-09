@@ -8,7 +8,14 @@ import dominion.*;
 import dominion.card.*;
 
 public class GameProxy {
+	/**
+	 * Référence vers le dernier GameProxy créé
+	 */
 	public static GameProxy shared;
+
+	/**
+	 * 
+	 */
 	public Game game;
 	public List<CardList> supplyStacks;
 	public Player[] players;
@@ -45,6 +52,20 @@ public class GameProxy {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	/**
+	 * Renvoie la pile correspondant au nom de carte passé en argument.
+	 * @param cardName: nom de la carte recherchée
+	 * @return: la pile de réserve correspondant au nom, ou null si aucune.
+	 */
+	public CardList getSupplyStack(String cardName) {
+		for (CardList stack: this.supplyStacks) {
+			if (!stack.isEmpty() && stack.get(0).getName().equals(cardName)) {
+				return stack;
+			}
+		}
+		return null;
 	}
 
 	public void run() {

@@ -182,7 +182,7 @@ public class Game {
 	public List<Player> otherPlayers(Player p) {
 		ArrayList <Player> autresJoueurs = new ArrayList<Player>();
 		int indice = indexOfPlayer(p);
-		for(int i=indice +1; i < this.numberOfPlayers(); i++) {
+		for(int i=indice +1 ; i < this.numberOfPlayers(); i++) {
 			autresJoueurs.add(this.players[i]);
 		}
 		for(int i=0; i < indice; i++) {
