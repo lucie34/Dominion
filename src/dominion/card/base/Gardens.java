@@ -10,7 +10,7 @@ import dominion.card.*;
  */
 public class Gardens extends VictoryCard {
 
-	public Gardens(String name, int cost) {
+	public Gardens() {
 		super("Gardens", 4);
 		// TODO Auto-generated constructor stub
 	}
