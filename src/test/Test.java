@@ -2,62 +2,91 @@ package test;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
+
 import dominion.*;
 import dominion.card.*;
 import dominion.card.base.*;
 
 public abstract class Test {
-	// Titre du test
-	private String title;
-	// Nombre total de tests réussis
+	/**
+	 * Nombre total de tests réussis
+ 	 */
 	private int nb_pass = 0;
-	// Nombre total de tests ratés
-	public int nb_fail = 0;
-	// Nombre total d'exceptions levées
+
+	/**
+	 * Nombre total de tests ratés
+	 */
+	private int nb_fail = 0;
+
+	/**
+	 * Nombre total d'exceptions levées
+	 */
 	private int nb_error = 0;
-	// Indique si le test courant est correct
+
+	/**
+	 * Indique si le test courant est correct
+	 */
 	private boolean testOk;
-	
-	public void reset() {
-		this.testOk = true;
-	}
-	
+
+	/**
+	 * Vérifie une condition, et modifie éventuellement l'état de succès du test
+	 * @param test: condition à tester
+	 */
 	public void check(boolean test) {
 		this.testOk &= test;
 	}
-	
-	public boolean isPassed() {
-		return this.testOk;
-	}
-	
-	public void pass() {
-		this.nb_pass += 1;
-	}
-	
-	public void fail() {
-		this.nb_fail += 1;
-	}
-	
-	public void error() {
-		this.nb_error += 1;
-	}
-	
+
+	/**
+	 * Nombre total de tests effectués (somme des réussite, succès et erreurs)
+	 */
 	public int nb_test() {
 		return this.nb_pass + this.nb_fail + this.nb_error;
 	}
-	
-	public abstract void executeTests();
-	
-	public void run() {
-		this.executeTests();
-		System.out.println("--");
-		System.out.println("Tests effectués : " + this.nb_test());
-		System.out.println("Succès : " + this.nb_pass);
-		System.out.println("Échecs : " + nb_fail);
-		System.out.println("Erreurs : " + nb_error);
-		System.out.println();
+
+	/**
+	 * Exécute un test
+	 * @param description: description du test à effectuer, qui sera affichée à l'écran
+	 * @param test_function: instructions du test (fonction statique qui prend en argument un objet de type Test dont
+	 *                     les attributs sont modifiés en fonction du succès des vérifications)
+	 */
+	public void runTest(String description, Consumer<Test> test_function) {
+		System.out.print(description + " : ");
+		this.testOk = true;
+		try {
+			test_function.accept(this);
+			if (this.testOk) {
+				// succès
+				System.out.println("[OK]");
+				this.nb_pass += 1;
+			}
+			else {
+				// échec
+				System.out.println("[ÉCHEC]");
+				this.nb_fail += 1;
+			}
+		} catch (Exception e) {
+			// exception levée
+			System.out.println("[ERREUR]");
+			this.nb_error += 1;
+		}
 	}
-	
+
+	/**
+	 * Méthode exécutant tous les tests du jeu de tests
+	 */
+	public abstract void run();
+
+	/**
+	 * Représentation globale des résultats du jeu de tests
+	 */
+	public String toString() {
+		return	"Tests effectués : " + this.nb_test() + "\n" +
+				"Succès : " + this.nb_pass + "\n" +
+				"Échecs : " + nb_fail + "\n" +
+				"Erreurs : " + nb_error + "\n";
+	}
+
 	/*** Méthodes statiques ***/
 	
 	/**
@@ -106,7 +135,6 @@ public abstract class Test {
 		}
 		return true;
 	}
-
 
 	/**
 	 * Teste si une CardList contient au moins le nom indiqué dans chaîne `namesString` (un nom de carte). 
@@ -184,14 +212,4 @@ public abstract class Test {
 		public void write(int b) {}
 	});
 
-	public static void main(String[] args) {
-		System.out.println("  -- Tests simples de Game --");
-		(new TestGame()).run();
-		System.out.println("  -- Tests sur Game minimale (seulement cartes argent et victoire) --");
-		(new TestMinimalGame()).run();
-		System.out.println("  -- Tests simples des cartes --");
-		(new TestCards()).run();
-		System.out.println("  -- Test d'une partie complète --");
-		(new TestFullGame()).run();
-	}
 }
