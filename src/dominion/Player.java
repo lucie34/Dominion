@@ -174,34 +174,15 @@ public class Player {
 		return this.draw;
 	}
 	
-	//Supprime et retourne le deck complet du joueur
-	public CardList removeDeck() {
-		CardList deck = this.totalCards();
-		this.hand.removeAll(this.hand);
-		this.discard.removeAll(this.discard);
-		this.draw.removeAll(this.draw);
-		this.inPlay.removeAll(this.inPlay);
-		return deck;
-	}
+	//Retourne la défausse du joueur;
+		public CardList getDiscard() {
+			return this.discard;
+		}
 	
 	//Méthode pour enlever une carte de la main du joueur
 	public void removeFromHand(Card c) {
 		if(c != null && this.hand.contains(c)) {
 			this.hand.remove(this.hand.indexOf(c));
-		}
-	}
-	
-	public CardList getDiscard() {
-		CardList toutesCartesDiscard = new CardList();
-		for(int i=0 ; i<this.discard.size(); i++) {
-			toutesCartesDiscard .add(this.discard.get(i)); 
-		}
-		return toutesCartesDiscard ;
-	}
-	
-	public void removeDiscard(Card c) {
-		if(c != null && this.discard.contains(c)) {
-			this.discard.remove(c);
 		}
 	}
 	

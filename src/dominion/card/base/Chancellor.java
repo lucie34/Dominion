@@ -7,7 +7,7 @@ import dominion.card.*;
  * Carte Chancellier (Chancellor)
  * 
  * +2 Pi√®ces.
- * Vous pouvez imm√©diatement d√©fausser votre deck.
+ * Vous pouvez imm√©diatement d√©fausser votre pioche.
  */
 public class Chancellor extends ActionCard {
 	
@@ -17,19 +17,25 @@ public class Chancellor extends ActionCard {
 
 	public void play(Player p) {
 		p.incrementMoney(2);
-		if(!p.totalCards().isEmpty()) {
+		CardList pioche = p.getDraw();
+		if(!pioche.isEmpty()) {
 			String instruction = "\nVoulez-vous dÈfausser votre deck ? (y/n)\n";
 			List<String> listeChoix = new ArrayList<String>(2);
 			listeChoix.add("y");
 			listeChoix.add("n");
 			String choix = p.choose(instruction, listeChoix, false);
 			if(choix.equalsIgnoreCase("y")) {
-				CardList deck = p.removeDeck();
-				for(int c=0; c<deck.size(); c++) {
-					p.gain(deck.get(c));
+				for(int i=0; i<pioche.size(); i++) {
+					p.gain(p.drawCard());
 				}
-				System.out.println("\n"+p.getName()+" a defaussÈ sa deck");
+				System.out.println("\n"+p.getName()+" a defaussÈ son deck");
 			}
+			else {
+				System.out.println("\n"+p.getName()+" choisit de ne pas dÈfausser son deck");
+			}
+		}
+		else {
+			System.out.println("\n"+p.getName()+" n'a pas de deck ‡ dÈfausser");
 		}
 	}
 }

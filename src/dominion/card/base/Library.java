@@ -17,23 +17,29 @@ public class Library extends ActionCard {
 
 	@Override
 	public void play(Player p) {
+		CardList deCote = new CardList();
 		List<String> choices = new ArrayList<String>();
 		choices.add("Y pour oui");
 		choices.add("N pour non");
-		while(p.cardsInHand().size() < 7) {
+		while(p.cardsInHand().size() < 7 && !(p.getDiscard().isEmpty() && p.getDraw().isEmpty())) {
 			Card carte = p.drawCard();
 			if(carte.getTypes().get(0).equals(CardType.Action)) {
-				String instruction = "Souhaitez_vous mettre de coté la carte action : " + carte.getName();
+				String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName();
 				String reponse = p.choose(instruction, choices, false);
 				if(reponse.equalsIgnoreCase("Y")) {
-					p.gain(carte); //met la carte dans la défausse
+					deCote.add(carte);//met la carte action de côté
 				}
 				else {
-					p.incrementHand(carte);
+					p.incrementHand(carte);//met la carte action dans la main
 				}
 			}
-			p.incrementHand(carte); // met la carte dans la main
+			else {
+				p.incrementHand(carte); // met la carte dans la main
+			}
 		}
-	
+		for(int i=0; i<deCote.size(); i++) {
+			p.gain(deCote.get(i)); //met les cartes mises de coté dans la défausse
+		}
+		deCote.removeAll(deCote);
 	}
 }

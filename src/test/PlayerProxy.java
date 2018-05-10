@@ -1,6 +1,5 @@
 package test;
 
-import java.io.*;
 import java.lang.reflect.Field;
 import dominion.*;
 import dominion.card.*;
@@ -105,13 +104,7 @@ public class PlayerProxy {
 	 * Player.playCard. La sortie standard initiale est rétablie à la sortie.
 	 */
 	public void playCard(String cardName) {
-		PrintStream outs = System.out;
-		try {
-			System.setOut(Test.nullOut);
-			this.player.playCard(cardName);
-		} finally {
-			System.setOut(outs);
-		}
+		this.player.playCard(cardName);
 	}
 	
 	public void clear() {

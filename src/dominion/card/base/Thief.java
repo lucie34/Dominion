@@ -14,7 +14,7 @@ public class Thief extends AttackCard {
 		super("Thief", 4);
 	}
 	
-	public boolean devoiler(Player p, CardList pile) {
+	public void attaquer(Player p) {
 		List<Card> listeCartesDevoile = new ArrayList<Card>(2);
 		listeCartesDevoile.add(p.drawCard());
 		listeCartesDevoile.add(p.drawCard());
@@ -29,59 +29,59 @@ public class Thief extends AttackCard {
 		//Si l'adversaire n'a plus aucune deck et aucune défausse à mélanger
 		if(listeCartesDevoile.get(0) == null && listeCartesDevoile.get(1) == null) {
 			System.out.println("\n"+p.getName()+" n'a pas de carte à dévoiler\n");
-			return false;
 		}
 		//Sinon
-		for(int i = 0; i<listeCartesDevoile.size(); i++) {
-			//La carte dévoilée n'est pas une carte trésor
-			if(listeCartesDevoile.get(i) != null && !listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
-				System.out.println("\n"+p.getName()+" dévoile la carte "+listeCartesDevoile.get(i).getName()+" de son deck\n");
-				p.gain(listeCartesDevoile.get(i));
-			}
-			//La carte dévoilée est une carte trésor
-			else if(listeCartesDevoile.get(i) != null && listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
-				System.out.println("\n"+p.getName()+" dévoile la carte trésor "+listeCartesDevoile.get(i).getName()+" de son deck\n");
-				//Une seule carte trésor peut être écartée
-				if(nbCartesTresorEcarte < 1) {
-					//Le joueur actif décide de faire écarter cette carte trésor ou non par l'adversaire
-					instruction  = "Le joueur actif "+joueurActif.getName()+" peut décider que "+p.getName()+" écarte cette carte trésor. "+joueurActif.getName()+" : voulez-vous faire écarter cette carte ? (y/n)";
-					rep = joueurActif.choose(instruction, listeChoix, false);
-					//Si le joueur actif décide de la faire écarter
-					if(rep.equalsIgnoreCase("y")) {
-						nbCartesTresorEcarte ++;
-						//le joueur actif décide de récupérer ou non la carte trésor écartée par l'adversaire
-						instruction = "Joueur actif "+joueurActif.getName()+" :  voulez-vous récupérer cette carte tresor "+listeCartesDevoile.get(i).getName()+" ? (y/n)";
+		else {
+			for(int i = 0; i<listeCartesDevoile.size(); i++) {
+				//La carte dévoilée n'est pas une carte trésor
+				if(listeCartesDevoile.get(i) != null && !listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
+					System.out.println("\n"+p.getName()+" dévoile la carte "+listeCartesDevoile.get(i).getName()+" de son deck\n");
+					p.gain(listeCartesDevoile.get(i));
+				}
+				//La carte dévoilée est une carte trésor
+				else if(listeCartesDevoile.get(i) != null && listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
+					System.out.println("\n"+p.getName()+" dévoile la carte trésor "+listeCartesDevoile.get(i).getName()+" de son deck\n");
+					//Une seule carte trésor peut être écartée
+					if(nbCartesTresorEcarte < 1) {
+						//Le joueur actif décide de faire écarter cette carte trésor ou non par l'adversaire
+						instruction  = "Le joueur actif "+joueurActif.getName()+" peut décider que "+p.getName()+" écarte cette carte trésor. "+joueurActif.getName()+" : voulez-vous faire écarter cette carte ? (y/n)";
 						rep = joueurActif.choose(instruction, listeChoix, false);
-						//Si le joueur actif la récupère
+						//Si le joueur actif décide de la faire écarter
 						if(rep.equalsIgnoreCase("y")) {
-							joueurActif.gain(listeCartesDevoile.get(i));
+							nbCartesTresorEcarte++;
+							//le joueur actif décide de récupérer ou non la carte trésor écartée par l'adversaire
+							instruction = "Joueur actif "+joueurActif.getName()+" :  voulez-vous récupérer cette carte tresor "+listeCartesDevoile.get(i).getName()+" ? (y/n)";
+							rep = joueurActif.choose(instruction, listeChoix, false);
+							//Si le joueur actif la récupère
+							if(rep.equalsIgnoreCase("y")) {
+								joueurActif.gain(listeCartesDevoile.get(i));
+							}
+							//Sinon
+							else {
+								p.getGame().addInTrash(listeCartesDevoile.get(i));
+							}
 						}
-						//Sinon
+						//Si le joueur actif ne souhaite pas faire écarter cette carte trésor
 						else {
-							p.getGame().addInTrash(listeCartesDevoile.get(i));
+							p.gain(listeCartesDevoile.get(i));
 						}
 					}
-					//Si le joueur actif ne souhaite pas faire écarter cette carte trésor
+					//Si une carte trésor a déjà été écartée
 					else {
 						p.gain(listeCartesDevoile.get(i));
 					}
 				}
-				//Si une carte trésor a déjà été écartée
-				else {
-					p.gain(listeCartesDevoile.get(i));
-				}
 			}
 		}
-		return true;
 	}
-	
+
 	public void play(Player p) {
 		List<Player> adversaires = p.otherPlayers();
 		for(int i =0; i<adversaires.size(); i++) {
 			//Vérifie que l'adversaire n'a pas dans sa main une carte Douves l'immunisant
 			Moat douves = new Moat();
 			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-				this.devoiler(adversaires.get(i), adversaires.get(i).getDraw());
+				this.attaquer(adversaires.get(i));
 			}
 		}
 	}

@@ -16,16 +16,18 @@ public class Bureaucrat extends AttackCard {
 		super("Bureaucrat", 4);
 	}
 
-	public boolean devoiler(Player p, CardList pile) {
+	public void attaquer(Player p) {
+		CardList pileCartesVictory = p.getVictoryCards();
 		int nbCarteVictoryDevoile = 0;
-		if(!pile.isEmpty()) {
-			String rep = p.chooseCard("Choisissez une carte victoire dans votre main", pile, false);
-			for(int c = 0; c<pile.size(); c++) {
-				if(pile.get(c).getName().equalsIgnoreCase(rep) && nbCarteVictoryDevoile < 1) {
-					Card carteVictory = pile.get(c);
-					System.out.println("\n"+p.getName()+" dévoile une carte victoire "+carteVictory.getName()+"\n");
-					p.gain(carteVictory);
+		if(!pileCartesVictory.isEmpty()) {
+			String rep = p.chooseCard("Choisissez une carte victoire dans votre main", pileCartesVictory, false);
+			for(int c = 0; c<pileCartesVictory.size(); c++) {
+				if(pileCartesVictory.get(c).getName().equalsIgnoreCase(rep) && nbCarteVictoryDevoile < 1) {
+					Card carteVictory = pileCartesVictory.get(c);
+					System.out.println("\n"+p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
+					p.addDraw(0, carteVictory);
 					p.removeFromHand(carteVictory);
+					pileCartesVictory.remove(c);
 					nbCarteVictoryDevoile ++;
 				}
 			}
@@ -34,21 +36,22 @@ public class Bureaucrat extends AttackCard {
 			String mainDevoile = String.format("%s\n", p.cardsInHand().toString());
 			System.out.println(p.getName()+" dévoile sa main sans carte victoire : \n"+mainDevoile);
 		}
-		return true;
 	}
 
 	public void play(Player p) {
 		Silver silver =  new Silver();
-		Card carteGain = p.gain(silver.getName());
-		if(carteGain == null) {
+		Card carteGain = p.getGame().removeFromSupply(silver.getName());
+		if(carteGain != null) {
+			p.addDraw(0, carteGain);
+		}
+		else {
 			System.out.println("\nLa pile Silver de la réserve est vide\n");
 		}
-
+		Moat douves = new Moat();
 		List<Player> adversaires = p.otherPlayers();
 		for(int i = 0; i<adversaires.size(); i++) {
-			Moat douves = new Moat();
 			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-				this.devoiler(adversaires.get(i), adversaires.get(i).getVictoryCards());
+				this.attaquer(adversaires.get(i));
 			}
 		}
 	}

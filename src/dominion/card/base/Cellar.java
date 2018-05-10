@@ -18,33 +18,32 @@ public class Cellar extends ActionCard {
 	
 	public void play(Player p) {
 		p.incrementActions(1);
-		CardList main = p.cardsInHand();
 		int cartesMemeNomDefausse;
 		int nombreCartesDefausse = 0;
-		String question = p.getName()+" : Voulez-vous défausser une carte ? (y/n)";
 		List<String> listeChoix = new ArrayList<String>(2);
 		listeChoix.add("y");
 		listeChoix.add("n");
+		String instruction;
 		String reponse = "y";
-		String instruction = "Choisissez une carte de votre main à défausser ou passez en laissant vide";
 		String choix = "init";
-		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("") && !main.isEmpty()) {
-			reponse = p.choose(question, listeChoix, false);
-			if(reponse.compareToIgnoreCase("y") == 0) {
+		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("")) {
+			instruction = p.getName()+" : Voulez-vous défausser une carte ? (y/n)";
+			reponse = p.choose(instruction, listeChoix, false);
+			if(reponse.equalsIgnoreCase("y")) {
 				cartesMemeNomDefausse = 0;
-				choix = p.chooseCard(instruction, main, true);
-				for(int c = 0; c<main.size(); c++) {
-					if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
-						p.gain(main.get(c));
-						p.removeFromHand(main.get(c));
-						main.remove(c);
-						cartesMemeNomDefausse ++;
-						nombreCartesDefausse ++;
+				instruction = "Choisissez une carte de votre main à défausser";
+				choix = p.chooseCard(instruction, p.cardsInHand(), false);
+				for(int i=0; i<p.cardsInHand().size(); i++) {
+					if(p.cardsInHand().get(i).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
+						p.gain(p.cardsInHand().get(i));
+						p.removeFromHand(p.cardsInHand().get(i));
+						cartesMemeNomDefausse++;
+						nombreCartesDefausse++;
 					}
 				}
 			}
 		}
-		for(int i = 0; i<nombreCartesDefausse; i++) {
+		for(int i=0; i<nombreCartesDefausse; i++) {
 			p.incrementHand(p.drawCard());
 		}
 		System.out.println("\n"+p.getName()+" a défaussé "+nombreCartesDefausse+" cartes");

@@ -6,13 +6,13 @@ import dominion.card.common.*;
 public class TestCards extends Test {
 
 	private static void testCellar(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Cellar.class, 2);
 		p1.addToHand(Estate.class, 3);
 		p1.addToDraw(Copper.class, 2);
-		g.setInput("Estate\nEstate\n\n");
+		g.setInput("Estate", "Estate", "");
 		p1.playCard("Cellar");
 		t.check(p1.getActions() == 1);
 		t.check(hasCards(p1.hand, "Cellar, Copper, Copper, Estate"));
@@ -20,20 +20,20 @@ public class TestCards extends Test {
 	}
 
 	private static void testChapel(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Chapel.class, 2);
 		p1.addToHand(Estate.class, 1);
 		p1.addToHand(Copper.class, 2);
-		g.setInput("Estate\nCopper\n\n");
+		g.setInput("Estate", "Copper", "");
 		p1.playCard("Chapel");
 		t.check(hasCards(p1.hand, "Chapel, Copper"));
 		t.check(p1.discard.isEmpty());
 	}
 
 	private static void testMoat(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Moat.class, 1);
@@ -44,12 +44,12 @@ public class TestCards extends Test {
 	}
 
 	private static void testChancellor(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Chancellor.class, 2);
 		p1.addToDraw(Estate.class, 3);
-		g.setInput("n\ny\n");
+		g.setInput("n", "y");
 		p1.playCard("Chancellor");
 		t.check(p1.getMoney() == 2);
 		t.check(hasCards(p1.draw, "Estate, Estate"));
@@ -59,9 +59,9 @@ public class TestCards extends Test {
 		t.check(hasCards(p1.discard, "Estate, Estate"));
 		t.check(p1.draw.size() == 0);
 	}
-		
+
 	private static void testVillage(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Village.class, 2);
@@ -74,7 +74,7 @@ public class TestCards extends Test {
 	}
 
 	private static void testWoodcutter(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Woodcutter.class, 1);
@@ -84,17 +84,17 @@ public class TestCards extends Test {
 	}
 
 	private static void testWorkshop(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Workshop.class, 1);
-		g.setInput("Gold\nSilver\n");
+		g.setInput("Gold", "Silver");
 		p1.playCard("Workshop");
 		t.check(hasCards(p1.discard, "Silver"));
 	}
 
 	private static void testBureaucrat(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p0 = new PlayerProxy(g.getPlayer(0));
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		PlayerProxy p2 = new PlayerProxy(g.getPlayer(2));
@@ -106,7 +106,7 @@ public class TestCards extends Test {
 		p2.clear();
 		p2.addToHand(Gold.class, 2);
 		p2.addToHand(Copper.class, 2);
-		g.setInput("Province\nDuchy\n\n");
+		g.setInput("Province", "Duchy", "");
 		p1.playCard("Bureaucrat");
 		t.check(hasCards(p0.hand, "Estate"));
 		t.check(hasCards(p0.draw, "Duchy"));
@@ -116,7 +116,7 @@ public class TestCards extends Test {
 	}
 
 	private static void testGardens(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Gardens.class, 1);
@@ -132,13 +132,13 @@ public class TestCards extends Test {
 		// 40 cartes
 		t.check(p1.hand.get(0).victoryValue(p1.player) == 4);
 	}
-		
+
 	private static void testFeast(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Feast.class, 1);
-		g.setInput("Gold\nDuchy\n");
+		g.setInput("Gold", "Duchy");
 		p1.playCard("Feast");
 		t.check(p1.draw.isEmpty());
 		t.check(p1.hand.isEmpty());
@@ -146,7 +146,7 @@ public class TestCards extends Test {
 	}
 
 	private static void testMoneylender(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Moneylender.class, 2);
@@ -163,7 +163,7 @@ public class TestCards extends Test {
 	}
 
 	private static void testSmithy(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		p1.clear();
 		p1.addToHand(Smithy.class, 3);
@@ -185,7 +185,7 @@ public class TestCards extends Test {
 	}
 
 	private static void testCouncilRoom(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p0 = new PlayerProxy(g.getPlayer(0));
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		PlayerProxy p2 = new PlayerProxy(g.getPlayer(2));
@@ -212,7 +212,7 @@ public class TestCards extends Test {
 	}
 
 	private static void testWitch(Test t) {
-		GameProxy g = new GameProxy(minimalGame());
+		GameProxy g = new GameProxy(IOGame.minimal());
 		PlayerProxy p0 = new PlayerProxy(g.getPlayer(0));
 		PlayerProxy p1 = new PlayerProxy(g.getPlayer(1));
 		PlayerProxy p2 = new PlayerProxy(g.getPlayer(2));
@@ -253,7 +253,6 @@ public class TestCards extends Test {
 	public static void main(String[] args) {
 		TestCards t = new TestCards();
 		t.run();
-		System.out.println("----");
-		System.out.println(t);
+		t.showResults();
 	}
 }

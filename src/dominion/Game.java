@@ -296,14 +296,18 @@ public class Game {
 	 * c'est que la partie est terminée)
 	 */
 	public boolean isFinished() {
+		if(this.supplyStacks.get(indiceProvincesupplyStacks).isEmpty()) {
+			return true;
+		}
 		int nbPileVide = 0;
-		for(int i=0; i < this.supplyStacks.size(); i++) {
+		for(int i=0; i<this.supplyStacks.size(); i++) {
 			if(this.supplyStacks.get(i).isEmpty()) {
 				nbPileVide++;
-				if(nbPileVide>2) { return true;}
+			}
+			if(nbPileVide>2) { 
+				return true;
 			}
 		}
-		if(this.supplyStacks.get(indiceProvincesupplyStacks).isEmpty()) {return true;}
 		return false;
 	}
 	

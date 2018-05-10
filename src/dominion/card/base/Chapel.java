@@ -15,22 +15,25 @@ public class Chapel extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		CardList main = p.cardsInHand();
 		int nombreCartesEcartees = 0;
 		int cartesMemeNomDefausse;
-		String instruction = "Vous pouvez écarter jusqu'à 4 cartes, voulez-vous écarter une carte ? (y/n)";
 		List<String> listeChoix = new ArrayList<String>(2);
 		listeChoix.add("y");
 		listeChoix.add("n");
-		String choix = "y";
-		while(choix.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("") && !main.isEmpty() && nombreCartesEcartees < 4) {
-			choix = p.choose(instruction, listeChoix, false);
-			if(choix.equalsIgnoreCase("y")) {
+		String instruction;
+		String reponse = "y";
+		String choix = "init";
+		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("") && nombreCartesEcartees < 4) {
+			instruction = p.getName()+" : Vous pouvez écarter jusqu'à 4 cartes, voulez-vous écarter une carte ? (y/n)";
+			reponse = p.choose(instruction, listeChoix, false);
+			if(reponse.equalsIgnoreCase("y")) {
 				cartesMemeNomDefausse = 0;
-				for(int c = 0; c<main.size(); c++) {
-					if(main.get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
-						p.getGame().addInTrash(main.get(c));
-						p.removeFromHand(main.get(c));
+				instruction = "Choisissez une carte de votre main à écarter";
+				choix = p.chooseCard(instruction, p.cardsInHand(), false);
+				for(int c = 0; c < p.cardsInHand().size(); c++) {
+					if(p.cardsInHand().get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
+						p.getGame().addInTrash(p.cardsInHand().get(c));
+						p.removeFromHand(p.cardsInHand().get(c));
 						cartesMemeNomDefausse ++;
 						nombreCartesEcartees ++;
 					}

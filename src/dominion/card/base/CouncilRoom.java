@@ -23,7 +23,13 @@ public class CouncilRoom extends ActionCard {
 		}
 		List<Player> adversaires = p.otherPlayers();
 		for(int i = 0; i<adversaires.size(); i++) {
-			adversaires.get(i).incrementHand(adversaires.get(i).drawCard());
+			Card cartePioche = adversaires.get(i).drawCard();
+			if(cartePioche != null) {
+				adversaires.get(i).incrementHand(cartePioche);
+			}
+			else {
+				System.out.println("\n"+adversaires.get(i).getName()+" n'a pas de carte à piocher");
+			}
 		}
 	}
 	

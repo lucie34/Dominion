@@ -17,7 +17,8 @@ public class Adventurer extends ActionCard {
 	@Override
 	public void play(Player p) {
 		int carteTresor = 0;
-		for(int i=0; i < p.getDraw().size(); i++) {
+		int totalCartesDevoilables = p.getDraw().size() + p.getDiscard().size();
+		for(int i=0; i < totalCartesDevoilables; i++) {//j'ai changé getDraw() après avoir relu le post sur le forum de Mr. Poupet
 			if(carteTresor < 2) {
 				Card carteDevoilee = p.drawCard();
 				System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");

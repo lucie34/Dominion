@@ -31,20 +31,24 @@ public class ThroneRoom extends ActionCard {
 				if(listeActionCards.get(c).getName().equalsIgnoreCase(choix) && nbCarteActionChoisie < 1) {
 					nbCarteActionChoisie ++;
 					Card cardChoosed = listeActionCards.get(c);
+					System.out.println("\n"+p.getName()+" choisit de jouer 2 fois sa carte action : "+ cardChoosed.getName());
 					if(cardChoosed.getName().equalsIgnoreCase("ThroneRoom") || cardChoosed.getName().equalsIgnoreCase("Cave") || cardChoosed.getName().equalsIgnoreCase("Espion") || cardChoosed.getName().equalsIgnoreCase("Laboratoire") || cardChoosed.getName().equalsIgnoreCase("Market")) {
 						nbActionsRestant += 2;
-						System.out.println("\n"+nbActionsRestant+" actions restantes\n");
+						System.out.println("\n"+nbActionsRestant+" actions restantes");
 					}
 					else if(cardChoosed.getName().equalsIgnoreCase("Village") || cardChoosed.getName().equalsIgnoreCase("Festival")) {
 						nbActionsRestant += 4;
-						System.out.println("\n"+nbActionsRestant+" actions restantes\n");
+						System.out.println("\n"+nbActionsRestant+" actions restantes");
 					}
 					cardChoosed.play(p);//carte action jouée une première fois
 					p.playCard(cardChoosed);//carte action jouée une deuxième fois et mise dans pile inPlay
 					nbActionsRestant -= 2;
-					System.out.println("\n"+nbActionsRestant+" actions restantes\n");
+					System.out.println("\n"+nbActionsRestant+" actions restantes");
 				}
 			}
+		}
+		else {
+			System.out.println("\n"+p.getName()+" n'a aucune carte action à jouer dans sa main");
 		}
 	}
 	

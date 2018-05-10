@@ -16,42 +16,42 @@ public class Spy extends AttackCard {
 		super("Spy", 4);
 	}
 	
-	public boolean devoiler(Player p, CardList pile) {
+	public void attaquer(Player p) {
 		Card carteDevoilee = p.drawCard();
 		//Récupère le joueur ayant joué la carte Espion
 		Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
 		if(carteDevoilee == null) {
 			System.out.println("\n"+p.getName()+" n'a pas de carte à dévoiler\n");
-			return false;
 		}
-		System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
-		List<String> listeChoix= new ArrayList<String>(2);
-		//Le joueur actif choisit de faire défausser ou non la carte dévoilée par l'adversaire
-		String instruction = joueurActif.getName()+" : Choisissez de faire défausser ou de faire remettre sur son deck la carte "+carteDevoilee.getName()+" dévoilée par le joueur "+p.getName()+" (Defausser/Deck)";
-		listeChoix.add("Defausser"); 
-		listeChoix.add("Deck");
-		String rep = joueurActif.choose(instruction, listeChoix, false);
-		//La fait défausser
-		if(rep.equalsIgnoreCase("Defausser")) {
-			p.gain(carteDevoilee);
+		else {
+			System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
+			List<String> listeChoix= new ArrayList<String>(2);
+			//Le joueur actif choisit de faire défausser ou non la carte dévoilée par l'adversaire
+			String instruction = joueurActif.getName()+" : Choisissez de faire défausser ou de faire remettre sur son deck la carte "+carteDevoilee.getName()+" dévoilée par le joueur "+p.getName()+" (Defausser/Deck)";
+			listeChoix.add("Defausser"); 
+			listeChoix.add("Deck");
+			String rep = joueurActif.choose(instruction, listeChoix, false);
+			//La fait défausser
+			if(rep.equalsIgnoreCase("Defausser")) {
+				p.gain(carteDevoilee);
+			}
+			//la fait remettre sur son deck
+			else if(rep.equalsIgnoreCase("Deck")) {
+				p.addDraw(0, carteDevoilee);
+			}
 		}
-		//la fait remettre sur son deck
-		else if(rep.equalsIgnoreCase("Deck")) {
-			p.addDraw(0, carteDevoilee);
-		}
-		return true;
 	}
 
 	public void play(Player p) {
 		p.incrementHand(p.drawCard());
 		p.incrementActions(1);
+		this.attaquer(p);
 		List<Player> adversaires = p.otherPlayers();
-		this.devoiler(p, p.getDraw());
+		Moat douves = new Moat();
 		for(int i = 0; i<adversaires.size(); i++) {
 			//Vérifie que l'adversaire n'a pas de carte Douves dans sa main l'immunisant
-			Moat douves = new Moat();
 			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-				this.devoiler(adversaires.get(i), adversaires.get(i).getDraw());
+				this.attaquer(adversaires.get(i));
 			}
 		}
 	}

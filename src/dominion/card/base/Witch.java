@@ -17,9 +17,9 @@ public class Witch extends AttackCard {
 	}
 
 	@Override
-	public boolean devoiler(Player p, CardList pile) {
-		// TODO Auto-generated method stub
-		return false;
+	public void attaquer(Player p) {
+		Curse malediction = new Curse();
+		p.gain(malediction.getName());
 	}
 
 	@Override
@@ -28,12 +28,10 @@ public class Witch extends AttackCard {
 			p.incrementHand(p.drawCard()); 
 		}
 		Moat douves = new Moat();
-		for(int i =0; i < p.otherPlayers().size(); i++) {
+		for(int i=0; i < p.otherPlayers().size(); i++) {
 			if(!douves.devoiler(p.otherPlayers().get(i), p.otherPlayers().get(i).cardsInHand())) {
-				Curse malediction = new Curse();
-				p.otherPlayers().get(i).gain(malediction.getName());
+				this.attaquer(p.otherPlayers().get(i));
 			}
 		}
 	}
-
 }

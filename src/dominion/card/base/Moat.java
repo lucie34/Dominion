@@ -25,7 +25,7 @@ public class Moat extends ReactionCard {
 		listeChoix.add("y");
 		listeChoix.add("n");
 		String rep = p.choose(instruction, listeChoix, false);
-		if(rep.compareToIgnoreCase("n") == 0) {
+		if(rep.equalsIgnoreCase("n")) {
 			return false;
 		}
 		System.out.println("\n"+p.getName()+" dévoile sa carte Douves\n");

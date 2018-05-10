@@ -1,37 +1,39 @@
 package test;
 
-import dominion.*;
-import dominion.card.*;
-import java.util.*;
+import dominion.Game;
+import dominion.Player;
+import dominion.card.CardList;
+
+import java.util.List;
 
 public class TestGame extends Test {
 
 	private static void testNbPlayers(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		t.check(g.numberOfPlayers() == 3);
 	}
 
 	private static void testGetPlayer(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		Player p = g.getPlayer(1);
 		t.check(p.getName().equals("Titi"));
 	}
 
 	private static void testOtherPlayersSize(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		Player p = g.getPlayer(1);
 		t.check(g.otherPlayers(p).size() == 2);
 	}
 
 	private static void testOtherPlayersNames(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		Player p = g.getPlayer(1);
 		t.check(g.otherPlayers(p).get(0).getName().equals("Tutu"));
 		t.check(g.otherPlayers(p).get(1).getName().equals("Toto"));
 	}
 
 	private static void testNbCardsInSupplies(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		GameProxy g_p = new GameProxy(g);
 		List<CardList> supplies = g_p.supplyStacks;
 		t.check(g_p.getSupplyStack("Estate").size() == 12);
@@ -43,7 +45,7 @@ public class TestGame extends Test {
 	}
 
 	private static void testGetFromSupply(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		Player p = g.getPlayer(0);
 		GameProxy g_p = new GameProxy(g);
 		PlayerProxy p_p = new PlayerProxy(p);
@@ -51,7 +53,7 @@ public class TestGame extends Test {
 	}
 
 	private static void testGetNotInSupply(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		Player p = g.getPlayer(0);
 		GameProxy g_p = new GameProxy(g);
 		PlayerProxy p_p = new PlayerProxy(p);
@@ -59,7 +61,7 @@ public class TestGame extends Test {
 	}
 
 	private static void testRemoveFromSupply(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		GameProxy g_p = new GameProxy(g);
 		t.check(g.removeFromSupply("Duchy").getName().equals("Duchy"));
 		CardList supp = g_p.getSupplyStack("Duchy");
@@ -67,13 +69,13 @@ public class TestGame extends Test {
 	}
 
 	private static void testRemoveNotInSupply(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		GameProxy g_p = new GameProxy(g);
 		t.check(g.removeFromSupply("Blip") == null);
 	}
 
 	private static void testNbAvailableSupplies(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		CardList availableSupplies = g.availableSupplyCards();
 		t.check(availableSupplies.size() == 7);
 		for (int i=0; i<12; i++) {
@@ -83,7 +85,7 @@ public class TestGame extends Test {
 	}
 
 	private static void testEndGame3Stack(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		t.check(!g.isFinished());
 		for (int i=0; i<12; i++) {
 			g.removeFromSupply("Estate");
@@ -100,7 +102,7 @@ public class TestGame extends Test {
 	}
 
 	private static void testEndGameProvince(Test t) {
-		Game g = minimalGame();
+		Game g = IOGame.minimal();
 		for (int i=0; i<12; i++) {
 			g.removeFromSupply("Province");
 		}
@@ -126,7 +128,6 @@ public class TestGame extends Test {
 	public static void main(String[] args) {
 		TestGame t = new TestGame();
 		t.run();
-		System.out.println("----");
-		System.out.println(t);
+		t.showResults();
 	}
 }
