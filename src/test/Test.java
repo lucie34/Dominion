@@ -126,15 +126,17 @@ public abstract class Test {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Teste si une CardList contient exactement les cartes indiquées dans la
 	 * chaîne `namesString` (noms de cartes séparées par des virgules). Les deux
 	 * listes doivent avoir les mêmes éléments, avec les mêmes multiplicités
 	 * mais l'ordre n'a pas d'importance.
 	 */
-	public static boolean hasCards(CardList cards, String namesString) {
-		String[] names = namesString.split(",\\s*");
+	public static boolean hasCards(CardList cards, String... names) {
+		if (cards.size() != names.length) {
+			return false;
+		}
 		Arrays.sort(names);
 		String[] cardNames = cardsToString(cards);
 		Arrays.sort(cardNames);

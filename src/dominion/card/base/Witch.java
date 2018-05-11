@@ -19,7 +19,9 @@ public class Witch extends AttackCard {
 	@Override
 	public void attaquer(Player p) {
 		Curse malediction = new Curse();
-		p.gain(malediction.getName());
+		for(int i=0; i < p.otherPlayers().size(); i++) {
+			p.otherPlayers().get(i).gain(malediction.getName());
+		}
 	}
 
 	@Override

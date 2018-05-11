@@ -99,14 +99,14 @@ public class PlayerProxy {
 		this.addTo(this.inPlay, cardClass, nbCopies);
 	}
 	
-	/**
-	 * Redirige la sortie standard pour ignorer les affichages puis appelle
-	 * Player.playCard. La sortie standard initiale est rétablie à la sortie.
-	 */
 	public void playCard(String cardName) {
 		this.player.playCard(cardName);
 	}
-	
+
+	public int victoryPoints() {
+		return this.player.victoryPoints();
+	}
+
 	public void clear() {
 		this.setActions(0);
 		this.setBuys(0);
