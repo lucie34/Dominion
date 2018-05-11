@@ -20,7 +20,7 @@ public class Witch extends AttackCard {
 	public void attaquer(Player p) {
 		Curse malediction = new Curse();
 		for(int i=0; i < p.otherPlayers().size(); i++) {
-			p.otherPlayers().get(i).gain(malediction.getName());
+			p.otherPlayers().get(i).gain(malediction.getName());//Non, dans la méthode play ça fait déjà la boucle ^^ le p en paramètre c'est déjà le p.otherPlayers.get(i), y avait pas d'erreur.
 		}
 	}
 
