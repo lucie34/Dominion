@@ -401,15 +401,19 @@ public class Player {
 	 * lieu
 	 */
 	public Card buyCard(String cardName) {
-		int coutCarte = game.getFromSupply(cardName).getCost();
-		if(this.money >= coutCarte) {
-			this.incrementMoney(-coutCarte);
-			this.incrementBuys(-1);
-			return this.gain(cardName);	
+		Card carte = game.getFromSupply(cardName);
+		if(carte != null) {
+			int coutCarte = carte.getCost();
+			if(this.money >= coutCarte) {
+				this.incrementMoney(-coutCarte);
+				this.incrementBuys(-1);
+				return this.gain(cardName);	
+			}
+			return null;
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Attend une entrée de la part du joueur (au clavier) et renvoie le choix
 	 *  du joueur.

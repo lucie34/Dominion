@@ -245,11 +245,11 @@ public class Game {
 	 * ne correspond
 	 */
 	public Card getFromSupply(String cardName) {
-		CardList reserve = this.availableSupplyCards();
+		//CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< reserve.size(); i++) {
-				if(reserve.get(i).getName().equalsIgnoreCase(cardName)) {
-					return reserve.get(i);
+			for(int i =0; i< this.supplyStacks.size(); i++) {
+				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
+					return this.supplyStacks.get(i).get(0);
 				}
 			}
 			return null;
@@ -265,10 +265,10 @@ public class Game {
 	 * ne correspond au nom passÃ© en argument
 	 */
 	public Card removeFromSupply(String cardName) {
-		CardList reserve = this.availableSupplyCards();
+		//CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< reserve.size(); i++) {
-				if(!this.supplyStacks.get(i).isEmpty() && reserve.get(i).getName().equalsIgnoreCase(cardName)) {
+			for(int i =0; i< this.supplyStacks.size(); i++) {// en fait la cardlist availableSupplyCards était pas forcément de la même taille que supplyStacks si une pile était vide, du coup le i ne correspondait pas ^^
+				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
 					return this.supplyStacks.get(i).remove(0);
 				}
 			}
