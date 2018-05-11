@@ -71,7 +71,7 @@ public class Game {
 		CardList duchy = new CardList();
 		CardList province = new CardList();
 		CardList curse = new CardList();
-		for(int i=0; i<(60+7*nombreJoueur); i++) {
+		for(int i=0; i<60; i++) {
 			copper.add(new Copper());	
 		}
 		for(int i=0; i<40; i++) {
@@ -81,7 +81,7 @@ public class Game {
 			gold.add(new Gold());	
 		}
 		if(nombreJoueur == 2) {
-			for(int i=0; i<(8+3*nombreJoueur); i++) {
+			for(int i=0; i<8; i++) {
 				estate.add(new Estate());	
 			}
 			for(int i=0; i<8; i++) {
@@ -95,7 +95,7 @@ public class Game {
 			}
 		}
 		else if(nombreJoueur >2) {
-			for(int i=0; i<(12+3*nombreJoueur); i++) {
+			for(int i=0; i<12; i++) {
 				estate.add(new Estate());	
 			}
 			for(int i=0; i<12; i++) {

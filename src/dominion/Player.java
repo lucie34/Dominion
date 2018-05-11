@@ -2,6 +2,8 @@ package dominion;
 import java.util.*;
 import java.lang.Object;
 import dominion.card.*;
+import dominion.card.common.Copper;
+import dominion.card.common.Estate;
 
 /**
  * Un joueur de Dominion
@@ -73,12 +75,10 @@ public class Player {
 		this.game = game; //Initialise this.game
 		this.name = name;//Initialise this.name
 		for(int i = 0; i<3; i++) {
-			Card carte = game.removeFromSupply("Estate");
-			this.discard.add(carte);
+			this.discard.add(new Estate());
 		}
 		for(int i = 0; i<7; i++) {
-			Card carte = game.removeFromSupply("Copper");
-			this.discard.add(carte);
+			this.discard.add(new Copper());
 		}
 		this.endTurn();
 	}
