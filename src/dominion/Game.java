@@ -299,14 +299,8 @@ public class Game {
 		if(this.supplyStacks.get(indiceProvincesupplyStacks).isEmpty()) {
 			return true;
 		}
-		int nbPileVide = 0;
-		for(int i=0; i<this.supplyStacks.size(); i++) {
-			if(this.supplyStacks.get(i).isEmpty()) {
-				nbPileVide++;
-			}
-			if(nbPileVide>2) { 
-				return true;
-			}
+		if(this.availableSupplyCards().size() <= this.supplyStacks.size()-3) {//Pour utiliser availableSupplyCards ^^
+			return true;
 		}
 		return false;
 	}
