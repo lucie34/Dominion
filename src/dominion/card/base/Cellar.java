@@ -39,6 +39,7 @@ public class Cellar extends ActionCard {
 						p.removeFromHand(p.cardsInHand().get(i));
 						cartesMemeNomDefausse++;
 						nombreCartesDefausse++;
+						System.out.println("\n"+p.getName()+" a defaussé une carte");
 					}
 				}
 			}

@@ -72,14 +72,16 @@ public class Player {
 		hand = new CardList();
 		draw = new CardList();
 		inPlay = new CardList();
-		this.game = game; //Initialise this.game
-		this.name = name;//Initialise this.name
+		this.game = game;
+		this.name = name;
+		//Ajoute les 5 cartes dans la défausse du joueur
 		for(int i = 0; i<3; i++) {
 			this.discard.add(new Estate());
 		}
 		for(int i = 0; i<7; i++) {
 			this.discard.add(new Copper());
 		}
+		//Initialise la main du joueur
 		this.endTurn();
 	}
 
@@ -155,9 +157,9 @@ public class Player {
 		return nouvelleListe;
 	}
 	
-	//Retire de la pile en jeu
+	//Retire de la pile en jeu (méthode utilisée dans classe Feast)
 	public void removeFromInPlay(Card c) {
-		if(c != null && this.inPlay.contains(c)) {
+		if(this.inPlay.contains(c) && c != null) {
 			this.inPlay.remove(c);
 		}
 	}
@@ -181,8 +183,8 @@ public class Player {
 	
 	//Méthode pour enlever une carte de la main du joueur
 	public void removeFromHand(Card c) {
-		if(c != null && this.hand.contains(c)) {
-			this.hand.remove(this.hand.indexOf(c));
+		if(this.hand.contains(c) && c != null) {
+			this.hand.remove(c);
 		}
 	}
 	
@@ -347,10 +349,11 @@ public class Player {
 	 * fait rien.
 	 */
 	public void playCard(String cardName) {
+		int cartesMemeNom = 0;
 		for(int i =0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
+			if(this.hand.get(i).getName().equalsIgnoreCase(cardName) && cartesMemeNom < 1) {
 				this.playCard(this.hand.get(i));
-				System.exit(0);
+				cartesMemeNom++;
 			}
 		}
 	}
@@ -404,7 +407,7 @@ public class Player {
 		Card carte = game.getFromSupply(cardName);
 		if(carte != null) {
 			int coutCarte = carte.getCost();
-			if(this.money >= coutCarte) {
+			if(this.buys>0 && this.money >= coutCarte) {
 				this.incrementMoney(-coutCarte);
 				this.incrementBuys(-1);
 				return this.gain(cardName);	
@@ -605,7 +608,7 @@ public class Player {
 		for(int i = 0; i<tresorCards.size(); i++) {
 			this.playCard(tresorCards.get(i));
 		}
-		reponse = "l";
+		reponse = "init";
 		while(this.buys>0 && !reponse.equalsIgnoreCase("")) {
 			String instruction = "Choisissez une carte à acheter dans la reserve ou entrez une réponse vide pour terminer votre tour \n"  ;
 			instruction += "La reserve : \n";

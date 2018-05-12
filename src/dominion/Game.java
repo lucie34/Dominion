@@ -37,7 +37,7 @@ public class Game {
 	 */
 	private Scanner scanner;
 	
-	
+	//Indice de la pile de cartes Province dans supplyStacks
 	private int indiceProvincesupplyStacks;
 	
 	/**
@@ -56,14 +56,15 @@ public class Game {
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
 		this.supplyStacks = new ArrayList<CardList>();
 		this.trashedCards = new CardList();
+		//Initialise le scanner utilisé dans classe Players
 		this.scanner = new Scanner(System.in);
+		//Récupère le nombre de joueurs
 		int nombreJoueur = playerNames.length;
-		//initialise le joueur courant
+		//Initialise le joueur courant
 		this.currentPlayerIndex = 0;
 		//Initialise le tableau de joueurs de la partie
 		this.players = new Player[nombreJoueur];
-		//Game game; // on doit créér des player mais dans les paramètres du constructeur de player il y a un objet Game.... On defini un autre constructeur sans Game???
-		//Pas nécessaire, le constructeur de Player a un objet game pour utiliser les méthodes removeFromSupply, utiliser "this"
+		//Initialise les piles de cartes.
 		CardList copper = new CardList();
 		CardList silver = new CardList();
 		CardList gold = new CardList();
@@ -116,13 +117,13 @@ public class Game {
 		this.supplyStacks.add(duchy);
 		this.supplyStacks.add(province);
 		this.supplyStacks.add(curse);
-		// permet de connaitre l'emplacement de la pile province
+		// Permet de connaitre l'emplacement de la pile province, pour la méthode isFinished()
 		for(int i=0; i<this.supplyStacks.size(); i++) {
 			if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
 				this.indiceProvincesupplyStacks = i;
 			}
 		}
-		//Créée les joueurs
+		//Crée les instances joueurs et remplit le tableau de joueurs
 		for(int i=0; i<nombreJoueur; i++) {
 			this.players[i] = new Player(playerNames[i], this);
 		}
@@ -199,15 +200,14 @@ public class Game {
 	 * non-vide de la rÃ©serve (cartes royaume et cartes communes)
 	 */
 	public CardList availableSupplyCards() {
-		CardList carteReserve = new CardList();
-
+		CardList cartesReserve = new CardList();
 		for(int i =0; i < this.supplyStacks.size(); i++) {
 			if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null) 
 			{
-				carteReserve.add(this.supplyStacks.get(i).get(0));
+				cartesReserve.add(this.supplyStacks.get(i).get(0));
 			}
 		}	
-		return carteReserve;	
+		return cartesReserve;	
 	}
 	
 	/**
@@ -245,10 +245,9 @@ public class Game {
 	 * ne correspond
 	 */
 	public Card getFromSupply(String cardName) {
-		//CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
 			for(int i =0; i< this.supplyStacks.size(); i++) {
-				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
+				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
 					return this.supplyStacks.get(i).get(0);
 				}
 			}
@@ -265,10 +264,9 @@ public class Game {
 	 * ne correspond au nom passÃ© en argument
 	 */
 	public Card removeFromSupply(String cardName) {
-		//CardList reserve = this.availableSupplyCards();
 		if(cardName != null) {
-			for(int i =0; i< this.supplyStacks.size(); i++) {// en fait la cardlist availableSupplyCards était pas forcément de la même taille que supplyStacks si une pile était vide, du coup le i ne correspondait pas ^^
-				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
+			for(int i =0; i< this.supplyStacks.size(); i++) {
+				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
 					return this.supplyStacks.get(i).remove(0);
 				}
 			}
@@ -277,7 +275,7 @@ public class Game {
 		return null;
 	}
 	
-	//Méthode nécessaire pour écarter une carte
+	//Méthode pour écarter une carte
 	public void addInTrash(Card c) {
 		if(c != null) {
 			this.trashedCards.add(c);
@@ -296,10 +294,8 @@ public class Game {
 	 * c'est que la partie est terminÃ©e)
 	 */
 	public boolean isFinished() {
-		if(this.supplyStacks.get(indiceProvincesupplyStacks).isEmpty()) {
-			return true;
-		}
-		if(this.availableSupplyCards().size() <= this.supplyStacks.size()-3) {//Pour utiliser availableSupplyCards ^^
+		//Si la pile Province est vide ou si le nombre de piles disponibles (non vides) est inférieur ou égal au nombre de piles total -3, retourne vrai
+		if(this.supplyStacks.get(indiceProvincesupplyStacks).isEmpty() || this.availableSupplyCards().size() <= this.supplyStacks.size()-3) {
 			return true;
 		}
 		return false;
@@ -314,9 +310,9 @@ public class Game {
 	 */
 	public void run() {
 		while (! this.isFinished()) {
-			// joue le tour du joueur courant
+			// Joue le tour du joueur courant
 			this.players[this.currentPlayerIndex].playTurn();
-			// passe au joueur suivant
+			// Passe au joueur suivant
 			this.currentPlayerIndex += 1;
 			if (this.currentPlayerIndex >= this.players.length) {
 				this.currentPlayerIndex = 0;
