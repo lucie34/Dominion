@@ -17,13 +17,19 @@ public class Chancellor extends ActionCard {
 
 	public void play(Player p) {
 		p.incrementMoney(2);
-		CardList pioche = p.getDraw();
+		CardList pioche = new CardList();
+		for(int i=0; i<p.getDraw().size(); i++) {
+			pioche.add(i, p.getDraw().get(i));
+		}	
 		if(!pioche.isEmpty()) {
 			String instruction = "\nVoulez-vous défausser votre deck ? (y/n)\n";
 			List<String> listeChoix = new ArrayList<String>(2);
 			listeChoix.add("y");
 			listeChoix.add("n");
+			System.out.println("Chancellor oui1");
 			String choix = p.choose(instruction, listeChoix, false);
+			System.out.println("Chancellor oui2");
+			System.out.println("\n le choix de Chancellor est : " + choix);
 			if(choix.equalsIgnoreCase("y")) {
 				for(int i=0; i<pioche.size(); i++) {
 					p.gain(p.drawCard());

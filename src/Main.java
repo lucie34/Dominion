@@ -85,7 +85,7 @@ class Main {
 			stack10.add(new Workshop());
 		}
 		kingdomStacks.add(stack10);
-		 
+		
 		// Instancie et exécute une partie
 		Game g = new Game(playerNames, kingdomStacks);
 		g.run();

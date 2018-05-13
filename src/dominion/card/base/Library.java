@@ -24,7 +24,7 @@ public class Library extends ActionCard {
 		while(p.cardsInHand().size() < 7 && !(p.getDiscard().isEmpty() && p.getDraw().isEmpty())) {
 			Card carte = p.drawCard();
 			if(carte.getTypes().get(0).equals(CardType.Action)) {
-				String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName();
+				String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName() + " y/n ?";
 				String reponse = p.choose(instruction, choices, false);
 				if(reponse.equalsIgnoreCase("Y")) {
 					deCote.add(carte);//met la carte action de côté

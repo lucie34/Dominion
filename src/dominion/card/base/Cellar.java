@@ -28,7 +28,10 @@ public class Cellar extends ActionCard {
 		String choix = "init";
 		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("")) {
 			instruction = p.getName()+" : Voulez-vous défausser une carte ? (y/n)";
-			reponse = p.choose(instruction, listeChoix, false);
+			System.out.println("Cellar oui1");
+			reponse = p.choose(instruction, listeChoix, true);
+			System.out.println("Cellar oui2");
+			System.out.println("\n la réponse de Cellar est : " + reponse);
 			if(reponse.equalsIgnoreCase("y")) {
 				cartesMemeNomDefausse = 0;
 				instruction = "Choisissez une carte de votre main à défausser";

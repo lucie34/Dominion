@@ -150,11 +150,16 @@ public class Player {
 	 * Ã©lÃ©ments sont les mÃªmes que ceux de {@code this.hand}.
 	 */
 	public CardList cardsInHand() {
-		CardList nouvelleListe = new CardList();
-		for(int i=0 ; i<this.hand.size(); i++) {
+		CardList nouvelleListe = (CardList)this.hand.clone();
+		//CardList nouvelleListe = new CardList();
+		/*for(int i=0 ; i<this.hand.size(); i++) {
 			nouvelleListe.add(this.hand.get(i));
-		}
+		}*/
 		return nouvelleListe;
+	}
+	//TEST
+	public CardList getHand() {
+		return this.hand;
 	}
 	
 	//Retire de la pile en jeu (méthode utilisée dans classe Feast)
