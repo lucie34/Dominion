@@ -193,7 +193,8 @@ public class Player {
 			for(int i=0; i<this.cardsInHand().size(); i++ ) {
 				if(this.cardsInHand().get(i).getName().equals(c.getName()) && carteSup == 0) 
 				{
-					this.hand.remove(c);
+					Copper cuivre = (Copper)this.hand.get(i);
+					this.hand.remove(cuivre);
 					carteSup ++;
 				}
 			}
