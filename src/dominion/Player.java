@@ -188,9 +188,19 @@ public class Player {
 	
 	//Méthode pour enlever une carte de la main du joueur
 	public void removeFromHand(Card c) {
-		if(this.hand.contains(c) && c != null) {
-			this.hand.remove(c);
+		int carteSup = 0;
+		if(c != null) {
+			for(int i=0; i<this.cardsInHand().size(); i++ ) {
+				if(this.cardsInHand().get(i).getName().equals(c.getName()) && carteSup == 0) 
+				{
+					this.hand.remove(c);
+					carteSup ++;
+				}
+			}
 		}
+		/*if(this.hand.contains(c) && c != null) {
+			this.hand.remove(c);
+		}*/
 	}
 	
 	/**

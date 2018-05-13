@@ -18,14 +18,19 @@ public class Moneylender extends ActionCard {
 	
 	public void play(Player p) {
 		Copper carteCuivre = new Copper();
+		boolean contientCopper = false;
+		//test
 		System.out.println("\n ne contient pas de cuivre XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 		for(int i=0; i<p.cardsInHand().size(); i++ ) {
 			System.out.println("\n la main " + p.cardsInHand().get(i));
 		}
 		for(int i=0; i<p.cardsInHand().size(); i++ ) {
-			if(p.cardsInHand().get(i).equals(carteCuivre)) {System.out.println("OK xxxxxxxxxxxxxxxxxxxxxxxx");}
+			if(p.cardsInHand().get(i).getName().equals(carteCuivre.getName())) 
+			{contientCopper = true;}
 		}
-		if(p.cardsInHand().contains(carteCuivre)) {
+		//test
+		System.out.println(carteCuivre);
+		if(contientCopper) {
 			System.out.println("\n contient 1 cuivre XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 			p.removeFromHand(carteCuivre);
 			p.getGame().addInTrash(carteCuivre);
