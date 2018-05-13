@@ -13,7 +13,7 @@ import dominion.card.common.*;
 public class ThroneRoom extends ActionCard {
 
 	public ThroneRoom() {
-		super("ThroneRoom", 4);
+		super("Throne Room", 4);
 	}
 
 	public void play(Player p) {
@@ -24,12 +24,12 @@ public class ThroneRoom extends ActionCard {
 		//Récupère cartes action dans la main du joueur
 		CardList listeActionCards = p.getActionCards();
 		String instruction = "Choisissez une carte action dans votre main à jouer 2 fois";
-		String choix = "init";
+		String choix;
 		if(!listeActionCards.isEmpty()) {
 			choix = p.chooseCard(instruction, listeActionCards, false);
-			for(int c = 0; c<listeActionCards.size(); c++) {
-				if(listeActionCards.get(c).getName().equalsIgnoreCase(choix) && nbCarteActionChoisie < 1) {
-					nbCarteActionChoisie ++;
+			for(int c=0; c<listeActionCards.size(); c++) {
+				if(nbCarteActionChoisie < 1 && listeActionCards.get(c).getName().equalsIgnoreCase(choix)) {
+					nbCarteActionChoisie++;
 					Card cardChoosed = listeActionCards.get(c);
 					System.out.println("\n"+p.getName()+" choisit de jouer 2 fois sa carte action : "+ cardChoosed.getName());
 					if(cardChoosed.getName().equalsIgnoreCase("ThroneRoom") || cardChoosed.getName().equalsIgnoreCase("Cave") || cardChoosed.getName().equalsIgnoreCase("Espion") || cardChoosed.getName().equalsIgnoreCase("Laboratoire") || cardChoosed.getName().equalsIgnoreCase("Market")) {

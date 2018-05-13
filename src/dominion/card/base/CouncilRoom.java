@@ -13,24 +13,17 @@ import dominion.card.*;
 public class CouncilRoom extends ActionCard {
 	
 	public CouncilRoom() {
-		super("CouncilRoom", 5);
+		super("Council Room", 5);
 	}
 	
 	public void play(Player p) {
-		p.incrementBuys(1);
-		for(int i = 0; i<4; i++) {
+		for(int i=0; i<4; i++) {
 			p.incrementHand(p.drawCard());
 		}
+		p.incrementBuys(1);
 		List<Player> adversaires = p.otherPlayers();
-		for(int i = 0; i<adversaires.size(); i++) {
-			Card cartePioche = adversaires.get(i).drawCard();
-			if(cartePioche != null) {
-				adversaires.get(i).incrementHand(cartePioche);
-			}
-			else {
-				System.out.println("\n"+adversaires.get(i).getName()+" n'a pas de carte à piocher");
-			}
+		for(int i=0; i<adversaires.size(); i++) {
+			adversaires.get(i).incrementHand(adversaires.get(i).drawCard());
 		}
 	}
-	
 }

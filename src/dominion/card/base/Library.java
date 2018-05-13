@@ -19,14 +19,14 @@ public class Library extends ActionCard {
 	public void play(Player p) {
 		CardList deCote = new CardList();
 		List<String> choices = new ArrayList<String>();
-		choices.add("Y pour oui");
-		choices.add("N pour non");
+		choices.add("y");
+		choices.add("n");
 		while(p.cardsInHand().size() < 7 && !(p.getDiscard().isEmpty() && p.getDraw().isEmpty())) {
 			Card carte = p.drawCard();
 			if(carte.getTypes().get(0).equals(CardType.Action)) {
-				String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName() + " y/n ?";
+				String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName() + " (y/n) ?";
 				String reponse = p.choose(instruction, choices, false);
-				if(reponse.equalsIgnoreCase("Y")) {
+				if(reponse.equalsIgnoreCase("y")) {
 					deCote.add(carte);//met la carte action de côté
 				}
 				else {
@@ -37,8 +37,8 @@ public class Library extends ActionCard {
 				p.incrementHand(carte); // met la carte dans la main
 			}
 		}
-		for(int i=0; i<deCote.size(); i++) {
-			p.gain(deCote.get(i)); //met les cartes mises de coté dans la défausse
+		for(Card carte : deCote) {
+			p.gain(carte); //met les cartes mises de coté dans la défausse
 		}
 		deCote.removeAll(deCote);
 	}

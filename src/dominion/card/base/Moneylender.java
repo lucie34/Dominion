@@ -11,31 +11,22 @@ import dominion.card.common.*;
  * Dans ce cas, +3 Pièces.
  */
 public class Moneylender extends ActionCard {
-	
+
 	public Moneylender() {
 		super("Moneylender", 4);
 	}
-	
+
 	public void play(Player p) {
 		Copper carteCuivre = new Copper();
-		boolean contientCopper = false;
-		//test
-		System.out.println("\n ne contient pas de cuivre XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		boolean copperTrouve = false;
 		for(int i=0; i<p.cardsInHand().size(); i++ ) {
-			System.out.println("\n la main " + p.cardsInHand().get(i));
-		}
-		for(int i=0; i<p.cardsInHand().size(); i++ ) {
-			if(p.cardsInHand().get(i).getName().equals(carteCuivre.getName())) 
-			{contientCopper = true;}
-		}
-		//test
-		System.out.println(carteCuivre);
-		if(contientCopper) {
-			System.out.println("\n contient 1 cuivre XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			p.removeFromHand(carteCuivre);
-			p.getGame().addInTrash(carteCuivre);
-			p.incrementMoney(3);
+			if(!copperTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(carteCuivre.getName())){
+				copperTrouve = true;
+				Card carteCopper = p.cardsInHand().get(i);
+				p.getGame().addInTrash(carteCopper);
+				p.removeFromHand(carteCopper);
+				p.incrementMoney(3);
+			}
 		}
 	}
-	
 }

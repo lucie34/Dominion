@@ -23,7 +23,7 @@ public class Adventurer extends ActionCard {
 				Card carteDevoilee = p.drawCard();
 				System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
 				if(carteDevoilee.getTypes().get(0).equals(CardType.Treasure)) {
-					carteTresor ++;
+					carteTresor++;
 					p.incrementHand(carteDevoilee);
 				}
 				else {

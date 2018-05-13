@@ -18,29 +18,20 @@ public class Cellar extends ActionCard {
 	
 	public void play(Player p) {
 		p.incrementActions(1);
-		int cartesMemeNomDefausse;
+		boolean carteTrouve;
 		int nombreCartesDefausse = 0;
-		List<String> listeChoix = new ArrayList<String>(2);
-		listeChoix.add("y");
-		listeChoix.add("n");
-		String instruction;
-		String reponse = "y";
+		String instruction = "Choisissez une carte de votre main à défausser ou laissez vide";
 		String choix = "init";
-		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("")) {
-			instruction = p.getName()+" : Voulez-vous défausser une carte ? (y/n)";
-			System.out.println("Cellar oui1");
-			reponse = p.choose(instruction, listeChoix, true);
-			System.out.println("Cellar oui2");
-			System.out.println("\n la réponse de Cellar est : " + reponse);
-			if(reponse.equalsIgnoreCase("y")) {
-				cartesMemeNomDefausse = 0;
-				instruction = "Choisissez une carte de votre main à défausser";
-				choix = p.chooseCard(instruction, p.cardsInHand(), false);
+		while(!choix.equalsIgnoreCase("")) {
+			choix = p.chooseCard(instruction, p.cardsInHand(), true);
+			if(!choix.equalsIgnoreCase("")) {
+				carteTrouve = false;
 				for(int i=0; i<p.cardsInHand().size(); i++) {
-					if(p.cardsInHand().get(i).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
-						p.gain(p.cardsInHand().get(i));
-						p.removeFromHand(p.cardsInHand().get(i));
-						cartesMemeNomDefausse++;
+					if(!carteTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(choix)) {
+						carteTrouve = true;
+						Card carte = p.cardsInHand().get(i);
+						p.gain(carte);
+						p.removeFromHand(carte);
 						nombreCartesDefausse++;
 						System.out.println("\n"+p.getName()+" a defaussé une carte");
 					}

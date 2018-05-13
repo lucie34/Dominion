@@ -25,18 +25,18 @@ public class Spy extends AttackCard {
 		}
 		else {
 			System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
-			List<String> listeChoix= new ArrayList<String>(2);
+			List<String> listeChoix= new ArrayList<String>();
 			//Le joueur actif choisit de faire défausser ou non la carte dévoilée par l'adversaire
-			String instruction = joueurActif.getName()+" : Choisissez de faire défausser ou de faire remettre sur son deck la carte "+carteDevoilee.getName()+" dévoilée par le joueur "+p.getName()+" (Defausser/Deck)";
-			listeChoix.add("Defausser"); 
-			listeChoix.add("Deck");
+			String instruction = joueurActif.getName()+" : Voulez-vous faire défausser cette carte "+carteDevoilee.getName()+" dévoilée par le joueur "+p.getName()+" (y/n)";
+			listeChoix.add("y"); 
+			listeChoix.add("n");
 			String rep = joueurActif.choose(instruction, listeChoix, false);
 			//La fait défausser
-			if(rep.equalsIgnoreCase("Defausser")) {
+			if(rep.equalsIgnoreCase("y")) {
 				p.gain(carteDevoilee);
 			}
 			//la fait remettre sur son deck
-			else if(rep.equalsIgnoreCase("Deck")) {
+			else {
 				p.addDraw(0, carteDevoilee);
 			}
 		}

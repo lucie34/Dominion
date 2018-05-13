@@ -9,40 +9,32 @@ import dominion.card.*;
  * Ã‰cartez jusqu'Ã  4 cartes de votre main.
  */
 public class Chapel extends ActionCard {
-	
+
 	public Chapel() {
 		super("Chapel", 2);
 	}
-	
+
 	public void play(Player p) {
-		int nombreCartesEcartees = 0;
-		int cartesMemeNomDefausse;
-		List<String> listeChoix = new ArrayList<String>(2);
-		listeChoix.add("y");
-		listeChoix.add("n");
-		String instruction;
-		String reponse = "y";
+		boolean carteTrouve;
+		int nombreCartesEcarte = 0;
+		String instruction = "Vous pouvez écarter 4 cartes de votre main, choisissez une carte à écarter ou laissez vide";
 		String choix = "init";
-		while(reponse.equalsIgnoreCase("y") && !choix.equalsIgnoreCase("") && nombreCartesEcartees < 4) {
-			instruction = p.getName()+" : Vous pouvez écarter jusqu'à 4 cartes, voulez-vous écarter une carte ? (y/n)";
-			System.out.println("Chapel oui1");
-			reponse = p.choose(instruction, listeChoix, true);
-			System.out.println("Chapel oui2");
-			System.out.println("\n la réponse de Chapel est : " + reponse);
-			if(reponse.equalsIgnoreCase("y")) {
-				cartesMemeNomDefausse = 0;
-				instruction = "Choisissez une carte de votre main à écarter";
-				choix = p.chooseCard(instruction, p.cardsInHand(), false);
-				for(int c = 0; c < p.cardsInHand().size(); c++) {
-					if(p.cardsInHand().get(c).getName().equalsIgnoreCase(choix) && cartesMemeNomDefausse == 0) {
-						p.getGame().addInTrash(p.cardsInHand().get(c));
-						p.removeFromHand(p.cardsInHand().get(c));
-						cartesMemeNomDefausse ++;
-						nombreCartesEcartees ++;
+		while(nombreCartesEcarte < 4 && !choix.equalsIgnoreCase("")) {
+			choix = p.chooseCard(instruction, p.cardsInHand(), true);
+			if(!choix.equalsIgnoreCase("")) {
+				carteTrouve = false;
+				for(int i=0; i<p.cardsInHand().size(); i++) {
+					if(!carteTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(choix)) {
+						carteTrouve = true;
+						Card carte = p.cardsInHand().get(i);
+						p.getGame().addInTrash(carte);
+						p.removeFromHand(carte);
+						nombreCartesEcarte++;
+						System.out.println("\n"+p.getName()+" a écarté une carte");
 					}
 				}
 			}
 		}
-		System.out.println("\n"+p.getName()+" a écarté "+nombreCartesEcartees+" cartes");
+		System.out.println("\n"+p.getName()+" a écarté "+nombreCartesEcarte+" cartes");
 	}
 }

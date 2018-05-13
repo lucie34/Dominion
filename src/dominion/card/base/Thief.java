@@ -13,63 +13,67 @@ public class Thief extends AttackCard {
 	public Thief() {
 		super("Thief", 4);
 	}
-	
+
 	public void attaquer(Player p) {
-		List<Card> listeCartesDevoile = new ArrayList<Card>(2);
+		CardList cartesTresor = new CardList();
+		CardList listeCartesDevoile = new CardList();
 		listeCartesDevoile.add(p.drawCard());
 		listeCartesDevoile.add(p.drawCard());
-		int nbCartesTresorEcarte = 0;
-		//Récupère le joueur ayant joué la carte Voleur
+		//Récupère le joueur ayant joué la carte Spy
 		Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
-		List<String> listeChoix = new ArrayList<String>(2);
-		listeChoix.add("y"); 
-		listeChoix.add("n");
-		String instruction = new String();
-		String rep = new String();
-		//Si l'adversaire n'a plus aucune deck et aucune défausse à mélanger
-		if(listeCartesDevoile.get(0) == null && listeCartesDevoile.get(1) == null) {
-			System.out.println("\n"+p.getName()+" n'a pas de carte à dévoiler\n");
-		}
-		//Sinon
-		else {
-			for(int i = 0; i<listeCartesDevoile.size(); i++) {
-				//La carte dévoilée n'est pas une carte trésor
-				if(listeCartesDevoile.get(i) != null && !listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
-					System.out.println("\n"+p.getName()+" dévoile la carte "+listeCartesDevoile.get(i).getName()+" de son deck\n");
-					p.gain(listeCartesDevoile.get(i));
+		for(Card carte : listeCartesDevoile) {
+			if(carte != null) {
+				System.out.println("\n"+p.getName()+" dévoile de son deck la carte "+carte.getTypes().get(0)+" : "+carte.getName());
+				if(carte.getTypes().get(0).equals(CardType.Treasure)) {
+					cartesTresor.add(carte);
 				}
-				//La carte dévoilée est une carte trésor
-				else if(listeCartesDevoile.get(i) != null && listeCartesDevoile.get(i).getTypes().get(0).equals(CardType.Treasure)) {
-					System.out.println("\n"+p.getName()+" dévoile la carte trésor "+listeCartesDevoile.get(i).getName()+" de son deck\n");
-					//Une seule carte trésor peut être écartée
-					if(nbCartesTresorEcarte < 1) {
-						//Le joueur actif décide de faire écarter cette carte trésor ou non par l'adversaire
-						instruction  = "Le joueur actif "+joueurActif.getName()+" peut décider que "+p.getName()+" écarte cette carte trésor. "+joueurActif.getName()+" : voulez-vous faire écarter cette carte ? (y/n)";
-						rep = joueurActif.choose(instruction, listeChoix, false);
-						//Si le joueur actif décide de la faire écarter
-						if(rep.equalsIgnoreCase("y")) {
-							nbCartesTresorEcarte++;
-							//le joueur actif décide de récupérer ou non la carte trésor écartée par l'adversaire
-							instruction = "Joueur actif "+joueurActif.getName()+" :  voulez-vous récupérer cette carte tresor "+listeCartesDevoile.get(i).getName()+" ? (y/n)";
-							rep = joueurActif.choose(instruction, listeChoix, false);
-							//Si le joueur actif la récupère
-							if(rep.equalsIgnoreCase("y")) {
-								joueurActif.gain(listeCartesDevoile.get(i));
-							}
-							//Sinon
-							else {
-								p.getGame().addInTrash(listeCartesDevoile.get(i));
-							}
-						}
-						//Si le joueur actif ne souhaite pas faire écarter cette carte trésor
-						else {
-							p.gain(listeCartesDevoile.get(i));
+				else {
+					p.gain(carte);
+				}
+			}
+		}
+		System.out.println("\n"+cartesTresor.toString()+"TTTTTTTTTTTTTTTTTTT 1");
+		System.out.println("\nDéfausse P 1 : "+p.getDiscard().toString());
+		if(!cartesTresor.isEmpty()) {
+			CardList cartesEcarte = new CardList();
+			int nbCartesTresorEcarte = 0;
+			int nbCartesTresor = cartesTresor.size();
+			String instruction = joueurActif.getName()+" : Choisissez de faire écarter une carte trésor à "+p.getName();
+			String rep = joueurActif.chooseCard(instruction, cartesTresor, false);
+			for(int i=0; i<nbCartesTresor; i++) {
+				if(nbCartesTresorEcarte < 1 && cartesTresor.get(i).getName().equalsIgnoreCase(rep)) {
+					nbCartesTresorEcarte++;
+					cartesEcarte.add(cartesTresor.get(i));
+					cartesTresor.remove(i);
+				}
+			}
+			System.out.println(cartesEcarte.toString()+"EEEEEEEEEEEEEEEEEEEEE 1");
+			System.out.println(cartesTresor.toString()+"TTTTTTTTTTTTTTTTTTTTT 2");
+			for(Card carte : cartesTresor) {
+				p.gain(carte);
+			}
+			System.out.println("Défausse P 2 : "+p.getDiscard().toString());
+			System.out.println("Défausse JA 1 : "+joueurActif.getDiscard().toString());
+			if(!cartesEcarte.isEmpty()) {
+				int nbCartesRecup = 0;
+				int nbCartesEcarte = cartesEcarte.size();
+				instruction = joueurActif.getName()+" : Choisissez de récupérer une carte trésor écartée ou laissez vide";
+				System.out.println("OK");
+				rep = joueurActif.chooseCard(instruction, cartesEcarte, true);
+				System.out.println("\nREP = "+rep);
+				if(!rep.equalsIgnoreCase("")) {
+					for(int i=0; i<nbCartesEcarte; i++) {
+						if(nbCartesRecup < 1 && cartesEcarte.get(i).getName().equalsIgnoreCase(rep)) {
+							nbCartesRecup++;
+							joueurActif.gain(cartesEcarte.get(i));
+							cartesEcarte.remove(i);
 						}
 					}
-					//Si une carte trésor a déjà été écartée
-					else {
-						p.gain(listeCartesDevoile.get(i));
-					}
+				}
+				System.out.println("Défausse JA 2 : "+joueurActif.getDiscard().toString());
+				System.out.println(cartesEcarte.toString()+"EEEEEEEEEEEEEEEEEEEEE 2");
+				for(Card carte : cartesEcarte) {
+					p.getGame().addInTrash(carte);
 				}
 			}
 		}
@@ -77,13 +81,12 @@ public class Thief extends AttackCard {
 
 	public void play(Player p) {
 		List<Player> adversaires = p.otherPlayers();
+		Moat douves = new Moat();
 		for(int i =0; i<adversaires.size(); i++) {
 			//Vérifie que l'adversaire n'a pas dans sa main une carte Douves l'immunisant
-			Moat douves = new Moat();
 			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
 				this.attaquer(adversaires.get(i));
 			}
 		}
 	}
-	
 }

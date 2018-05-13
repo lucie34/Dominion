@@ -150,16 +150,11 @@ public class Player {
 	 * Ã©lÃ©ments sont les mÃªmes que ceux de {@code this.hand}.
 	 */
 	public CardList cardsInHand() {
-		CardList nouvelleListe = (CardList)this.hand.clone();
-		//CardList nouvelleListe = new CardList();
-		/*for(int i=0 ; i<this.hand.size(); i++) {
-			nouvelleListe.add(this.hand.get(i));
-		}*/
+		CardList nouvelleListe = new CardList();
+		for(Card carte : this.hand) {
+			nouvelleListe.add(carte);
+		}
 		return nouvelleListe;
-	}
-	//TEST
-	public CardList getHand() {
-		return this.hand;
 	}
 	
 	//Retire de la pile en jeu (méthode utilisée dans classe Feast)
@@ -171,7 +166,7 @@ public class Player {
 	
 	//Ajoute la carte dans la pioche à l'indice indiqué (pour pouvoir remettre carte au dessus de la pile)
 	public void addDraw(int i, Card c) {
-		if(c != null) {
+		if(c != null && i>=0 && i<= this.draw.size()) {
 			this.draw.add(i, c);
 		}
 	}
@@ -188,20 +183,9 @@ public class Player {
 	
 	//Méthode pour enlever une carte de la main du joueur
 	public void removeFromHand(Card c) {
-		int carteSup = 0;
-		if(c != null) {
-			for(int i=0; i<this.cardsInHand().size(); i++ ) {
-				if(this.cardsInHand().get(i).getName().equals(c.getName()) && carteSup == 0) 
-				{
-					Copper cuivre = (Copper)this.hand.get(i);
-					this.hand.remove(cuivre);
-					carteSup ++;
-				}
-			}
-		}
-		/*if(this.hand.contains(c) && c != null) {
+		if(this.hand.contains(c) && c != null) {
 			this.hand.remove(c);
-		}*/
+		}
 	}
 	
 	/**
@@ -365,11 +349,13 @@ public class Player {
 	 * fait rien.
 	 */
 	public void playCard(String cardName) {
-		int cartesMemeNom = 0;
-		for(int i =0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getName().equalsIgnoreCase(cardName) && cartesMemeNom < 1) {
-				this.playCard(this.hand.get(i));
-				cartesMemeNom++;
+		if(cardName != null) {
+			boolean carteTrouve = false;
+			for(int i=0; i < this.hand.size(); i++) {
+				if(!carteTrouve && this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
+					carteTrouve = true;
+					this.playCard(this.hand.get(i));
+				}
 			}
 		}
 	}

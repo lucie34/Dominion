@@ -17,17 +17,15 @@ public class Bureaucrat extends AttackCard {
 	}
 
 	public void attaquer(Player p) {
-		CardList pileCartesVictory = p.getVictoryCards();
 		int nbCarteVictoryDevoile = 0;
-		if(!pileCartesVictory.isEmpty()) {
-			String rep = p.chooseCard("Choisissez une carte victoire dans votre main", pileCartesVictory, false);
-			for(int c = 0; c<pileCartesVictory.size(); c++) {
-				if(pileCartesVictory.get(c).getName().equalsIgnoreCase(rep) && nbCarteVictoryDevoile < 1) {
-					Card carteVictory = pileCartesVictory.get(c);
+		if(!p.getVictoryCards().isEmpty()) {
+			String rep = p.chooseCard("Choisissez une carte victoire dans votre main à dévoiler", p.getVictoryCards(), false);
+			for(int c = 0; c<p.getVictoryCards().size(); c++) {
+				if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
+					Card carteVictory = p.getVictoryCards().get(c);
 					System.out.println("\n"+p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
 					p.addDraw(0, carteVictory);
 					p.removeFromHand(carteVictory);
-					pileCartesVictory.remove(c);
 					nbCarteVictoryDevoile ++;
 				}
 			}
