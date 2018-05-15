@@ -25,10 +25,10 @@ public class Spy extends AttackCard {
 			//Récupère le joueur actif ayant joué la carte Spy
 			Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
 			if(carteDevoilee == null) {
-				System.out.println("\n"+p.getName()+" n'a pas de carte à dévoiler\n");
+				System.out.println(p.getName()+" n'a pas de carte à dévoiler\n");
 			}
 			else {
-				System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
+				System.out.println(p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
 				List<String> listeChoix= new ArrayList<String>();
 				//Le joueur actif choisit de faire défausser ou non la carte dévoilée par l'adversaire
 				String instruction = joueurActif.getName()+" : Voulez-vous faire défausser cette carte "+carteDevoilee.getName()+" dévoilée par le joueur "+p.getName()+" (y/n)";

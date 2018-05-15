@@ -29,6 +29,7 @@ public class Moneylender extends ActionCard {
 					Card carteCopper = p.cardsInHand().get(i);
 					p.getGame().addInTrash(carteCopper);
 					p.removeFromHand(carteCopper);
+					System.out.println(p.getName()+" écarte une carte Cuivre de sa main\n");
 					p.incrementMoney(3);
 				}
 			}			

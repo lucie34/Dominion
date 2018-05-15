@@ -45,7 +45,7 @@ public class Cellar extends ActionCard {
 			for(int i=0; i<nombreCartesDefausse; i++) {
 				p.incrementHand(p.drawCard());
 			}
-			System.out.println("\n"+p.getName()+" a défaussé "+nombreCartesDefausse+" cartes");			
+			System.out.println(p.getName()+" a défaussé "+nombreCartesDefausse+" cartes\n");			
 		}
 	}
 }

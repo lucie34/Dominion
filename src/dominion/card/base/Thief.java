@@ -29,7 +29,7 @@ public class Thief extends AttackCard {
 			Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
 			for(Card carte : listeCartesDevoile) {
 				if(carte != null) {
-					System.out.println("\n"+p.getName()+" dévoile de son deck la carte "+carte.getTypes().get(0)+" : "+carte.getName());
+					System.out.println(p.getName()+" dévoile de son deck la carte "+carte.getTypes().get(0)+" : "+carte.getName()+"\n");
 					//Si la carte dévoilée est une carte trésor, elle est ajoutée à la liste de cartes cartesTresor
 					if(carte.getTypes().get(0).equals(CardType.Treasure)) {
 						cartesTresor.add(carte);

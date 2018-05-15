@@ -25,7 +25,7 @@ public class Chancellor extends ActionCard {
 				pioche.add(carte);
 			}	
 			if(!pioche.isEmpty()) {
-				String instruction = "\nVoulez-vous défausser votre deck ? (y/n)\n";
+				String instruction = "Voulez-vous défausser votre deck ? (y/n)";
 				List<String> listeChoix = new ArrayList<String>(2);
 				listeChoix.add("y");
 				listeChoix.add("n");
@@ -34,15 +34,15 @@ public class Chancellor extends ActionCard {
 					for(int i=0; i<pioche.size(); i++) {
 						p.gain(p.drawCard());
 					}
-					System.out.println("\n"+p.getName()+" a defaussé son deck");
+					System.out.println(p.getName()+" a defaussé son deck\n");
 				}
 				else {
-					System.out.println("\n"+p.getName()+" choisit de ne pas défausser son deck");
+					System.out.println(p.getName()+" choisit de ne pas défausser son deck\n");
 				}
 			}
 			else {
-				System.out.println("\n"+p.getName()+" n'a pas de deck à défausser");
+				System.out.println(p.getName()+" n'a pas de deck à défausser\n");
 			}
 		}			
-		}	
+	}	
 }

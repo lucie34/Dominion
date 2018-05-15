@@ -26,7 +26,7 @@ public class Bureaucrat extends AttackCard {
 				for(int c = 0; c<p.getVictoryCards().size(); c++) {
 					if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c) != null && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
 						Card carteVictory = p.getVictoryCards().get(c);
-						System.out.println("\n"+p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
+						System.out.println(p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
 						p.addDraw(0, carteVictory);
 						p.removeFromHand(carteVictory);
 						nbCarteVictoryDevoile ++;
@@ -50,7 +50,7 @@ public class Bureaucrat extends AttackCard {
 				p.addDraw(0, carteGain);
 			}
 			else {
-				System.out.println("\nLa pile Silver de la réserve est vide\n");
+				System.out.println("La pile Silver de la réserve est vide\n");
 			}
 			Moat douves = new Moat();
 			List<Player> adversaires = p.otherPlayers();

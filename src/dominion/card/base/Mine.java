@@ -59,7 +59,7 @@ public class Mine extends ActionCard {
 						if(!carteTrouve && listeTreasureCards.get(c).getName().equalsIgnoreCase(choix)) {
 							carteTrouve = true;
 							p.incrementHand(p.getGame().removeFromSupply(choix));
-							System.out.println("\n"+p.getName() +" reçoit une carte trésor "+choix);
+							System.out.println("\n"+p.getName() +" reçoit une carte trésor "+choix+"\n");
 						}
 					}
 				}

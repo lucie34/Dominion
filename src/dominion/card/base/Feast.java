@@ -46,7 +46,7 @@ public class Feast extends ActionCard {
 				}
 			}
 			else {
-				System.out.println("Aucune carte de la réserve à moins de 6 pièces disponible");
+				System.out.println("Aucune carte de la réserve à moins de 6 pièces disponible\n");
 			}			
 		}
 	}

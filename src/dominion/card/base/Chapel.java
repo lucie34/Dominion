@@ -33,7 +33,7 @@ public class Chapel extends ActionCard {
 							p.getGame().addInTrash(carte);
 							p.removeFromHand(carte);
 							nombreCartesEcarte++;
-							System.out.println("\n"+p.getName()+" a écarté une carte");
+							System.out.println(p.getName()+" a écarté une carte\n");
 						}
 					}
 				}

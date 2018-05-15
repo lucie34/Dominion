@@ -52,12 +52,12 @@ public class Remodel extends ActionCard {
 						if(!carteTrouve && listeCarte.get(c).getName().equalsIgnoreCase(choix)) {
 							carteTrouve = true;
 							p.gain(choix);
-							System.out.println("\n"+p.getName() +" reçoit une carte "+choix);
+							System.out.println(p.getName() +" reçoit une carte "+choix+"\n");
 						}
 					}
 				}
 				else {
-					System.out.println("Aucune carte de la réserve à moins de "+(coutCarte+1)+" pièces disponible");
+					System.out.println("Aucune carte de la réserve à moins de "+(coutCarte+1)+" pièces disponible\n");
 				}
 			}
 			else {

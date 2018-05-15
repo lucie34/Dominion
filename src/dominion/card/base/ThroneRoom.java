@@ -23,7 +23,7 @@ public class ThroneRoom extends ActionCard {
 			//Affiche le nombre d'actions restant à jouer
 			int nbActionsRestant = 2;
 			int nbCarteActionChoisie = 0;
-			System.out.println("\n"+nbActionsRestant+" actions restantes\n");
+			System.out.println(nbActionsRestant+" actions restantes\n");
 			//Récupère les cartes action dans la main du joueur
 			CardList listeActionCards = p.getActionCards();
 			String instruction = "Choisissez une carte action dans votre main à jouer 2 fois";
@@ -35,19 +35,19 @@ public class ThroneRoom extends ActionCard {
 					if(nbCarteActionChoisie < 1 && listeActionCards.get(c) != null && listeActionCards.get(c).getName().equalsIgnoreCase(choix)) {
 						nbCarteActionChoisie++;
 						Card cardChoosed = listeActionCards.get(c);
-						System.out.println("\n"+p.getName()+" choisit de jouer 2 fois sa carte action : "+ cardChoosed.getName());
+						System.out.println(p.getName()+" choisit de jouer 2 fois sa carte action : "+ cardChoosed.getName()+"\n");
 						if(cardChoosed.getName().equalsIgnoreCase("ThroneRoom") || cardChoosed.getName().equalsIgnoreCase("Cave") || cardChoosed.getName().equalsIgnoreCase("Espion") || cardChoosed.getName().equalsIgnoreCase("Laboratoire") || cardChoosed.getName().equalsIgnoreCase("Market")) {
 							nbActionsRestant += 2;
-							System.out.println("\n"+nbActionsRestant+" actions restantes");
+							System.out.println(nbActionsRestant+" actions restantes\n");
 						}
 						else if(cardChoosed.getName().equalsIgnoreCase("Village") || cardChoosed.getName().equalsIgnoreCase("Festival")) {
 							nbActionsRestant += 4;
-							System.out.println("\n"+nbActionsRestant+" actions restantes");
+							System.out.println(nbActionsRestant+" actions restantes\n");
 						}
 						cardChoosed.play(p);//carte action jouée une première fois
 						p.playCard(cardChoosed);//carte action jouée une deuxième fois et mise dans pile inPlay
 						nbActionsRestant -= 2;
-						System.out.println("\n"+nbActionsRestant+" actions restantes");
+						System.out.println(nbActionsRestant+" actions restantes\n");
 					}
 				}
 			}
