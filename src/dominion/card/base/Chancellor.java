@@ -16,29 +16,31 @@ public class Chancellor extends ActionCard {
 	}
 
 	public void play(Player p) {
-		p.incrementMoney(2);
-		CardList pioche = new CardList();
-		for(Card carte : p.getDraw()) {
-			pioche.add(carte);
-		}	
-		if(!pioche.isEmpty()) {
-			String instruction = "\nVoulez-vous défausser votre deck ? (y/n)\n";
-			List<String> listeChoix = new ArrayList<String>(2);
-			listeChoix.add("y");
-			listeChoix.add("n");
-			String choix = p.choose(instruction, listeChoix, false);
-			if(choix.equalsIgnoreCase("y")) {
-				for(int i=0; i<pioche.size(); i++) {
-					p.gain(p.drawCard());
+		if(p != null) {
+			p.incrementMoney(2);
+			CardList pioche = new CardList();
+			for(Card carte : p.getDraw()) {
+				pioche.add(carte);
+			}	
+			if(!pioche.isEmpty()) {
+				String instruction = "\nVoulez-vous défausser votre deck ? (y/n)\n";
+				List<String> listeChoix = new ArrayList<String>(2);
+				listeChoix.add("y");
+				listeChoix.add("n");
+				String choix = p.choose(instruction, listeChoix, false);
+				if(choix.equalsIgnoreCase("y")) {
+					for(int i=0; i<pioche.size(); i++) {
+						p.gain(p.drawCard());
+					}
+					System.out.println("\n"+p.getName()+" a defaussé son deck");
 				}
-				System.out.println("\n"+p.getName()+" a defaussé son deck");
+				else {
+					System.out.println("\n"+p.getName()+" choisit de ne pas défausser son deck");
+				}
 			}
 			else {
-				System.out.println("\n"+p.getName()+" choisit de ne pas défausser son deck");
+				System.out.println("\n"+p.getName()+" n'a pas de deck à défausser");
 			}
-		}
-		else {
-			System.out.println("\n"+p.getName()+" n'a pas de deck à défausser");
-		}
-	}
+		}			
+		}	
 }

@@ -17,40 +17,45 @@ public class Bureaucrat extends AttackCard {
 	}
 
 	public void attaquer(Player p) {
-		int nbCarteVictoryDevoile = 0;
-		if(!p.getVictoryCards().isEmpty()) {
-			String rep = p.chooseCard("Choisissez une carte victoire dans votre main à dévoiler", p.getVictoryCards(), false);
-			for(int c = 0; c<p.getVictoryCards().size(); c++) {
-				if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
-					Card carteVictory = p.getVictoryCards().get(c);
-					System.out.println("\n"+p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
-					p.addDraw(0, carteVictory);
-					p.removeFromHand(carteVictory);
-					nbCarteVictoryDevoile ++;
+		if(p != null) {
+			int nbCarteVictoryDevoile = 0;
+			if(!p.getVictoryCards().isEmpty()) {
+				String rep = p.chooseCard("Choisissez une carte victoire dans votre main à dévoiler", p.getVictoryCards(), false);
+				for(int c = 0; c<p.getVictoryCards().size(); c++) {
+					if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
+						Card carteVictory = p.getVictoryCards().get(c);
+						System.out.println("\n"+p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
+						p.addDraw(0, carteVictory);
+						p.removeFromHand(carteVictory);
+						nbCarteVictoryDevoile ++;
+					}
 				}
 			}
+			else {
+				String mainDevoile = String.format("%s\n", p.cardsInHand().toString());
+				System.out.println(p.getName()+" dévoile sa main sans carte victoire : \n"+mainDevoile);
+			}			
 		}
-		else {
-			String mainDevoile = String.format("%s\n", p.cardsInHand().toString());
-			System.out.println(p.getName()+" dévoile sa main sans carte victoire : \n"+mainDevoile);
-		}
+
 	}
 
 	public void play(Player p) {
-		Silver silver =  new Silver();
-		Card carteGain = p.getGame().removeFromSupply(silver.getName());
-		if(carteGain != null) {
-			p.addDraw(0, carteGain);
-		}
-		else {
-			System.out.println("\nLa pile Silver de la réserve est vide\n");
-		}
-		Moat douves = new Moat();
-		List<Player> adversaires = p.otherPlayers();
-		for(int i = 0; i<adversaires.size(); i++) {
-			if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-				this.attaquer(adversaires.get(i));
+		if(p != null) {
+			Silver silver =  new Silver();
+			Card carteGain = p.getGame().removeFromSupply(silver.getName());
+			if(carteGain != null) {
+				p.addDraw(0, carteGain);
 			}
+			else {
+				System.out.println("\nLa pile Silver de la réserve est vide\n");
+			}
+			Moat douves = new Moat();
+			List<Player> adversaires = p.otherPlayers();
+			for(int i = 0; i<adversaires.size(); i++) {
+				if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
+					this.attaquer(adversaires.get(i));
+				}
+			}			
 		}
 	}
 }

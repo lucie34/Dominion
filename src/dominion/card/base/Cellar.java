@@ -17,30 +17,32 @@ public class Cellar extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		p.incrementActions(1);
-		boolean carteTrouve;
-		int nombreCartesDefausse = 0;
-		String instruction = "Choisissez une carte de votre main à défausser ou laissez vide";
-		String choix = "init";
-		while(!choix.equalsIgnoreCase("")) {
-			choix = p.chooseCard(instruction, p.cardsInHand(), true);
-			if(!choix.equalsIgnoreCase("")) {
-				carteTrouve = false;
-				for(int i=0; i<p.cardsInHand().size(); i++) {
-					if(!carteTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(choix)) {
-						carteTrouve = true;
-						Card carte = p.cardsInHand().get(i);
-						p.gain(carte);
-						p.removeFromHand(carte);
-						nombreCartesDefausse++;
-						System.out.println("\n"+p.getName()+" a defaussé une carte");
+		if(p != null) {
+			p.incrementActions(1);
+			boolean carteTrouve;
+			int nombreCartesDefausse = 0;
+			String instruction = "Choisissez une carte de votre main à défausser ou laissez vide";
+			String choix = "init";
+			while(!choix.equalsIgnoreCase("")) {
+				choix = p.chooseCard(instruction, p.cardsInHand(), true);
+				if(!choix.equalsIgnoreCase("")) {
+					carteTrouve = false;
+					for(int i=0; i<p.cardsInHand().size(); i++) {
+						if(!carteTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(choix)) {
+							carteTrouve = true;
+							Card carte = p.cardsInHand().get(i);
+							p.gain(carte);
+							p.removeFromHand(carte);
+							nombreCartesDefausse++;
+							System.out.println("\n"+p.getName()+" a defaussé une carte");
+						}
 					}
 				}
 			}
+			for(int i=0; i<nombreCartesDefausse; i++) {
+				p.incrementHand(p.drawCard());
+			}
+			System.out.println("\n"+p.getName()+" a défaussé "+nombreCartesDefausse+" cartes");			
 		}
-		for(int i=0; i<nombreCartesDefausse; i++) {
-			p.incrementHand(p.drawCard());
-		}
-		System.out.println("\n"+p.getName()+" a défaussé "+nombreCartesDefausse+" cartes");
 	}
 }
