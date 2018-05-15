@@ -68,13 +68,23 @@ public class Player {
 	 * prÃ©parer la main du joueur aprÃ¨s avoir placÃ© les cartes dans la dÃ©fausse.
 	 */
 	public Player(String name, Game game) {
-		//Initialisation des attributs bouh
-		discard = new CardList();
-		hand = new CardList();
-		draw = new CardList();
-		inPlay = new CardList();
+		//game ne peut pas être null
+		if(game == null) {
+			System.err.println("\nLe deuxième paramètre du constructeur de Player ne doit pas être null, veuillez spécifier une instance de Game\n");
+			System.exit(2);
+		}
+		//Initialisation des attributs
+		this.discard = new CardList();
+		this.hand = new CardList();
+		this.draw = new CardList();
+		this.inPlay = new CardList();
+		if(name == null) {
+			this.name = "defaultName";
+		}
+		else {
+			this.name = name;
+		}
 		this.game = game;
-		this.name = name;
 		//Ajoute les 5 cartes dans la défausse du joueur
 		for(int i = 0; i<3; i++) {
 			this.discard.add(new Estate());
@@ -157,7 +167,7 @@ public class Player {
 		}
 		return nouvelleListe;
 	}
-	
+
 	//Retire de la pile en jeu (méthode utilisée dans classe Feast)
 	public void removeFromInPlay(Card c) {
 		if(this.inPlay.contains(c) && c != null) {
@@ -210,7 +220,7 @@ public class Player {
 		}
 		return toutesCartes;
 	}
-	
+
 	/**
 	 * Renvoie le nombre total de points de victoire du joueur
 	 * 
@@ -226,7 +236,7 @@ public class Player {
 		}
 		return pointVictoire;
 	}
-	
+
 	/**
 	 * Renvoie une liste des autres joueurs de la partie.
 	 * 
@@ -254,7 +264,9 @@ public class Player {
 	 */
 	public Card drawCard() {
 		if(this.draw.isEmpty()) {
-			if(this.discard.isEmpty()) {return null;}
+			if(this.discard.isEmpty()) {
+				return null;
+			}
 			this.discard.shuffle();
 			for(int i=0; i<this.discard.size(); i++) {
 				this.draw.add(this.discard.get(i));
@@ -263,7 +275,7 @@ public class Player {
 		}
 		return this.draw.remove(0);
 	}
-	
+
 	/**
 	 * Renvoie une reprÃ©sentation de l'Ã©tat du joueur sous forme d'une chaÃ®ne
 	 * de caractÃ¨res.
@@ -289,33 +301,33 @@ public class Player {
 	public CardList getTreasureCards() {
 		CardList listTresor = new CardList();
 		for(int i=0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getTypes().get(0).equals(CardType.Treasure)) {
+			if(this.hand.get(i) != null && this.hand.get(i).getTypes().get(0).equals(CardType.Treasure)) {
 				listTresor.add(this.hand.get(i));
 			}
 		}
 		return listTresor;
 	}
-	
+
 	/**
 	 * Renvoie la liste de toutes les cartes Action dans la main du joueur
 	 */
 	public CardList getActionCards() {
 		CardList listAction = new CardList();
 		for(int i=0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getTypes().get(0).equals(CardType.Action)) {
+			if(this.hand.get(i) != null && this.hand.get(i).getTypes().get(0).equals(CardType.Action)) {
 				listAction.add(this.hand.get(i));
 			}
 		}
 		return listAction;
 	}
-	
+
 	/**
 	 * Renvoie la liste de toutes les cartes Victoire dans la main du joueur
 	 */
 	public CardList getVictoryCards() {
 		CardList listVictoire = new CardList();
 		for(int i=0; i < this.hand.size(); i++) {
-			if(this.hand.get(i).getTypes().get(0).equals(CardType.Victory)) {
+			if(this.hand.get(i) != null && this.hand.get(i).getTypes().get(0).equals(CardType.Victory)) {
 				listVictoire.add(this.hand.get(i));
 			}
 		}
@@ -333,10 +345,11 @@ public class Player {
 	 * {@code inPlay} et exÃ©cute la mÃ©thode {@code play(Player p)} de la carte.
 	 */
 	public void playCard(Card c) {
-		this.hand.remove(c);
-		this.inPlay.add(c); 
-		c.play(this);
-		
+		if(c != null) {
+			this.hand.remove(c);
+			this.inPlay.add(c);
+			c.play(this);
+		}
 	}
 	
 	/**
@@ -353,7 +366,7 @@ public class Player {
 		if(cardName != null) {
 			boolean carteTrouve = false;
 			for(int i=0; i < this.hand.size(); i++) {
-				if(!carteTrouve && this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
+				if(!carteTrouve && this.hand.get(i) != null && this.hand.get(i).getName().equalsIgnoreCase(cardName)) {
 					carteTrouve = true;
 					this.playCard(this.hand.get(i));
 				}
@@ -390,8 +403,8 @@ public class Player {
 		this.gain(c); 
 		return game.removeFromSupply(cardName);
 	}
-	
-	
+
+
 	/**
 	 * Le joueur achÃ¨te une carte de la rÃ©serve
 	 * 
@@ -598,7 +611,7 @@ public class Player {
 	 */
 	public void playTurn() {
 		this.startTurn();
-		String reponse = "l";
+		String reponse = "init";
 		while(this.actions>0 && !reponse.equalsIgnoreCase("")) {
 			String instruction = "Choisissez une carte ACTION de votre main ou entrez une réponse vide pour arrêter cette étape" ;
 			reponse = chooseCard(instruction, this.getActionCards(), true);
