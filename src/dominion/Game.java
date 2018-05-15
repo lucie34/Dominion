@@ -81,7 +81,7 @@ public class Game {
 			for(int i=0; i<30; i++) {
 				gold.add(new Gold());	
 			}
-			if(nombreJoueur == 2) {
+			if(nombreJoueur <= 2) {
 				for(int i=0; i<8; i++) {
 					estate.add(new Estate());	
 				}
