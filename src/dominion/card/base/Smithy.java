@@ -10,10 +10,12 @@ import dominion.card.*;
  */
 public class Smithy extends ActionCard {
 	
+	//Constructeur
 	public Smithy() {
 		super("Smithy", 4);
 	}
 	
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			for(int i = 0; i<3; i++) {
@@ -21,5 +23,4 @@ public class Smithy extends ActionCard {
 			}			
 		}
 	}
-	
 }

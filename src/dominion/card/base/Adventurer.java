@@ -10,11 +10,12 @@ import dominion.card.*;
  */
 public class Adventurer extends ActionCard {
 
+	//Constructeur
 	public Adventurer() {
 		super("Adventurer", 6);
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			int carteTresor = 0;
@@ -23,14 +24,19 @@ public class Adventurer extends ActionCard {
 			for(int i=0; i < totalCartesDevoilables; i++) {
 				if(carteTresor < 2) {
 					Card carteDevoilee = p.drawCard();
-					System.out.println("\n"+p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
-					if(carteDevoilee.getTypes().get(0).equals(CardType.Treasure)) {
-						carteTresor++;
-						p.incrementHand(carteDevoilee);
+					if(carteDevoilee != null) {
+						System.out.println(p.getName()+" dévoile la première carte de son deck : carte "+carteDevoilee.getName()+"\n");
+						if(carteDevoilee.getTypes().get(0).equals(CardType.Treasure)) {
+							carteTresor++;
+							p.incrementHand(carteDevoilee);
+						}
+						else {
+							p.gain(carteDevoilee);
+						}	
 					}
 					else {
-						p.gain(carteDevoilee);
-					}	
+						System.out.println(p.getName()+" n'a pas de carte à dévoiler\n");
+					}
 				}
 			}
 		}

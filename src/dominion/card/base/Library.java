@@ -10,12 +10,13 @@ import dominion.card.*;
  */
 public class Library extends ActionCard {
 
+	//Constructeur
 	public Library() {
 		super("Library", 5);
 	
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			CardList deCote = new CardList();
@@ -38,6 +39,7 @@ public class Library extends ActionCard {
 					p.incrementHand(carte); // met la carte dans la main
 				}
 			}
+			System.out.println(p.getName()+" a 7 cartes en main ou plus");
 			for(Card carte : deCote) {
 				p.gain(carte); //met les cartes mises de coté dans la défausse
 			}

@@ -11,10 +11,12 @@ import dominion.card.*;
  */
 public class Woodcutter extends ActionCard {
 	
+	//Constructeur
 	public Woodcutter() {
 		super("Woodcutter", 3);
 	}
 	
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			p.incrementBuys(1);

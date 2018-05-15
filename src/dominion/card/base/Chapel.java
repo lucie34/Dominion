@@ -10,10 +10,12 @@ import dominion.card.*;
  */
 public class Chapel extends ActionCard {
 
+	//Méthode
 	public Chapel() {
 		super("Chapel", 2);
 	}
 
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			boolean carteTrouve;
@@ -25,7 +27,7 @@ public class Chapel extends ActionCard {
 				if(!choix.equalsIgnoreCase("")) {
 					carteTrouve = false;
 					for(int i=0; i<p.cardsInHand().size(); i++) {
-						if(!carteTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(choix)) {
+						if(!carteTrouve && p.cardsInHand().get(i) != null && p.cardsInHand().get(i).getName().equalsIgnoreCase(choix)) {
 							carteTrouve = true;
 							Card carte = p.cardsInHand().get(i);
 							p.getGame().addInTrash(carte);

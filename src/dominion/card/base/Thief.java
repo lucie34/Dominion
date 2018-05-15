@@ -12,12 +12,10 @@ public class Thief extends AttackCard {
 	//listes de cartes écartées par le joueur actif dans laquelle il peut récupérer les cartes qu'il souhaite
 	private static CardList cartesEcarte = new CardList();
 	
-	
 	//Constructeur
 	public Thief() {
 		super("Thief", 4);
 	}
-	
 	
 	//Méthode réalisant l'action d'attaque de la carte
 	public void attaquer(Player p) {
@@ -53,6 +51,7 @@ public class Thief extends AttackCard {
 							nbCartesTresorEcarte++;
 							//La carte écartée est ajoutée à la liste cartesEcarte en attribut de classe
 							cartesEcarte.add(cartesTresor.get(i));
+							System.out.println(joueurActif.getName()+" fait écarter la carte "+cartesTresor.get(i).getName()+" au joueur "+p.getName()+"\n");
 							cartesTresor.remove(i);
 						}
 					}
@@ -64,7 +63,6 @@ public class Thief extends AttackCard {
 			}			
 		}
 	}
-
 	
 	//Méthode play jouant la carte
 	public void play(Player p) {
@@ -81,16 +79,22 @@ public class Thief extends AttackCard {
 				}
 				//Si cartesEcarte contient des cartes, le joueur actif peut récupérer celles qu'il souhaite. Les autres sont mises dans le trash du Game
 				if(!cartesEcarte.isEmpty()) {
-					int nbCartesRecup = 0;
-					int nbCartesEcarte = cartesEcarte.size();
+					boolean carteTrouve;
+					int nbCartesEcarte;
 					String instruction = p.getName()+" : Choisissez de récupérer une carte trésor écartée ou laissez vide";
-					String rep2 = p.chooseCard(instruction, cartesEcarte, true);
-					if(!rep2.equalsIgnoreCase("")) {
-						for(int i=0; i<nbCartesEcarte; i++) {
-							if(nbCartesRecup < 1 && cartesEcarte.get(i).getName().equalsIgnoreCase(rep2)) {
-								nbCartesRecup++;
-								p.gain(cartesEcarte.get(i));
-								cartesEcarte.remove(i);
+					String rep2="init";
+					while(!rep2.equalsIgnoreCase("")) {
+						rep2 = p.chooseCard(instruction, cartesEcarte, true);
+						if(!rep2.equalsIgnoreCase("")) {
+							nbCartesEcarte = cartesEcarte.size();
+							carteTrouve = false;
+							for(int i=0; i<nbCartesEcarte; i++) {
+								if(!carteTrouve && cartesEcarte.get(i).getName().equalsIgnoreCase(rep2)) {
+									carteTrouve = true;
+									p.gain(cartesEcarte.get(i));
+									System.out.println(p.getName()+" récupère la carte trésor "+cartesEcarte.get(i).getName()+"\n");
+									cartesEcarte.remove(i);
+								}
 							}
 						}
 					}

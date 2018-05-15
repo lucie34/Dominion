@@ -11,10 +11,12 @@ import dominion.card.*;
  */
 public class Remodel extends ActionCard {
 
+	//Constructeur
 	public Remodel() {
 		super("Remodel", 4);
 	}
 
+	//Constructeur jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			int coutCarte = 0;
@@ -25,7 +27,7 @@ public class Remodel extends ActionCard {
 				choix = p.chooseCard(instruction, p.cardsInHand(), false);
 				carteTrouve = false;
 				for(int c = 0; c<p.cardsInHand().size(); c++) {
-					if(!carteTrouve && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
+					if(!carteTrouve && p.cardsInHand().get(c) != null && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
 						carteTrouve = true;
 						Card carte = p.cardsInHand().get(c);
 						coutCarte = carte.getCost();
@@ -38,7 +40,7 @@ public class Remodel extends ActionCard {
 				CardList reserve = p.getGame().availableSupplyCards();
 				CardList listeCarte = new CardList();
 				for(Card carte : reserve) {
-					if(carte.getCost()<=coutCarte) {
+					if(carte != null && carte.getCost()<=coutCarte) {
 						listeCarte.add(carte);
 					}
 				}
@@ -57,7 +59,10 @@ public class Remodel extends ActionCard {
 				else {
 					System.out.println("Aucune carte de la réserve à moins de "+(coutCarte+1)+" pièces disponible");
 				}
-			}			
+			}
+			else {
+				System.out.println(p.getName()+" n'a pas de carte à écarter dans sa main\n");
+			}
 		}
 	}
 }

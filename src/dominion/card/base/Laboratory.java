@@ -11,12 +11,12 @@ import dominion.card.*;
  */
 public class Laboratory extends ActionCard {
 
+	//Constructeur
 	public Laboratory() {
 		super("Laboratory", 5);
-		
 	}
 
-	@Override
+	//méthode play jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			for(int i = 0; i<2; i++) {
@@ -25,6 +25,4 @@ public class Laboratory extends ActionCard {
 			p.incrementActions(1);			
 		}
 	}
-	
-	
 }

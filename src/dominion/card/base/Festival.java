@@ -12,12 +12,12 @@ import dominion.card.*;
  */
 public class Festival extends ActionCard {
 
+	//Constructeur
 	public Festival() {
 		super("Festival", 5);
-		
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			p.incrementActions(2);

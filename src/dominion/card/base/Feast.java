@@ -11,10 +11,12 @@ import dominion.card.*;
  */
 public class Feast extends ActionCard {
 	
+	//Constructeur
 	public Feast() {
 		super("Feast", 4);
 	}
 	
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			//Ecarte cette carte
@@ -26,7 +28,7 @@ public class Feast extends ActionCard {
 			CardList reserve = p.getGame().availableSupplyCards();
 			CardList listeCartes = new CardList();
 			for(Card carte : reserve) {
-				if(carte.getCost()<=5) {
+				if(carte != null && carte.getCost()<=5) {
 					listeCartes.add(carte);
 				}
 			}
@@ -36,7 +38,10 @@ public class Feast extends ActionCard {
 				for(int c = 0; c<listeCartes.size(); c++) {
 					if(!carteTrouve && listeCartes.get(c).getName().equalsIgnoreCase(choix)) {
 						carteTrouve = true;
-						p.gain(choix);
+						Card carte = p.gain(choix);
+						if(carte != null) {
+							System.out.println(p.getName()+" reçoit la carte "+carte.getName()+"\n");
+						}
 					}
 				}
 			}

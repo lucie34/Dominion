@@ -12,10 +12,12 @@ import dominion.card.*;
  */
 public class CouncilRoom extends ActionCard {
 	
+	//Constructeur
 	public CouncilRoom() {
 		super("Council Room", 5);
 	}
 	
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			for(int i=0; i<4; i++) {
@@ -23,9 +25,11 @@ public class CouncilRoom extends ActionCard {
 			}
 			p.incrementBuys(1);
 			List<Player> adversaires = p.otherPlayers();
-			for(int i=0; i<adversaires.size(); i++) {
-				adversaires.get(i).incrementHand(adversaires.get(i).drawCard());
-			}			
+			if(adversaires != null) {
+				for(int i=0; i<adversaires.size(); i++) {
+					adversaires.get(i).incrementHand(adversaires.get(i).drawCard());
+				}	
+			}
 		}
 	}
 }

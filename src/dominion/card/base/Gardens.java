@@ -10,17 +10,17 @@ import dominion.card.*;
  */
 public class Gardens extends VictoryCard {
 
+	//Constructeur
 	public Gardens() {
 		super("Gardens", 4);
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		// TODO Auto-generated method stub
-		
 	}
 	
+	//Méthode calculant la valeur de cette carte victoire
 	public int victoryValue(Player p) {
 		if(p != null) {
 			int valeur = (p.totalCards().size())/10;
@@ -28,6 +28,4 @@ public class Gardens extends VictoryCard {
 		}
 		return 0;
 	}
-	
-	
 }

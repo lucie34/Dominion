@@ -11,10 +11,13 @@ import dominion.card.*;
  */
 public class Village extends ActionCard {
 	
+	//Constructeur
 	public Village() {
 		super("Village", 3);
 	}
 	
+	
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			p.incrementHand(p.drawCard());

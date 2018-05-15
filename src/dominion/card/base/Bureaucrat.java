@@ -12,17 +12,19 @@ import dominion.card.common.*;
  */
 public class Bureaucrat extends AttackCard {
 
+	//Constructeur
 	public Bureaucrat() {
 		super("Bureaucrat", 4);
 	}
 
+	//Méthode jouant l'action d'attaque de la carte
 	public void attaquer(Player p) {
 		if(p != null) {
-			int nbCarteVictoryDevoile = 0;
 			if(!p.getVictoryCards().isEmpty()) {
+				int nbCarteVictoryDevoile = 0;
 				String rep = p.chooseCard("Choisissez une carte victoire dans votre main à dévoiler", p.getVictoryCards(), false);
 				for(int c = 0; c<p.getVictoryCards().size(); c++) {
-					if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
+					if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c) != null && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
 						Card carteVictory = p.getVictoryCards().get(c);
 						System.out.println("\n"+p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
 						p.addDraw(0, carteVictory);
@@ -33,14 +35,15 @@ public class Bureaucrat extends AttackCard {
 			}
 			else {
 				String mainDevoile = String.format("%s\n", p.cardsInHand().toString());
-				System.out.println(p.getName()+" dévoile sa main sans carte victoire : \n"+mainDevoile);
+				System.out.println(p.getName()+" dévoile sa main sans carte victoire :\n"+mainDevoile);
 			}			
 		}
-
 	}
 
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
+			//Le joueur actif reçoit une carte argent si la pile correspondante dans la réserve n'est pas vide
 			Silver silver =  new Silver();
 			Card carteGain = p.getGame().removeFromSupply(silver.getName());
 			if(carteGain != null) {
@@ -51,11 +54,14 @@ public class Bureaucrat extends AttackCard {
 			}
 			Moat douves = new Moat();
 			List<Player> adversaires = p.otherPlayers();
-			for(int i = 0; i<adversaires.size(); i++) {
-				if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-					this.attaquer(adversaires.get(i));
-				}
-			}			
+			if(adversaires != null) {
+				//Si l'adversaire i ne dévoile pas une carte Moat, il subit l'attaque
+				for(int i = 0; i<adversaires.size(); i++) {
+					if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
+						this.attaquer(adversaires.get(i));
+					}
+				}	
+			}
 		}
 	}
 }

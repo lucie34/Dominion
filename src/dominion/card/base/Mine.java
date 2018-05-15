@@ -12,11 +12,12 @@ import dominion.card.common.Silver;
  */
 public class Mine extends ActionCard {
 
+	//Constructeur
 	public Mine() {
 		super("Mine", 5);	
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			int coutCarte = 0;
@@ -29,7 +30,7 @@ public class Mine extends ActionCard {
 				choix = p.chooseCard(instruction, p.getTreasureCards(), false);
 				carteTrouve = false;
 				for(int c = 0; c<p.getTreasureCards().size(); c++) {
-					if(!carteTrouve && p.getTreasureCards().get(c).getName().equalsIgnoreCase(choix)) {
+					if(!carteTrouve && p.getTreasureCards().get(c) != null && p.getTreasureCards().get(c).getName().equalsIgnoreCase(choix)) {
 						carteTrouve = true;
 						Card carte = p.getTreasureCards().get(c);
 						//Récupère le coût de la carte écartée
@@ -37,6 +38,7 @@ public class Mine extends ActionCard {
 						//L'écarte
 						p.getGame().addInTrash(carte);
 						p.removeFromHand(carte);
+						System.out.println(p.getName()+" écarte la carte trésor "+carte.getName()+"\n");
 					}
 				}
 				coutCarte += 3;
@@ -45,7 +47,7 @@ public class Mine extends ActionCard {
 				CardList listeTreasureCards = new CardList();
 				//Récupère les cartes trésor de la réserve disponible, coutant 3 pièces de plus ou moins que la carte écartée
 				for(Card carte : reserve) {
-					if(carte.getTypes().get(0).equals(CardType.Treasure) && carte.getCost()<=coutCarte) {
+					if(carte != null && carte.getTypes().get(0).equals(CardType.Treasure) && carte.getCost()<=coutCarte) {
 						listeTreasureCards.add(carte);
 					}
 				}

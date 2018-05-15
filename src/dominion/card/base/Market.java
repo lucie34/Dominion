@@ -13,15 +13,16 @@ import dominion.card.*;
  */
 public class Market extends ActionCard {
 
+	//Constructeur
 	public Market() {
 		super("Market", 5);
 		
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
-			p.incrementHand(p.drawCard()); // pioche une carte
+			p.incrementHand(p.drawCard());
 			p.incrementActions(1);
 			p.incrementBuys(1);
 			p.incrementMoney(1);			

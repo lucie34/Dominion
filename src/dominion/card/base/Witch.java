@@ -12,30 +12,34 @@ import dominion.card.common.Curse;
  */
 public class Witch extends AttackCard {
 
+	//Constructeur
 	public Witch() {
 		super("Witch", 5);	
 	}
 
-	@Override
+	//Méthode jouant l'action d'attaque de la carte
 	public void attaquer(Player p) {
 		if(p != null) {
 			Curse malediction = new Curse();
-			p.gain(malediction.getName());			
+			p.gain(malediction.getName());
+			System.out.println(p.getName()+" reçoit une carte Curse\n");
 		}
 	}
 
-	@Override
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			for(int i = 0; i<2; i++) {
 				p.incrementHand(p.drawCard()); 
 			}
-			Moat douves = new Moat();
-			for(int i=0; i < p.otherPlayers().size(); i++) {
-				if(!douves.devoiler(p.otherPlayers().get(i), p.otherPlayers().get(i).cardsInHand())) {
-					this.attaquer(p.otherPlayers().get(i));
-				}
-			}			
+			if(p.otherPlayers() != null) {
+				Moat douves = new Moat();
+				for(int i=0; i < p.otherPlayers().size(); i++) {
+					if(!douves.devoiler(p.otherPlayers().get(i), p.otherPlayers().get(i).cardsInHand())) {
+						this.attaquer(p.otherPlayers().get(i));
+					}
+				}	
+			}
 		}
 	}
 }

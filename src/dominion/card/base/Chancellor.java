@@ -11,10 +11,12 @@ import dominion.card.*;
  */
 public class Chancellor extends ActionCard {
 	
+	//Constructeur
 	public Chancellor() {
 		super("Chancellor", 3);
 	}
 
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			p.incrementMoney(2);

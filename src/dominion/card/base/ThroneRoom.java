@@ -12,24 +12,27 @@ import dominion.card.common.*;
  */
 public class ThroneRoom extends ActionCard {
 
+	//Constructeur
 	public ThroneRoom() {
 		super("Throne Room", 4);
 	}
 
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			//Affiche le nombre d'actions restant à jouer
 			int nbActionsRestant = 2;
 			int nbCarteActionChoisie = 0;
 			System.out.println("\n"+nbActionsRestant+" actions restantes\n");
-			//Récupère cartes action dans la main du joueur
+			//Récupère les cartes action dans la main du joueur
 			CardList listeActionCards = p.getActionCards();
 			String instruction = "Choisissez une carte action dans votre main à jouer 2 fois";
 			String choix;
 			if(!listeActionCards.isEmpty()) {
+				//Fait choisir une carte action au joueur
 				choix = p.chooseCard(instruction, listeActionCards, false);
 				for(int c=0; c<listeActionCards.size(); c++) {
-					if(nbCarteActionChoisie < 1 && listeActionCards.get(c).getName().equalsIgnoreCase(choix)) {
+					if(nbCarteActionChoisie < 1 && listeActionCards.get(c) != null && listeActionCards.get(c).getName().equalsIgnoreCase(choix)) {
 						nbCarteActionChoisie++;
 						Card cardChoosed = listeActionCards.get(c);
 						System.out.println("\n"+p.getName()+" choisit de jouer 2 fois sa carte action : "+ cardChoosed.getName());

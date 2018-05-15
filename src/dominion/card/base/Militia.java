@@ -11,43 +11,49 @@ import dominion.card.*;
  */
 public class Militia extends AttackCard {
 	
+	//Constructeur
 	public Militia() {
 		super("Militia", 4);
 	}
 
+	//Méthode jouant l'action d'attaque de la carte
 	public void attaquer(Player p) {
 		if(p != null) {
 			String instruction = "Vous devez avoir seulement 3 cartes en main, choisissez une carte de votre main à défausser";
 			String choix;
 			boolean carteTrouve;
-			//Ramène la main de l'adversaire i à 3 cartes s'il ne dévoile aucune carte Douves
+			//Ramène la main de l'adversaire i à 3 cartes
 			while(p.cardsInHand().size() > 3) {
 				//Empêche de défausser plusieurs fois les cartes de même nom dans la boucle for
 				carteTrouve = false;
 				choix = p.chooseCard(instruction, p.cardsInHand(), false);
 				for(int c=0; c<p.cardsInHand().size(); c++) {
-					if(!carteTrouve && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
+					if(!carteTrouve && p.cardsInHand().get(c) != null && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
 						carteTrouve = true;
 						Card carte = p.cardsInHand().get(c);
-						p.gain(carte);//met la carte choisie dans défausse
-						p.removeFromHand(carte);//l'enleve de la main du joueur
+						p.gain(carte);//met la carte choisie dans la défausse
+						p.removeFromHand(carte);//l'enlève de la main du joueur
 					}
 				}
-			}			
+			}
+			System.out.println(p.getName()+" a 3 cartes en main ou moins\n");
 		}
 	}
 
+	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
 			p.incrementMoney(2);
 			List<Player> adversaires = p.otherPlayers();
-			Moat douves = new Moat();
-			for(int i = 0; i<adversaires.size(); i++) {
-				//Gère le cas où l'adversaire i possède dans sa main et dévoile une carte Douves l'immunisant de l'attaque
-				if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
-					this.attaquer(adversaires.get(i));
-				}
-			}			
+			if(adversaires != null) {
+				Moat douves = new Moat();
+				for(int i = 0; i<adversaires.size(); i++) {
+					//Gère le cas où l'adversaire i possède dans sa main et dévoile une carte Douves l'immunisant de l'attaque
+					if(!douves.devoiler(adversaires.get(i), adversaires.get(i).cardsInHand())) {
+						this.attaquer(adversaires.get(i));
+					}
+				}		
+			}
 		}
 	}
 }
