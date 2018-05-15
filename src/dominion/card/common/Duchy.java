@@ -11,7 +11,10 @@ public class Duchy extends VictoryCard {
 	public Duchy() { super("Duchy", 5);	}
 	
 	public int victoryValue(Player p) {
-		return 3;
+		if(p != null) {
+			return 3;
+		}
+		return 0;
 	}
 
 	@Override

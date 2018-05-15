@@ -22,8 +22,11 @@ public class Gardens extends VictoryCard {
 	}
 	
 	public int victoryValue(Player p) {
-		int valeur = (p.totalCards().size())/10;
-		return valeur;
+		if(p != null) {
+			int valeur = (p.totalCards().size())/10;
+			return valeur;
+		}
+		return 0;
 	}
 	
 	
