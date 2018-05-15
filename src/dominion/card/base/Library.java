@@ -39,7 +39,7 @@ public class Library extends ActionCard {
 					p.incrementHand(carte); // met la carte dans la main
 				}
 			}
-			System.out.println(p.getName()+" a 7 cartes en main ou plus");
+			System.out.println(p.getName()+" a 7 cartes en main ou plus\n");
 			for(Card carte : deCote) {
 				p.gain(carte); //met les cartes mises de coté dans la défausse
 			}
