@@ -16,7 +16,9 @@ public class Woodcutter extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		p.incrementBuys(1);
-		p.incrementMoney(2);
+		if(p != null) {
+			p.incrementBuys(1);
+			p.incrementMoney(2);			
+		}
 	}
 }

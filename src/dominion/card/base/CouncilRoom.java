@@ -17,13 +17,15 @@ public class CouncilRoom extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		for(int i=0; i<4; i++) {
-			p.incrementHand(p.drawCard());
-		}
-		p.incrementBuys(1);
-		List<Player> adversaires = p.otherPlayers();
-		for(int i=0; i<adversaires.size(); i++) {
-			adversaires.get(i).incrementHand(adversaires.get(i).drawCard());
+		if(p != null) {
+			for(int i=0; i<4; i++) {
+				p.incrementHand(p.drawCard());
+			}
+			p.incrementBuys(1);
+			List<Player> adversaires = p.otherPlayers();
+			for(int i=0; i<adversaires.size(); i++) {
+				adversaires.get(i).incrementHand(adversaires.get(i).drawCard());
+			}			
 		}
 	}
 }

@@ -20,9 +20,11 @@ public class Market extends ActionCard {
 
 	@Override
 	public void play(Player p) {
-		p.incrementHand(p.drawCard()); // pioche une carte
-		p.incrementActions(1);
-		p.incrementBuys(1);
-		p.incrementMoney(1);
+		if(p != null) {
+			p.incrementHand(p.drawCard()); // pioche une carte
+			p.incrementActions(1);
+			p.incrementBuys(1);
+			p.incrementMoney(1);			
+		}
 	}
 }

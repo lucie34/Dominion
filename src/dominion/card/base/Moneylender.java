@@ -17,16 +17,18 @@ public class Moneylender extends ActionCard {
 	}
 
 	public void play(Player p) {
-		Copper carteCuivre = new Copper();
-		boolean copperTrouve = false;
-		for(int i=0; i<p.cardsInHand().size(); i++ ) {
-			if(!copperTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(carteCuivre.getName())){
-				copperTrouve = true;
-				Card carteCopper = p.cardsInHand().get(i);
-				p.getGame().addInTrash(carteCopper);
-				p.removeFromHand(carteCopper);
-				p.incrementMoney(3);
-			}
+		if(p != null) {
+			Copper carteCuivre = new Copper();
+			boolean copperTrouve = false;
+			for(int i=0; i<p.cardsInHand().size(); i++ ) {
+				if(!copperTrouve && p.cardsInHand().get(i).getName().equalsIgnoreCase(carteCuivre.getName())){
+					copperTrouve = true;
+					Card carteCopper = p.cardsInHand().get(i);
+					p.getGame().addInTrash(carteCopper);
+					p.removeFromHand(carteCopper);
+					p.incrementMoney(3);
+				}
+			}			
 		}
 	}
 }

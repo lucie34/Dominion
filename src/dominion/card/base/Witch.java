@@ -18,20 +18,24 @@ public class Witch extends AttackCard {
 
 	@Override
 	public void attaquer(Player p) {
-		Curse malediction = new Curse();
-		p.gain(malediction.getName());
+		if(p != null) {
+			Curse malediction = new Curse();
+			p.gain(malediction.getName());			
+		}
 	}
 
 	@Override
 	public void play(Player p) {
-		for(int i = 0; i<2; i++) {
-			p.incrementHand(p.drawCard()); 
-		}
-		Moat douves = new Moat();
-		for(int i=0; i < p.otherPlayers().size(); i++) {
-			if(!douves.devoiler(p.otherPlayers().get(i), p.otherPlayers().get(i).cardsInHand())) {
-				this.attaquer(p.otherPlayers().get(i));
+		if(p != null) {
+			for(int i = 0; i<2; i++) {
+				p.incrementHand(p.drawCard()); 
 			}
+			Moat douves = new Moat();
+			for(int i=0; i < p.otherPlayers().size(); i++) {
+				if(!douves.devoiler(p.otherPlayers().get(i), p.otherPlayers().get(i).cardsInHand())) {
+					this.attaquer(p.otherPlayers().get(i));
+				}
+			}			
 		}
 	}
 }

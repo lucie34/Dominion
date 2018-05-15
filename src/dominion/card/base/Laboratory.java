@@ -18,10 +18,12 @@ public class Laboratory extends ActionCard {
 
 	@Override
 	public void play(Player p) {
-		for(int i = 0; i<2; i++) {
-			p.incrementHand(p.drawCard()); 
+		if(p != null) {
+			for(int i = 0; i<2; i++) {
+				p.incrementHand(p.drawCard()); 
+			}
+			p.incrementActions(1);			
 		}
-		p.incrementActions(1);
 	}
 	
 	

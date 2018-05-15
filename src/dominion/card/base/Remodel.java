@@ -16,46 +16,48 @@ public class Remodel extends ActionCard {
 	}
 
 	public void play(Player p) {
-		int coutCarte = 0;
-		boolean carteTrouve;
-		String instruction = "Choisissez une carte de votre main à écarter";
-		String choix;
-		if(!p.cardsInHand().isEmpty()) {
-			choix = p.chooseCard(instruction, p.cardsInHand(), false);
-			carteTrouve = false;
-			for(int c = 0; c<p.cardsInHand().size(); c++) {
-				if(!carteTrouve && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
-					carteTrouve = true;
-					Card carte = p.cardsInHand().get(c);
-					coutCarte = carte.getCost();
-					p.getGame().addInTrash(carte);
-					p.removeFromHand(carte);
-				}
-			}
-			coutCarte += 2;
-			instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter au plus "+coutCarte+" pièces";
-			CardList reserve = p.getGame().availableSupplyCards();
-			CardList listeCarte = new CardList();
-			for(Card carte : reserve) {
-				if(carte.getCost()<=coutCarte) {
-					listeCarte.add(carte);
-				}
-			}
-			if(!listeCarte.isEmpty()) {
-				choix = p.chooseCard(instruction, listeCarte, false);
+		if(p != null) {
+			int coutCarte = 0;
+			boolean carteTrouve;
+			String instruction = "Choisissez une carte de votre main à écarter";
+			String choix;
+			if(!p.cardsInHand().isEmpty()) {
+				choix = p.chooseCard(instruction, p.cardsInHand(), false);
 				carteTrouve = false;
-				for(int c=0; c<listeCarte.size(); c++) {
-					//Ajoute la carte choisie au deck si la réserve contenait une carte de prix valide
-					if(!carteTrouve && listeCarte.get(c).getName().equalsIgnoreCase(choix)) {
+				for(int c = 0; c<p.cardsInHand().size(); c++) {
+					if(!carteTrouve && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
 						carteTrouve = true;
-						p.gain(choix);
-						System.out.println("\n"+p.getName() +" reçoit une carte "+choix);
+						Card carte = p.cardsInHand().get(c);
+						coutCarte = carte.getCost();
+						p.getGame().addInTrash(carte);
+						p.removeFromHand(carte);
 					}
 				}
-			}
-			else {
-				System.out.println("Aucune carte de la réserve à moins de "+(coutCarte+1)+" pièces disponible");
-			}
+				coutCarte += 2;
+				instruction = "Sélectionnez une carte de la réserve à recevoir, elle doit coûter au plus "+coutCarte+" pièces";
+				CardList reserve = p.getGame().availableSupplyCards();
+				CardList listeCarte = new CardList();
+				for(Card carte : reserve) {
+					if(carte.getCost()<=coutCarte) {
+						listeCarte.add(carte);
+					}
+				}
+				if(!listeCarte.isEmpty()) {
+					choix = p.chooseCard(instruction, listeCarte, false);
+					carteTrouve = false;
+					for(int c=0; c<listeCarte.size(); c++) {
+						//Ajoute la carte choisie au deck si la réserve contenait une carte de prix valide
+						if(!carteTrouve && listeCarte.get(c).getName().equalsIgnoreCase(choix)) {
+							carteTrouve = true;
+							p.gain(choix);
+							System.out.println("\n"+p.getName() +" reçoit une carte "+choix);
+						}
+					}
+				}
+				else {
+					System.out.println("Aucune carte de la réserve à moins de "+(coutCarte+1)+" pièces disponible");
+				}
+			}			
 		}
 	}
 }

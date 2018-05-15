@@ -16,33 +16,38 @@ public class Moat extends ReactionCard {
 	
 	//permet au joueur possédant cette carte de choisir s'il veut la dévoiler ou non en cas d'attaque d'un autre joueur
 	public boolean devoiler(Player p, CardList pile) {
-		boolean contient = false;
-		for(Card carte : pile) {
-			if(carte.getName().equalsIgnoreCase(this.getName())) {
-				contient = true;
+		if(p != null && pile != null) {
+			boolean contient = false;
+			for(Card carte : pile) {
+				if(carte.getName().equalsIgnoreCase(this.getName())) {
+					contient = true;
+				}
 			}
+			if(!contient) {
+				return false;
+			}
+			String instruction = p.getName()+" : Voulez-vous montrer votre carte Douves ? (y/n)\n";
+			List<String> listeChoix = new ArrayList<String>();
+			listeChoix.add("y");
+			listeChoix.add("n");
+			String rep = p.choose(instruction, listeChoix, false);
+			if(rep.equalsIgnoreCase("n")) {
+				return false;
+			}
+			else {
+				System.out.println("\n"+p.getName()+" dévoile sa carte Douves\n");
+				return true;
+			}			
 		}
-		if(!contient) {
-			return false;
-		}
-		String instruction = p.getName()+" : Voulez-vous montrer votre carte Douves ? (y/n)\n";
-		List<String> listeChoix = new ArrayList<String>();
-		listeChoix.add("y");
-		listeChoix.add("n");
-		String rep = p.choose(instruction, listeChoix, false);
-		if(rep.equalsIgnoreCase("n")) {
-			return false;
-		}
-		else {
-			System.out.println("\n"+p.getName()+" dévoile sa carte Douves\n");
-			return true;
-		}
+		return false;
 	}
 
 	
 	public void play(Player p) {
-		for(int i = 0; i<2; i++) {
-			p.incrementHand(p.drawCard());
+		if(p != null) {
+			for(int i = 0; i<2; i++) {
+				p.incrementHand(p.drawCard());
+			}			
 		}
 	}
 }

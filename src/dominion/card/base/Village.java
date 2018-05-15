@@ -16,7 +16,9 @@ public class Village extends ActionCard {
 	}
 	
 	public void play(Player p) {
-		p.incrementHand(p.drawCard());
-		p.incrementActions(2);
+		if(p != null) {
+			p.incrementHand(p.drawCard());
+			p.incrementActions(2);			
+		}
 	}
 }

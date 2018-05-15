@@ -17,29 +17,31 @@ public class Library extends ActionCard {
 
 	@Override
 	public void play(Player p) {
-		CardList deCote = new CardList();
-		List<String> choices = new ArrayList<String>();
-		choices.add("y");
-		choices.add("n");
-		while(p.cardsInHand().size() < 7 && !(p.getDiscard().isEmpty() && p.getDraw().isEmpty())) {
-			Card carte = p.drawCard();
-			if(carte.getTypes().get(0).equals(CardType.Action)) {
-				String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName() + " (y/n) ?";
-				String reponse = p.choose(instruction, choices, false);
-				if(reponse.equalsIgnoreCase("y")) {
-					deCote.add(carte);//met la carte action de côté
+		if(p != null) {
+			CardList deCote = new CardList();
+			List<String> choices = new ArrayList<String>();
+			choices.add("y");
+			choices.add("n");
+			while(p.cardsInHand().size() < 7 && !(p.getDiscard().isEmpty() && p.getDraw().isEmpty())) {
+				Card carte = p.drawCard();
+				if(carte.getTypes().get(0).equals(CardType.Action)) {
+					String instruction = "Souhaitez-vous mettre de coté la carte action : " + carte.getName() + " (y/n) ?";
+					String reponse = p.choose(instruction, choices, false);
+					if(reponse.equalsIgnoreCase("y")) {
+						deCote.add(carte);//met la carte action de côté
+					}
+					else {
+						p.incrementHand(carte);//met la carte action dans la main
+					}
 				}
 				else {
-					p.incrementHand(carte);//met la carte action dans la main
+					p.incrementHand(carte); // met la carte dans la main
 				}
 			}
-			else {
-				p.incrementHand(carte); // met la carte dans la main
+			for(Card carte : deCote) {
+				p.gain(carte); //met les cartes mises de coté dans la défausse
 			}
+			deCote.removeAll(deCote);			
 		}
-		for(Card carte : deCote) {
-			p.gain(carte); //met les cartes mises de coté dans la défausse
-		}
-		deCote.removeAll(deCote);
 	}
 }
