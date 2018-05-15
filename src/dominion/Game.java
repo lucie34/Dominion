@@ -54,79 +54,78 @@ public class Game {
 	 * - 8 (si 2 joueurs) ou 12 (si 3 ou 4 joueurs) Estate, Duchy et Province 	 * - 10 * (n-1) Curse oÃ¹ n est le nombre de joueurs dans la partie
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
-		this.supplyStacks = new ArrayList<CardList>();
-		this.trashedCards = new CardList();
-		//Initialise le scanner utilisé dans classe Players
-		this.scanner = new Scanner(System.in);
-		//Récupère le nombre de joueurs
-		int nombreJoueur = playerNames.length;
-		//Initialise le joueur courant
-		this.currentPlayerIndex = 0;
-		//Initialise le tableau de joueurs de la partie
-		this.players = new Player[nombreJoueur];
-		//Initialise les piles de cartes.
-		CardList copper = new CardList();
-		CardList silver = new CardList();
-		CardList gold = new CardList();
-		CardList estate = new CardList();
-		CardList duchy = new CardList();
-		CardList province = new CardList();
-		CardList curse = new CardList();
-		for(int i=0; i<60; i++) {
-			copper.add(new Copper());	
-		}
-		for(int i=0; i<40; i++) {
-			silver.add(new Silver());	
-		}
-		for(int i=0; i<30; i++) {
-			gold.add(new Gold());	
-		}
-		if(nombreJoueur == 2) {
-			for(int i=0; i<8; i++) {
-				estate.add(new Estate());	
+			this.supplyStacks = new ArrayList<CardList>();
+			this.trashedCards = new CardList();
+			//Initialise le scanner utilisé dans classe Players
+			this.scanner = new Scanner(System.in);
+			//Récupère le nombre de joueurs
+			int nombreJoueur = playerNames.length;
+			//Initialise le joueur courant
+			this.currentPlayerIndex = 0;
+			//Initialise le tableau de joueurs de la partie
+			this.players = new Player[nombreJoueur];
+			//Initialise les piles de cartes.
+			CardList copper = new CardList();
+			CardList silver = new CardList();
+			CardList gold = new CardList();
+			CardList estate = new CardList();
+			CardList duchy = new CardList();
+			CardList province = new CardList();
+			CardList curse = new CardList();
+			for(int i=0; i<60; i++) {
+				copper.add(new Copper());	
 			}
-			for(int i=0; i<8; i++) {
-				duchy.add(new Duchy());	
+			for(int i=0; i<40; i++) {
+				silver.add(new Silver());	
 			}
-			for(int i=0; i<8; i++) {
-				province.add(new Province());	
+			for(int i=0; i<30; i++) {
+				gold.add(new Gold());	
 			}
-			for(int i = 0; i<10; i++) { 
-				curse.add(new Curse());
+			if(nombreJoueur == 2) {
+				for(int i=0; i<8; i++) {
+					estate.add(new Estate());	
+				}
+				for(int i=0; i<8; i++) {
+					duchy.add(new Duchy());	
+				}
+				for(int i=0; i<8; i++) {
+					province.add(new Province());	
+				}
+				for(int i = 0; i<10; i++) { 
+					curse.add(new Curse());
+				}
 			}
-		}
-		else if(nombreJoueur >2) {
-			for(int i=0; i<12; i++) {
-				estate.add(new Estate());	
+			else if(nombreJoueur >2) {
+				for(int i=0; i<12; i++) {
+					estate.add(new Estate());	
+				}
+				for(int i=0; i<12; i++) {
+					duchy.add(new Duchy());	
+				}
+				for(int i=0; i<12; i++) {
+					province.add(new Province());	
+				}
+				for(int i =0; i < 10*(nombreJoueur-1); i++) { 
+					curse.add(new Curse());
+				}
 			}
-			for(int i=0; i<12; i++) {
-				duchy.add(new Duchy());	
+			this.supplyStacks.addAll(kingdomStacks);
+			this.supplyStacks.add(copper);
+			this.supplyStacks.add(silver);
+			this.supplyStacks.add(gold);
+			this.supplyStacks.add(estate);
+			this.supplyStacks.add(duchy);
+			this.supplyStacks.add(province);
+			this.supplyStacks.add(curse);
+			// Permet de connaitre l'emplacement de la pile province, pour la méthode isFinished()
+			for(int i=0; i<this.supplyStacks.size(); i++) {
+				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
+					this.indiceProvincesupplyStacks = i;
+				}
 			}
-			for(int i=0; i<12; i++) {
-				province.add(new Province());	
-			}
-			for(int i =0; i < 10*(nombreJoueur-1); i++) { 
-				curse.add(new Curse());
-			}
-		}
-		this.supplyStacks.addAll(kingdomStacks);
-		this.supplyStacks.add(copper);
-		this.supplyStacks.add(silver);
-		this.supplyStacks.add(gold);
-		this.supplyStacks.add(estate);
-		this.supplyStacks.add(duchy);
-		this.supplyStacks.add(province);
-		this.supplyStacks.add(curse);
-		// Permet de connaitre l'emplacement de la pile province, pour la méthode isFinished()
-		for(int i=0; i<this.supplyStacks.size(); i++) {
-			if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase("province")) {
-				this.indiceProvincesupplyStacks = i;
-			}
-		}
-		//Crée les instances joueurs et remplit le tableau de joueurs
-		for(int i=0; i<nombreJoueur; i++) {
-			this.players[i] = new Player(playerNames[i], this);
-		}
+			//Crée les instances joueurs et remplit le tableau de joueurs
+			for(int i=0; i<nombreJoueur; i++) {
+				this.players[i] = new Player(playerNames[i], this);}
 	}
 	
 	
