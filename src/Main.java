@@ -11,7 +11,7 @@ class Main {
 		// Noms des joueurs de la partie
 		// (le nombre total de joueurs correspond au nombre de noms dans le 
 		// tableau)
-		String[] playerNames = new String[]{"Marco", "Polo", "lulu"};
+		String[] playerNames = new String[]{"Marco", "Polo"};
 		// Prépare les piles "royaume" de la réserve (hors cartes communes)
 		List<CardList> kingdomStacks = new ArrayList<CardList>();
 		CardList stack;

@@ -54,10 +54,14 @@ public class Game {
 	 * - 8 (si 2 joueurs) ou 12 (si 3 ou 4 joueurs) Estate, Duchy et Province 	 * - 10 * (n-1) Curse oÃ¹ n est le nombre de joueurs dans la partie
 	 */
 	public Game(String[] playerNames, List<CardList> kingdomStacks) {
+			//Initialise les attributs
 			this.supplyStacks = new ArrayList<CardList>();
 			this.trashedCards = new CardList();
-			//Initialise le scanner utilisé dans classe Players
 			this.scanner = new Scanner(System.in);
+			//Si playerNames est une référence null, créee un tableau de joueur de taille 0
+			if(playerNames == null) {
+				playerNames = new String[0];
+			}
 			//Récupère le nombre de joueurs
 			int nombreJoueur = playerNames.length;
 			//Initialise le joueur courant
@@ -125,7 +129,8 @@ public class Game {
 			}
 			//Crée les instances joueurs et remplit le tableau de joueurs
 			for(int i=0; i<nombreJoueur; i++) {
-				this.players[i] = new Player(playerNames[i], this);}
+				this.players[i] = new Player(playerNames[i], this);
+			}
 	}
 	
 	
@@ -200,6 +205,7 @@ public class Game {
 	 */
 	public CardList availableSupplyCards() {
 		CardList cartesReserve = new CardList();
+		//Si la pile i de la réserve n'est pas vide, la première carte de cette pile (non nulle) est ajoutée à cartesReserve
 		for(int i =0; i < this.supplyStacks.size(); i++) {
 			if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null) 
 			{
@@ -247,6 +253,7 @@ public class Game {
 		if(cardName != null) {
 			for(int i =0; i< this.supplyStacks.size(); i++) {
 				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
+					//Retourne la première carte de la pile de la réserve dont les cartes ont pour nom cardName
 					return this.supplyStacks.get(i).get(0);
 				}
 			}
@@ -266,6 +273,7 @@ public class Game {
 		if(cardName != null) {
 			for(int i =0; i< this.supplyStacks.size(); i++) {
 				if(!this.supplyStacks.get(i).isEmpty() && this.supplyStacks.get(i).get(0) != null && this.supplyStacks.get(i).get(0).getName().equalsIgnoreCase(cardName)) {
+					//Supprime et retourne la première carte de la pile de la réserve dont les cartes ont pour nom cardName
 					return this.supplyStacks.get(i).remove(0);
 				}
 			}
@@ -274,7 +282,7 @@ public class Game {
 		return null;
 	}
 	
-	//Méthode pour écarter une carte
+	//Méthode pour écarter une carte en l'ajoutant à la pile trashedCards du jeu
 	public void addInTrash(Card c) {
 		if(c != null) {
 			this.trashedCards.add(c);
@@ -308,9 +316,11 @@ public class Game {
 	 * final et les cartes possÃ©dÃ©es par chacun des joueurs.
 	 */
 	public void run() {
-		while (! this.isFinished()) {
-			// Joue le tour du joueur courant
-			this.players[this.currentPlayerIndex].playTurn();
+		while (this.players.length > 0 && ! this.isFinished()) {
+			// Joue le tour du joueur courant si le joueur n'est pas null
+			if(this.players[this.currentPlayerIndex] != null) {
+				this.players[this.currentPlayerIndex].playTurn();
+			}
 			// Passe au joueur suivant
 			this.currentPlayerIndex += 1;
 			if (this.currentPlayerIndex >= this.players.length) {
