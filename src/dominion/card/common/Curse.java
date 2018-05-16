@@ -12,7 +12,10 @@ public class Curse extends CurseCard {
 	}
 	
 	public int victoryValue(Player p) {
-		return -1;
+		if(p != null) {
+			return -1;			
+		}
+		return 0;
 	}
 
 	@Override
