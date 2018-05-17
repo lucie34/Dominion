@@ -21,18 +21,13 @@ public class Moneylender extends ActionCard {
 	public void play(Player p) {
 		if(p != null) {
 			Copper carteCuivre = new Copper();
-			boolean copperTrouve = false;
-			for(int i=0; i<p.cardsInHand().size(); i++ ) {
-				//Si le joueur possède une carte Cuivre dans sa main, l'action de la carte est réalisée
-				if(!copperTrouve && p.cardsInHand().get(i) != null && p.cardsInHand().get(i).getName().equalsIgnoreCase(carteCuivre.getName())){
-					copperTrouve = true;
-					Card carteCopper = p.cardsInHand().get(i);
-					p.getGame().addInTrash(carteCopper);
-					p.removeFromHand(carteCopper);
-					System.out.println(p.getName()+" écarte une carte Cuivre de sa main\n");
-					p.incrementMoney(3);
-				}
-			}			
+			Card carte = p.cardsInHand().getCard(carteCuivre.getName());
+			if(carte != null) {
+				p.getGame().addInTrash(carte);
+				p.removeFromHand(carte);
+				System.out.println(p.getName()+" écarte une carte Cuivre de sa main\n");
+				p.incrementMoney(3);
+			}		
 		}
 	}
 }

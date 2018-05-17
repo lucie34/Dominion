@@ -29,8 +29,8 @@ public class Thief extends AttackCard {
 			Player joueurActif = p.getGame().getPlayer(p.getGame().getCurrentPlayerIndex());
 			for(Card carte : listeCartesDevoile) {
 				if(carte != null) {
-					System.out.println(p.getName()+" dévoile de son deck la carte "+carte.getTypes().get(0)+" : "+carte.getName()+"\n");
-					//Si la carte dévoilée est une carte trésor, elle est ajoutée à la liste de cartes cartesTresor
+					System.out.println(p.getName()+" dévoile de son deck la carte "+carte.getName()+"\n");
+					//Si la carte dévoilée est une carte trésor, elle est ajoutée à la CardList cartesTresor
 					if(carte.getTypes().get(0).equals(CardType.Treasure)) {
 						cartesTresor.add(carte);
 					}
@@ -39,24 +39,17 @@ public class Thief extends AttackCard {
 						p.gain(carte);
 					}
 				}
-			}//Si l'adversaire a dévoilé une ou plusieurs cartes trésor, le joueur actif choisit d'en faire écarter une
+			}
+			//Si l'adversaire a dévoilé une ou plusieurs cartes trésor, le joueur actif choisit d'en faire écarter une
 			if(!cartesTresor.isEmpty()) {
-				int nbCartesTresorEcarte = 0;
-				int nbCartesTresor = cartesTresor.size();
 				String instruction = joueurActif.getName()+" : Choisissez de faire écarter une carte trésor à "+p.getName();
 				String rep = joueurActif.chooseCard(instruction, cartesTresor, false);
 				if(!rep.equalsIgnoreCase("")) {
-					for(int i=0; i<nbCartesTresor; i++) {
-						if(nbCartesTresorEcarte < 1 && cartesTresor.get(i).getName().equalsIgnoreCase(rep)) {
-							nbCartesTresorEcarte++;
-							//La carte écartée est ajoutée à la liste cartesEcarte en attribut de classe
-							cartesEcarte.add(cartesTresor.get(i));
-							System.out.println(joueurActif.getName()+" fait écarter la carte "+cartesTresor.get(i).getName()+" au joueur "+p.getName()+"\n");
-							cartesTresor.remove(i);
-						}
-					}
+					//La carte écartée est ajoutée à la liste cartesEcarte en attribut de classe
+					cartesEcarte.add(cartesTresor.remove(rep));
+					System.out.println(joueurActif.getName()+" fait écarter la carte "+rep+" au joueur "+p.getName()+"\n");
 				}
-				//Les cartes trésor non écartées sont aussi défaussées par l'adversaire
+				//Les cartes trésor non écartées sont défaussées par l'adversaire
 				for(Card carte : cartesTresor) {
 					p.gain(carte);
 				}
@@ -79,23 +72,13 @@ public class Thief extends AttackCard {
 				}
 				//Si cartesEcarte contient des cartes, le joueur actif peut récupérer celles qu'il souhaite. Les autres sont mises dans le trash du Game
 				if(!cartesEcarte.isEmpty()) {
-					boolean carteTrouve;
-					int nbCartesEcarte;
 					String instruction = p.getName()+" : Choisissez de récupérer une carte trésor écartée ou laissez vide";
 					String rep2="init";
 					while(!rep2.equalsIgnoreCase("")) {
 						rep2 = p.chooseCard(instruction, cartesEcarte, true);
 						if(!rep2.equalsIgnoreCase("")) {
-							nbCartesEcarte = cartesEcarte.size();
-							carteTrouve = false;
-							for(int i=0; i<nbCartesEcarte; i++) {
-								if(!carteTrouve && cartesEcarte.get(i).getName().equalsIgnoreCase(rep2)) {
-									carteTrouve = true;
-									p.gain(cartesEcarte.get(i));
-									System.out.println(p.getName()+" récupère la carte trésor "+cartesEcarte.get(i).getName()+"\n");
-									cartesEcarte.remove(i);
-								}
-							}
+							p.gain(cartesEcarte.remove(rep2));
+							System.out.println(p.getName()+" récupère la carte trésor "+rep2+"\n");
 						}
 					}
 					for(Card carte : cartesEcarte) {

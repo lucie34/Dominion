@@ -20,18 +20,13 @@ public class Bureaucrat extends AttackCard {
 	//Méthode jouant l'action d'attaque de la carte
 	public void attaquer(Player p) {
 		if(p != null) {
+			//le joueur dévoile sa carte victoire s'il en possède une en main, sinon il dévoile sa main
 			if(!p.getVictoryCards().isEmpty()) {
-				int nbCarteVictoryDevoile = 0;
 				String rep = p.chooseCard("Choisissez une carte victoire dans votre main à dévoiler", p.getVictoryCards(), false);
-				for(int c = 0; c<p.getVictoryCards().size(); c++) {
-					if(nbCarteVictoryDevoile < 1 && p.getVictoryCards().get(c) != null && p.getVictoryCards().get(c).getName().equalsIgnoreCase(rep)) {
-						Card carteVictory = p.getVictoryCards().get(c);
-						System.out.println(p.getName()+" dévoile une carte victoire : carte "+carteVictory.getName()+"\n");
-						p.addDraw(0, carteVictory);
-						p.removeFromHand(carteVictory);
-						nbCarteVictoryDevoile ++;
-					}
-				}
+				Card carteVictory = p.getVictoryCards().getCard(rep);
+				System.out.println(p.getName()+" dévoile sa carte victoire "+rep);
+				p.removeFromHand(carteVictory);
+				p.addDraw(0, carteVictory);
 			}
 			else {
 				String mainDevoile = String.format("%s\n", p.cardsInHand().toString());

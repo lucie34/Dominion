@@ -20,33 +20,23 @@ public class Mine extends ActionCard {
 	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
-			int coutCarte = 0;
-			boolean carteTrouve;
-			String instruction = "Choisissez une carte trésor de votre main à écarter";
-			String choix;
 			//Si le joueur possède une carte trésor  ou plus dans sa main
 			if(!p.getTreasureCards().isEmpty()) {
 				//Il choisit laquelle écarter
-				choix = p.chooseCard(instruction, p.getTreasureCards(), false);
-				carteTrouve = false;
-				for(int c = 0; c<p.getTreasureCards().size(); c++) {
-					if(!carteTrouve && p.getTreasureCards().get(c) != null && p.getTreasureCards().get(c).getName().equalsIgnoreCase(choix)) {
-						carteTrouve = true;
-						Card carte = p.getTreasureCards().get(c);
-						//Récupère le coût de la carte écartée
-						coutCarte = carte.getCost();
-						//L'écarte
-						p.getGame().addInTrash(carte);
-						p.removeFromHand(carte);
-						System.out.println(p.getName()+" écarte la carte trésor "+carte.getName()+"\n");
-					}
-				}
-				coutCarte += 3;
+				String instruction = "Choisissez une carte trésor de votre main à écarter";
+				String choix = p.chooseCard(instruction, p.getTreasureCards(), false);
+				System.out.println(p.getName()+" écarte la carte trésor "+choix+"\n");
+				//Écarte la carte trésor choisie
+				Card carteTresor = p.getTreasureCards().getCard(choix);
+				p.getGame().addInTrash(carteTresor);
+				p.removeFromHand(carteTresor);
+				
+				//Récupère le coût de la carte écartée
+				int coutCarte = carteTresor.getCost() +3;
 				instruction = "Sélectionnez une carte trésor de la réserve à recevoir, elle doit coûter au plus "+coutCarte+" pièces";
-				CardList reserve = p.getGame().availableSupplyCards();
 				CardList listeTreasureCards = new CardList();
 				//Récupère les cartes trésor de la réserve disponible, coutant 3 pièces de plus ou moins que la carte écartée
-				for(Card carte : reserve) {
+				for(Card carte : p.getGame().availableSupplyCards()) {
 					if(carte != null && carte.getTypes().get(0).equals(CardType.Treasure) && carte.getCost()<=coutCarte) {
 						listeTreasureCards.add(carte);
 					}
@@ -54,20 +44,13 @@ public class Mine extends ActionCard {
 				//S'il y a des cartes trésor dans la réserve coutant 3 pièces de plus ou moins que la carte écartée
 				if(!listeTreasureCards.isEmpty()) {
 					choix = p.chooseCard(instruction, listeTreasureCards, false);
-					carteTrouve = false;
-					for(int c=0; c<listeTreasureCards.size(); c++) {
-						if(!carteTrouve && listeTreasureCards.get(c).getName().equalsIgnoreCase(choix)) {
-							carteTrouve = true;
-							p.incrementHand(p.getGame().removeFromSupply(choix));
-							System.out.println("\n"+p.getName() +" reçoit une carte trésor "+choix+"\n");
-						}
-					}
+					p.incrementHand(p.getGame().removeFromSupply(choix));
+					System.out.println("\n"+p.getName() +" reçoit une carte trésor "+choix+"\n");
 				}
-				//Sinon
 				else {
 					System.out.println("Aucune carte trésor de la réserve à moins de "+(coutCarte+3)+" pièces disponible");
 				}
-			}//Si aucune carte trésor dans la main à écarter, rien			
+			}			
 		}
 	}
 }

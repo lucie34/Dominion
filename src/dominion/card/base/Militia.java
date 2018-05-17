@@ -19,22 +19,13 @@ public class Militia extends AttackCard {
 	//Méthode jouant l'action d'attaque de la carte
 	public void attaquer(Player p) {
 		if(p != null) {
-			String instruction = "Vous devez avoir seulement 3 cartes en main, choisissez une carte de votre main à défausser";
-			String choix;
-			boolean carteTrouve;
 			//Ramène la main de l'adversaire i à 3 cartes
 			while(p.cardsInHand().size() > 3) {
-				//Empêche de défausser plusieurs fois les cartes de même nom dans la boucle for
-				carteTrouve = false;
-				choix = p.chooseCard(instruction, p.cardsInHand(), false);
-				for(int c=0; c<p.cardsInHand().size(); c++) {
-					if(!carteTrouve && p.cardsInHand().get(c) != null && p.cardsInHand().get(c).getName().equalsIgnoreCase(choix)) {
-						carteTrouve = true;
-						Card carte = p.cardsInHand().get(c);
-						p.gain(carte);//met la carte choisie dans la défausse
-						p.removeFromHand(carte);//l'enlève de la main du joueur
-					}
-				}
+				String instruction = "Vous devez avoir seulement 3 cartes en main, choisissez une carte de votre main à défausser";
+				String choix = p.chooseCard(instruction, p.cardsInHand(), false);
+				Card carte = p.cardsInHand().getCard(choix);
+				p.gain(carte);//met la carte choisie dans la défausse
+				p.removeFromHand(carte);//l'enlève de la main du joueur
 			}
 			System.out.println(p.getName()+" a 3 cartes en main ou moins\n");
 		}

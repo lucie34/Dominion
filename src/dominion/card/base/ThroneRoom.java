@@ -20,36 +20,28 @@ public class ThroneRoom extends ActionCard {
 	//Méthode jouant la carte
 	public void play(Player p) {
 		if(p != null) {
-			//Affiche le nombre d'actions restant à jouer
-			int nbActionsRestant = 2;
-			int nbCarteActionChoisie = 0;
-			System.out.println(nbActionsRestant+" actions restantes\n");
-			//Récupère les cartes action dans la main du joueur
-			CardList listeActionCards = p.getActionCards();
-			String instruction = "Choisissez une carte action dans votre main à jouer 2 fois";
-			String choix;
-			if(!listeActionCards.isEmpty()) {
+			if(!p.getActionCards().isEmpty()) {
+				//Affiche le nombre d'actions restant à jouer
+				int nbActionsRestant = 2;
+				System.out.println(nbActionsRestant+" actions restantes\n");
 				//Fait choisir une carte action au joueur
-				choix = p.chooseCard(instruction, listeActionCards, false);
-				for(int c=0; c<listeActionCards.size(); c++) {
-					if(nbCarteActionChoisie < 1 && listeActionCards.get(c) != null && listeActionCards.get(c).getName().equalsIgnoreCase(choix)) {
-						nbCarteActionChoisie++;
-						Card cardChoosed = listeActionCards.get(c);
-						System.out.println(p.getName()+" choisit de jouer 2 fois sa carte action : "+ cardChoosed.getName()+"\n");
-						if(cardChoosed.getName().equalsIgnoreCase("ThroneRoom") || cardChoosed.getName().equalsIgnoreCase("Cave") || cardChoosed.getName().equalsIgnoreCase("Espion") || cardChoosed.getName().equalsIgnoreCase("Laboratoire") || cardChoosed.getName().equalsIgnoreCase("Market")) {
-							nbActionsRestant += 2;
-							System.out.println(nbActionsRestant+" actions restantes\n");
-						}
-						else if(cardChoosed.getName().equalsIgnoreCase("Village") || cardChoosed.getName().equalsIgnoreCase("Festival")) {
-							nbActionsRestant += 4;
-							System.out.println(nbActionsRestant+" actions restantes\n");
-						}
-						cardChoosed.play(p);//carte action jouée une première fois
-						p.playCard(cardChoosed);//carte action jouée une deuxième fois et mise dans pile inPlay
-						nbActionsRestant -= 2;
-						System.out.println(nbActionsRestant+" actions restantes\n");
-					}
+				String instruction = "Choisissez une carte action dans votre main à jouer 2 fois";
+				String choix = p.chooseCard(instruction, p.getActionCards(), false);
+				System.out.println(p.getName()+" choisit de jouer 2 fois sa carte action : "+choix+"\n");
+				if(choix.equalsIgnoreCase("ThroneRoom") || choix.equalsIgnoreCase("Cave") || choix.equalsIgnoreCase("Espion") || choix.equalsIgnoreCase("Laboratoire") || choix.equalsIgnoreCase("Market")) {
+					nbActionsRestant += 2;
+					System.out.println(nbActionsRestant+" actions restantes\n");
 				}
+				else if(choix.equalsIgnoreCase("Village") || choix.equalsIgnoreCase("Festival")) {
+					nbActionsRestant += 4;
+					System.out.println(nbActionsRestant+" actions restantes\n");
+				}
+				//Joue la carte action 2 fois
+				Card cardChoosed = p.getActionCards().getCard(choix);
+				cardChoosed.play(p);
+				p.playCard(cardChoosed);
+				nbActionsRestant -= 2;
+				System.out.println(nbActionsRestant+" actions restantes\n");
 			}
 			else {
 				System.out.println("\n"+p.getName()+" n'a aucune carte action à jouer dans sa main");

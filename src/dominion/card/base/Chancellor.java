@@ -20,18 +20,15 @@ public class Chancellor extends ActionCard {
 	public void play(Player p) {
 		if(p != null) {
 			p.incrementMoney(2);
-			CardList pioche = new CardList();
-			for(Card carte : p.getDraw()) {
-				pioche.add(carte);
-			}	
-			if(!pioche.isEmpty()) {
+			if(!p.getDraw().isEmpty()) {
+				int piocheSize = p.getDraw().size();
 				String instruction = "Voulez-vous défausser votre deck ? (y/n)";
 				List<String> listeChoix = new ArrayList<String>(2);
 				listeChoix.add("y");
 				listeChoix.add("n");
 				String choix = p.choose(instruction, listeChoix, false);
 				if(choix.equalsIgnoreCase("y")) {
-					for(int i=0; i<pioche.size(); i++) {
+					for(int i=0; i<piocheSize; i++) {
 						p.gain(p.drawCard());
 					}
 					System.out.println(p.getName()+" a defaussé son deck\n");

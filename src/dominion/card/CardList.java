@@ -35,7 +35,7 @@ public class CardList extends ArrayList<Card> {
 	 */
 	public Card remove(String cardName) {
 		for (Card c: this) {
-			if (c.getName().equals(cardName)) {
+			if (c != null && c.getName().equals(cardName)) {
 				this.remove(c);
 				return c;
 			}
@@ -52,7 +52,7 @@ public class CardList extends ArrayList<Card> {
 	 */
 	public Card getCard(String cardName) {
 		for (Card c: this) {
-			if (c.getName().equals(cardName)) {
+			if (c!= null && c.getName().equals(cardName)) {
 				return c;
 			}
 		}
